@@ -1,5 +1,29 @@
 \documentclass{willowtreebook}
 \usepackage{url}
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+\usetikzlibrary{decorations.pathreplacing}
+\colorlet{lgray}{gray!25}
+\colorlet{llgray}{gray!50}
+\usepackage{tikz-cd}
+
+
+\newcommand{\nc}{\newcommand}
+\nc{\dmo}{\DeclareMathOperator}
+\nc{\bbZ}{\mathbb{Z}}
+\nc{\cat}[1]{\mathscr{#1}}
+\nc{\Mid}{\,\big|\,}
+\nc{\SET}[2]{\big\{\,#1\Mid#2\,\big\}}
+
+\dmo{\End}{End}
+\dmo{\Mod}{Mod}
+\dmo{\Grp}{Grp}
+\dmo{\Aut}{Aut}
+\dmo{\Iso}{Iso}
+\dmo{\sgn}{sgn}
+\dmo{\Hom}{Hom}
+\dmo{\id}{id}
+
 \Title{MA8403  - Equivariant homotopy theory}
 \Author{Drew Heard}
 \BibliographyFile{ma8403} 		
@@ -9,7 +33,163 @@
 This are the courses notes for MA8403 - Equivariant homotopy theory, held during the Autumn semester 2023 at NTNU. The notes are mainly based on two excellent sets of lectures notes, one by Guillou \cite{guillou}, and one by Blumberg \cite{blumberg}. The notes will be continually updated during the semester. 
 \afterpreface
 \chapter{Equivariance in algebra}
+\subsection{Group actions in algebra}
+We recall that if $X$ is an object in a category $\cat C$, then the set of endomorphisms $\End(X)$ forms a monoid (that is, a set equipped with an associative binary operation and an identity element) under composition. The set of automorphisms of $X$ (that is, those endomorphisms that are invertible) form a group. Moreover, we have
+\[
+\Aut(X) = \End(X) \cap \Iso(\cat C)
+\]
 
+Note that any group is a monoid, simply by forgetting the existence of inverses. 
+\begin{definition}
+    An action of a group $G$ on an object $X \in \cat C$ is a monoid homomorphism $a \colon G \to \End(X)$, or equivalently a group homomorphism $a \colon G \to \Aut(X)$ (note that a monoid homomorphism between groups is a group homomorphism). 
+\end{definition}
+\begin{remark}
+    Unwinding the definition, this means that we have:
+    \begin{enumerate}
+        \item For each $g \in G$, there is a morphism $a(g) \colon G \to G$.
+        \item $a$ preserves composition, i.e., $a(g \cdot h) = a(h) \cdot a(h)$. 
+        \item $a$ preserves identifies, so $a(e) = \id_X$.
+    \end{enumerate}
+\end{remark}
+\begin{example}
+    Let $\cat C$ be the category of sets and functions. Then, $a \colon G \to \End(X) = \big\{\,f \colon X \to X\big\}$ correspond to a function $\overline{a} \colon G \times X \to X$. The conditions above mean that the diagrams
+    % https://q.uiver.app/#q=WzAsNCxbMCwwLCJHIFxcdGltZXMgRyBcXHRpbWVzIFgiXSxbMCwxLCJHIFxcdGltZXMgWCJdLFsxLDAsIkcgXFx0aW1lcyBYIl0sWzEsMSwiWCJdLFswLDEsIlxcaWQgXFx0aW1lcyBcXG92ZXJsaW5le2F9IiwyXSxbMCwyLCJtIFxcdGltZXMgXFxpZCJdLFsyLDMsIlxcb3ZlcmxpbmV7YX0iXSxbMSwzLCJcXG92ZXJsaW5le2F9IiwyXV0=
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{G \times G \times X} \& {G \times X} \\
+	{G \times X} \& X
+	\arrow["{\id \times \overline{a}}"', from=1-1, to=2-1]
+	\arrow["{m \times \id}", from=1-1, to=1-2]
+	\arrow["{\overline{a}}", from=1-2, to=2-2]
+	\arrow["{\overline{a}}"', from=2-1, to=2-2]
+\end{tikzcd}
+\text{ and }
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJcXHtcXGFzdFxcfSBcXHRpbWVzIFgiXSxbMSwwLCJHIFxcdGltZXMgWCJdLFswLDEsIlgiXSxbMSwxLCJYIl0sWzAsMSwiZSBcXHRpbWVzIFxcaWQiXSxbMCwyLCJcXGNvbmciLDJdLFsxLDMsIlxcb3ZlcmxpbmV7YX0iXSxbMiwzLCIiLDIseyJsZXZlbCI6Miwic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dXQ==
+\begin{tikzcd}[ampersand replacement=\&]
+	{\{\ast\} \times X} \& {G \times X} \\
+	X \& X
+	\arrow["{e \times \id}", from=1-1, to=1-2]
+	\arrow["\cong"', from=1-1, to=2-1]
+	\arrow["{\overline{a}}", from=1-2, to=2-2]
+	\arrow[Rightarrow, no head, from=2-1, to=2-2]
+\end{tikzcd}\]
+commute, where $m \colon G \times G \to G$ denotes the group multiplication. Equivalently, in symbols, we have
+\[
+\overline{a}(h,\overline{a}(h,x)) = \overline{a}(gh,x) 
+\]
+and
+\[
+\overline{a}(e,x) = x. 
+\]
+\end{example}
+\begin{remark}
+    Let $BG$ denote the category with one object $\ast$ and with $\Hom(\ast,\ast) = G$. Then an action of $G$ in the category $\cat C$ is the same as a functor $\rho \colon BG \to \cat C$. The object $X$ in the previous definition is the object $\rho(\ast) \in \cat C$. 
+\end{remark}
+\begin{remark}
+    Let $\cat C = \Mod_R$ for a commutative ring $R$. An action of $G$ on $M \in \Mod_R$ is a monoid homormorphism
+    \[
+a \colon G \to \Hom_R(M,M).
+    \]
+    We recall that $\Hom_R(M,M)$ actually has the structure of an $R$-algebra
+\end{remark}
+\begin{definition}
+    The ($R$-linear) group ring on $R$ is the $R$-algebra $R[G]$ whose:
+    \begin{enumerate}[label=(\alph*)]
+    \item underlying $R$-module is the free $R$-module with basis on the underlying set of $G$. 
+    \item whose multiplication is given on basis elements by the group operation. 
+    \end{enumerate}
+\end{definition}
+\begin{example}
+    Let $R = \mathbb{Z}$ and $G = C_2 = \langle \sigma \rangle$. An element of $\bbZ[C_2]$ is of the form $a + b\sigma$ where $a,b \in \bbZ$. Multiplication is given by
+    \[
+(a_1 \cdot 1+b_1\sigma)\cdot(a_2\cdot 1+b_2\sigma) = (a_1a_2+b_1b_2)\cdot 1  + (a_1b_2+b_1a_2)\sigma. 
+    \]
+    This is the same thing as the polynomial ring $\bbZ[\sigma]/(\sigma^2-1)$. 
+\end{example}
+\begin{remark}
+    Categorically, the group ring construction is left adjoint to the functor that takes an $R$-algebra to its group of units, i.e., there is an adjudication
+    \[
+R[-] \colon \Grp \leftrightarrows \Mod_R \colon (-)^{
+\times}
+    \]
+\end{remark}
+Returning to group actions, we have the following:
+\begin{proposition}
+    Let $R$ be a commutative ring, and $G$ a finite group. The following data on an $R$-module $M$ are equivalent:
+    \begin{enumerate}
+        \item A monoid homomorphism $G \to \End_R(M)$.
+        \item A group homomorphism $G \to \Aut_R(M)$. 
+        \item A homomorphism of $R$-algebras $R[G] \to \Hom_R(M,M)$. 
+        \item An $R[G]$-module structure on $M$ whose underlying $R$-module structure is $M$. 
+    \end{enumerate}
+\end{proposition}
+\begin{definition}
+    A representation of $G$ over $R$ is an $R[G]$-module. 
+\end{definition}
+\begin{example}
+    If $R = k$ is a field, then the underlying $R$-module is a $k$-vector space $V$. If $\dim_k(V) = n$, then $\Aut_k(V) = GL_n(k)$, and a $k$-representation is the same thing as a group homomorphism $G \to GL_n(k)$. 
+\end{example}
+\begin{definition}
+    The $R[G]$-module $R[G]$ is known as the regular representation. More generally, if $X$ is a finite $G$-set, then the free $R$-module $R[X]$ inherits the structure of a $R[G]$-module (the case of $R[G]$ itself corresponds to the finite $G$-set $G$, considered as an $R[G]$-module over itself). Representations obtained this way are known as permutation representations. 
+\end{definition}
+\begin{example}
+    Taking $X$ to be the trivial $G$-set, we obtain the (one-dimensional) trivial representation. This is simply the $R[G]$-module $R$, where $G$ acts trivially. 
+\end{example}
+\begin{definition}
+    Let $G = C_2 = \langle \tau \rangle$, and suppose that $-1 \ne 1 \in R$. Then the sign representation of $G$ is the one-dimensional representation where $\tau$ acts as $-1$ (if $-1 = 1$ in $R$ this still makes sense, but is just the trivial representation). Note that this is an example of a representation that is not a permutation representation.
+\end{definition}
+\begin{example}
+    Let $C_n = \langle \sigma \rangle$ be the cyclic group of order $n$. Let us calculate all complex 1-dimensional representations of $C_n$, i.e., homomorphisms $\rho \colon C_n \to \mathbb{C}$. Note that if we define $\rho(\sigma) =c$, then $\rho(\sigma^n) = c^n = 1$, so that $c$ must be an $n$-th root of unity. There are precisely $n$-of these (take $\chi_n = e^{2\pi/n i}$), and so there are precisely $n$-representations. For example, when $G = C_4$, the four representations correspond to sending $\sigma$ to either $1,i,-1$ or $-i$. Note that we can also consider these as 2-dimensional \emph{real} representations. 
+\end{example}
+\begin{notation}
+We let $\rho = \rho_G$ denote the regular representation of $G$, and the trivial $n$-dimensional representation by $\mathbf{n} = R^{\oplus n}$. 
+\end{notation}
+\begin{definition}
+    A subrepresentation is a submodule. 
+\end{definition}
+\begin{example}
+    The regular representation always has a one-dimensional trivial representation, generated by the sum $\sum_{g \in G}g$. 
+\end{example}
+\begin{definition}
+    A representation $V$ is irreducible if the only subrepresentations of $V$ are $0$ and $V$. 
+\end{definition}
+\begin{theorem}[Maschke]Suppose that $k$ is a field of characteristic not dividing $|G|$. Then every
+representation splits as a direct sum of irreducible representations.
+\end{theorem}
+\begin{proof}
+    We prove the following: if $V \subseteq W$ is a subrepresentation, then there exists $U \subseteq W$ such that $U \oplus V \simeq W$. 
+
+    To see this, let $\pi \colon W \to W$ be any $k$-linear projection of $W$ onto $V$. This map need not be $G$-equivariant, but we can make it so by `averaging'. That is, we define a new map $\phi \colon W \to W$ by 
+    \[
+\phi(\mathbf{w}) = \frac{1}{|G|}\sum_{g \in G}g \cdot \pi(g^{-1} \cdot \mathbf{w}). 
+    \]
+   Moreover the map is $G$-equivariant: for $h \in G$ we have
+   \[
+   \begin{split}
+\phi(h \cdot \mathbf{w}) &= \frac{1}{|G|}\sum_{g \in G}g \cdot \pi(g^{-1} \cdot h \cdot \mathbf{w}) \\
+& = \frac{1}{|G|}\sum_{u \in G}u \cdot h \cdot \pi(u^{-1} \cdot \mathbf{w}) \\
+&= h \cdot \phi(\mathbf{w}),
+\end{split}
+   \]
+   where $u = gh^{-1}$, and so $\phi$ is $k[G]$-linear. Furthermore, the map $\phi$ is the identity on $V$ By the splitting lemma, $W = V \oplus \ker(\phi)$. 
+\end{proof}
+\begin{remark}
+We used the assumption on $k$ to ensure that we could divide by $|G|$. Without that assumption, the theorem is false. Indeed, let $G = C_2$, $R = \mathbb{F}_2$ and consider the representation defined by $\rho(\tau) =\begin{pmatrix}
+1 & 1 \\
+1 & 0 
+\end{pmatrix} $. This is not irreducible, but does not split as a direct sum of indecomposable representations. 
+\end{remark}
+\begin{corollary}
+Suppose that $k$ is a field of characteristic not dividing $|G|$.  If $V$ is an irreducible representation, then $V$ is isomorphism to a subgroup of $k[G]$ (slogan: all irreducibles are submodules of the regular representation). 
+\end{corollary}
+\begin{proof}
+    Let $\mathbf{v} \in V$ be non-trivial. Then the homomorphism $\phi \colon k[G] \to V$ given by sending $1$ to $\mathbf{v}$ must be surjective, because $V$ is irreducible. Let $U = \ker(\phi)$, then apply Maschke's theorem. 
+\end{proof}
+\begin{example}
+    Let $G = C_2 = \langle \tau \rangle$, and $k$ a field of characteristic not equal to 2. We have the trivial representation $\mathbf{1}$ and the sign representation $\mathbf{1}_{\sgn}$. Then, $\mathbf{1}$ is generated by the sum $1+\tau$, while $\mathbf{1}_{\sgn}$ is generated by $1-\tau$, and we deduce that 
+    \[
+\rho_{C_2} = \mathbf{1} \oplus \mathbf{1}_{\sgn}. 
+    \]
+\end{example}
 \par\bigskip\noindent
 
 	% End the document without loading the bibliography

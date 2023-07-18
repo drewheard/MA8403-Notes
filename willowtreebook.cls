@@ -3,7 +3,7 @@
 \DeclareOption{ContainsChinese}{\def\ChineseTextInThisDocument{}}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{memoir}}
 \ProcessOptions\relax
-\LoadClass{memoir}
+\LoadClass[oneside]{memoir}
 \RequirePackage{xparse}
 \def\mckaybook@title{}
 \def\mckaybook@subtitle{}
@@ -284,6 +284,9 @@ Analphabetics
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{remark}
+\newtheorem{definition}[theorem]{Definition}\newtheorem{remark}[theorem]{Remark}
+\newtheorem{notation}[theorem]{Notation}
 %.......Colours
 \colorlet{exampleBackgroundColour}{gray!16}
 \newtcolorbox{example}{%
