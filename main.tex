@@ -6,7 +6,7 @@
 \colorlet{lgray}{gray!25}
 \colorlet{llgray}{gray!50}
 \usepackage{tikz-cd}
-
+\usepackage{cleveref}
 
 \newcommand{\nc}{\newcommand}
 \nc{\dmo}{\DeclareMathOperator}
@@ -23,7 +23,7 @@
 \dmo{\sgn}{sgn}
 \dmo{\Hom}{Hom}
 \dmo{\id}{id}
-
+\Crefname{example}{Example}{Examples}
 \Title{MA8403  - Equivariant homotopy theory}
 \Author{Drew Heard}
 \BibliographyFile{ma8403} 		
@@ -85,7 +85,7 @@ and
     Let $BG$ denote the category with one object $\ast$ and with $\Hom(\ast,\ast) = G$. Then an action of $G$ in the category $\cat C$ is the same as a functor $\rho \colon BG \to \cat C$. The object $X$ in the previous definition is the object $\rho(\ast) \in \cat C$. 
 \end{remark}
 \begin{remark}
-    Let $\cat C = \Mod_R$ for a commutative ring $R$. An action of $G$ on $M \in \Mod_R$ is a monoid homormorphism
+    Let $\cat C = \Mod_R$ for a commutative ring $R$. An action of $G$ on $M \in \Mod_R$ is a monoid homomorphism
     \[
 a \colon G \to \Hom_R(M,M).
     \]
@@ -138,7 +138,7 @@ Returning to group actions, we have the following:
     Let $G = C_2 = \langle \tau \rangle$, and suppose that $-1 \ne 1 \in R$. Then the sign representation of $G$ is the one-dimensional representation where $\tau$ acts as $-1$ (if $-1 = 1$ in $R$ this still makes sense, but is just the trivial representation). Note that this is an example of a representation that is not a permutation representation.
 \end{definition}
 \begin{example}
-    Let $C_n = \langle \sigma \rangle$ be the cyclic group of order $n$. Let us calculate all complex 1-dimensional representations of $C_n$, i.e., homomorphisms $\rho \colon C_n \to \mathbb{C}$. Note that if we define $\rho(\sigma) =c$, then $\rho(\sigma^n) = c^n = 1$, so that $c$ must be an $n$-th root of unity. There are precisely $n$-of these (take $\chi_n = e^{2\pi/n i}$), and so there are precisely $n$-representations. For example, when $G = C_4$, the four representations correspond to sending $\sigma$ to either $1,i,-1$ or $-i$. Note that we can also consider these as 2-dimensional \emph{real} representations. 
+    Let $C_n = \langle \sigma \rangle$ be the cyclic group of order $n$. Let us calculate all complex 1-dimensional representations of $C_n$, i.e., homomorphisms $\rho \colon C_n \to \mathbb{C}$. Note that if we define $\rho(\sigma) =c$, then $\rho(\sigma^n) = c^n = 1$, so that $c$ must be an $n$-th root of unity. There are precisely $n$-of these (take $\zeta_n = e^{2\pi/n i}$), and so there are precisely $n$-representations. For example, when $G = C_4$, the four representations correspond to sending $\sigma$ to either $1,i,-1$ or $-i$. Note that we can also consider these as 2-dimensional \emph{real} representations. 
 \end{example}
 \begin{notation}
 We let $\rho = \rho_G$ denote the regular representation of $G$, and the trivial $n$-dimensional representation by $\mathbf{n} = R^{\oplus n}$. 
@@ -189,6 +189,75 @@ Suppose that $k$ is a field of characteristic not dividing $|G|$.  If $V$ is an 
     \[
 \rho_{C_2} = \mathbf{1} \oplus \mathbf{1}_{\sgn}. 
     \]
+\end{example}
+\section{The representation ring}
+Let $k$ be a field, and suppose that $V$ and $W$ are $G$-representations, then the $k$-linear tensor sum $V \oplus W$ can be given the structure of a $k[G]$-module, by taking the diagonal $G$-action. If we think of a representation in terms of a homomorphism $\rho \colon G \to GL_n(k)$, then this direct sum corresponds to the `block sum'
+\[
+G \to GL_n(k) \times GL_m(k) \to GL_{n+m}(k)
+\]
+Similarly, we can define a tensor product of representations using the `Kronecker tensor product' (or matrix direct product). Equivalently, this is the $k$-linear tensor product $V \otimes W$ with the $g$-action defined on simple tensors by
+\[
+g \cdot (\mathbf{v} \otimes\mathbf{w}) = g \cdot \mathbf{v} \otimes g \mathbf{w}. 
+\]
+We leave it for the reader to verify the following straightforward computations:
+\begin{enumerate}[label=(\alph*)]
+    \item $\mathbf{1} \otimes V \cong V \cong V \otimes \mathbf{1}$. 
+    \item $\mathbf{n} \otimes V \cong V^{\oplus n} \cong V \otimes \mathbf{n}$. 
+\end{enumerate}
+\begin{example}[label=ex:tensor-product-sign]
+    Let us compute the tensor product $\mathbf{1}_{\sgn} \otimes \mathbf{1}_{\sgn}$. The underlying vector space is simply $k \otimes k \cong k$, while $\tau$ acts as $\tau \cdot (1 \otimes 1) = (\tau \cdot 1) \otimes (\tau \cdot 1) = -1 \otimes -1 = 1 \otimes 1$. So the tensor product $\mathbf{1}_{\sgn} \otimes \mathbf{1}_{\sgn} = \mathbf{1}$. 
+   
+\end{example}
+\begin{example}[label=ex:tensor-product-c3]
+    Take $G = C_3$ and $k = \mathbb{R}$. We have a two-dimensional representation $\lambda_3$ corresponding to rotation by an angle of $2\pi/3$. What is $\lambda_3 \otimes \lambda_3$? This is a 4-dimensional representation, and by working out all irreducible representations must be either $\mathbf{4}, \mathbf{2} \oplus \lambda_3$ or $\lambda_3 \oplus \lambda_3$. If you know a little bit of character theory, you can see that it must be $\mathbf{2} \oplus \lambda_3$: we have
+    \[
+\chi_{\lambda_3 \otimes \lambda_3}(1) = 4, \quad \chi_{\lambda_3 \otimes \lambda_3}(\tau) = 1
+    \]
+        \[
+\chi_{\mathbf{4}}(1) = 4, \quad \chi_{\mathbf{4}}(\tau) = 1
+    \]
+        \[
+\chi_{\mathbf{2} \oplus \lambda_3}(1) = 4, \quad \chi_{\mathbf{2} \oplus \lambda_3}(\tau) = 1
+    \]
+            \[
+\chi_{\lambda_3 \oplus \lambda_3}(1) = 4, \quad \chi_{\lambda_3  \oplus \lambda_3}(\tau) = -2
+    \]
+\end{example}
+\begin{remark}
+    By passing to isomorphism classes of representations, the set of finite dimensional representations has the structure of a semiring. Using the Grothendieck construction, we can produce a commutative ring. 
+\end{remark}
+\begin{definition}
+    For a finite group $G$ the real representation ring $RO(G)$ is the Grothendieck group of the above semi-ring. Explicitly,
+    \[
+RO(G) \coloneqq \mathbb{Z}\left\{ \parbox{15em}{isomorphism classes of finite-dimensional real $G$-representations} \right\}/\langle [ V \oplus W] - [V] - [W] \rangle .
+    \]
+\end{definition}
+\begin{remark}
+    As an abelian group, $RO(G)$ is a direct sum of copies of $\bbZ$, with rank equal to the number of isomorphism classes of irreducible representations. 
+\end{remark}
+\begin{remark}
+    We can make the same definition for other fields, for example when $k = \mathbb{C}$ we get the complex representation ring $R(G)$. 
+\end{remark}
+\begin{example}
+    We have $RO(C_2) \cong \bbZ\{ \mathbf{1} \} \oplus \bbZ\{\mathbf{1}_{\sgn}\}$. The ring structure is determined by Example~\eqref{ex:tensor-product-sign}: we have $RO(C_2) \cong \bbZ[\sigma]/(\sigma^2-1)$. The same is true for the complex representation ring. Note that this is the same as $\bbZ[C_2]$. In fact, the complex representation ring of a finite abelian group is always (non-canonically) isomorphic to the group ring: it is the group ring of the character group. 
+\end{example}
+\begin{example}
+    When $G = C_3$ we have that
+    \[
+RO(C_3) = \bbZ\{ \mathbf{1} \} \oplus \bbZ\{ \lambda_3 \}. 
+    \]
+    By Example~\eqref{ex:tensor-product-c3} we have $[\lambda_3]^2 = 2 + [\lambda_3]$ and we see that
+    \[
+RO(C_3) \cong \bbZ[\lambda]/(\lambda^2-\lambda-2). 
+    \]
+    On the other hand, the complex representation ring is given by \[
+    R(C_3) \cong \bbZ[\zeta]/(\zeta^3-1).
+    \]
+    By tensoring a real representation with $\mathbb{C}$, there is a map
+    \[
+RO(C_3) \to R(C_3)
+    \]
+    given by $\lambda \mapsto \zeta + \zeta^2$. 
 \end{example}
 \par\bigskip\noindent
 
