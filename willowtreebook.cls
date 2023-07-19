@@ -289,17 +289,19 @@ Analphabetics
 \newtheorem{notation}[theorem]{Notation}
 %.......Colours
 \colorlet{exampleBackgroundColour}{gray!16}
-\newtcolorbox{example}{%
+\newtcolorbox[auto counter,number within=chapter]{example}[1][]{%%
 enhanced,%
 breakable,%
 colback=gray!16,%
-colframe=gray!22,%
+colframe=gray!100,%
 leftrule=1.4pt,%
 toprule=1.4pt,%
 bottomrule=1.4pt,%
 rightrule=1.4pt,%
 arc=3mm,%
-before upper={\parindent15pt\noindent}%
+before upper={\parindent15pt\noindent},%
+ title={Example \thetcbcounter},
+   #1
 }
 \newenvironment{exampleAndImage}[1]%
 {%
