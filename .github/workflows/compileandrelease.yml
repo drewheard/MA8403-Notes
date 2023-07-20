@@ -17,4 +17,4 @@ jobs:
         with:
           files: main.pdf # Same base name as the .tex file
         env:
-          GITHUB_TOKEN: $
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
