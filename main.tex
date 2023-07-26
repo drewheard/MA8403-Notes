@@ -1,6 +1,7 @@
 \documentclass{willowtreebook}
 \usepackage{url}
 \usepackage{tikz}
+\usepackage{quiver}
 \usetikzlibrary{shapes}
 \usetikzlibrary{decorations.pathreplacing}
 \colorlet{lgray}{gray!25}
@@ -9,6 +10,7 @@
 \usepackage{cleveref}
 
 \newcommand{\nc}{\newcommand}
+\nc{\ul}{\underline}
 \nc{\dmo}{\DeclareMathOperator}
 \nc{\bbZ}{\mathbb{Z}}
 \nc{\bbR}{\mathbb{R}}
@@ -17,7 +19,9 @@
 \nc{\Mid}{\,\big|\,}
 \nc{\SET}[2]{\big\{\,#1\Mid#2\,\big\}}
 
+\dmo{\Mack}{Mack}
 \dmo{\End}{End}
+\dmo{\Conj}{Conj}
 \dmo{\Mod}{Mod}
 \dmo{\Res}{Res}
 \dmo{\Ind}{Ind}
@@ -28,6 +32,14 @@
 \dmo{\sgn}{sgn}
 \dmo{\Hom}{Hom}
 \dmo{\id}{id}
+%%Alternative command for C_p-Lewis diagrams
+\newcommand{\lew}[5]{
+\begin{tikzcd}
+    #1 \arrow[d, "#3", curve={height=3pt}, swap, shift right=2] \\
+    #2 \arrow[u, "#4", swap, curve={height=3pt}, shift right=2] \arrow[loop, "#5", distance=20, out=300,in=240]
+\end{tikzcd}
+}
+
 \Crefname{example}{Example}{Examples}
 \Title{MA8403  - Equivariant homotopy theory}
 \Author{Drew Heard}
@@ -402,6 +414,178 @@ Hence,
     S \to \Hom_R(S,R).
     \]
 \end{remark}
+\section{The double-coset formula}
+Let us return to a moment to $RO(C_4)$. We have constructed maps
+\[
+RO(C_2) \to RO(C_4) \to RO(C_2)
+\]
+which send
+\[
+\mathbf{1} \mapsto \mathbf{1}\oplus \sigma \mapsto \mathbf{2}
+\]
+and
+\[
+\mathbf{1}_{\sgn} \mapsto \lambda_4 \mapsto 2 \cdot \mathbf{1}_{\sgn}
+\]
+so that the composite map $RO(C_2) \to RO(C_2)$ is multiplication by 2. This is actually a complete general phenomena. 
+\begin{definition}
+    Let $H,K \le G$ be subgroups, then a double coset $HgK$ is the set
+    \[
+    HgK = \SET{x \in G}{x = hgk \text{ for some } h \in H,k \in K}.
+    \]
+\end{definition}
+\begin{theorem}[Double coset formula]
+For subgroups $H,K,\le G$ and a $H$-representation $K$ we have a decomposition of $K$-representations
+\[
+\Res^G_K\Ind_H^G(V) = \sum_{HgK \in H \backslash G/K} \Ind_{H^{g-1} \cap K}^{K} c_g^*\Res^H_{H \cap K^g}(V)
+\]
+where $c_g \colon H \cap K^g \xrightarrow{\sim}H^{g^{-1}}\cap K$ is the conjugation by $g$ homomorphism. 
+\end{theorem}
+\begin{corollary}
+    Suppose that $G$ is abelian, and $H = K$, then the composite 
+    \[
+    RO(H) \xrightarrow{\Ind_H^G} RO(G) \xrightarrow{\Res^G_H} RO(H)
+    \]
+    is given by multiplication by the index $|G/H|$ of $H$ inside of $G$. 
+\end{corollary}
+Indeed, in this case $H\backslash G/H = G/H$. 
+\begin{remark}
+    The restriction that $G$ is abelian is really necessary. See \cite[Example 1.1.51]{guillou}. 
+\end{remark}
+\chapter{Mackey functors}
+\section{The definition of a Mackey functor}
+We can axiomatize the structure we have on seen on the representation ring in an algebraic object called a \emph{Mackey functor}. As we will see later, these play the same role in equivariant stable homotopy that abelian groups play in ordinary stable homotopy. 
+\begin{definition}
+    A Mackey functor $\ul{M}$ for a finite group $G$ consists of the following data:
+    \begin{enumerate}[label=(\alph*)]
+    \item An abelian group $\ul{M}(H)$ for each $H \le G$. 
+    \item A restriction map $R^G_H \colon \ul{M}(H) \to \ul{M}(K)$ for each $K \le H$. 
+    \item A transfer map $I_K^H \colon \ul{M}(K) \to \ul{M}(H)$ for each $K \le H$. 
+    \item A conjugation homomorphism $c_g \colon \ul M(H) \to \ul{M}(H^g)$  for each $g \in G$. 
+    \end{enumerate}
+    subject to the following rules:
+    \begin{enumerate}[label=(\roman*)]
+        \item $R^H_H$ and $I^H_H$ are the identity for each $ H \le K$. Moreover, for each $h \in H$, $c_h$ is the identity on $\ul{M}(H)$. 
+        \item If $L \le K \le H$, then $R^K_L \circ R^H_K \simeq R^H_L$ and $I_H^K \circ I_L^K \simeq I_L^H$. 
+        \item $c_g \circ c_h \simeq c_{gh}$ for all $g, h \in G$. 
+        \item $R_{K^g}^{H^g}c_g = c_gR_K^H$ and $I_{K^g}^{H_g}c_g= c_gI_K^H$.
+        \item The double coset formula holds:
+        \[
+R^{H}_L \circ I_K^H = \sum_{KhL \in K\backslash H/L} I^L_{K^{h}\cap L} R^{K^h}_{K^h \cap L}c_h
+        \]
+        for all $L,K \le H \le G$. 
+    \end{enumerate}
+\end{definition}
+\begin{example}
+    In the previous section we have shown that there is a Mackey functor $\ul{RO}(G)$ with $\ul{RO}(G)(H) \cong RO(H)$. 
+\end{example}
+\begin{remark}
+    There are numerous different ways to record the data of a Mackey functor, and depending on precisely what you want to do, some may be better than others. For example, although it's maybe not so hard to define a category of Mackey functors from this perspective, its formal properties might be a bit hard to see (for example, is it an abelian category? Is it symmetric monoidal?), while from other perspectives this becomes much clearer. 
+\end{remark}
+\begin{remark}
+    Let $\ul{M}$ be a Mackey functor. Note that if $g$ normalizes $H$ so that $H^g = H$, then $c_g$ maps $\ul{M}$ to itself, i.e. we have an action of $N_G(H)$ on $\ul{M}(H)$. Moreover, the normal subgroup $H \le N_G(H)$ acts trivially, so we get an action of $W_G(H) = N_G(H)/H$ on $\ul{M}(H)$. For example, in the case $H = e$, we get an action of $N_G(e)/e = G$ on $\ul{M}(e)$. It is customary to write Mackey functors via a \emph{Lewis diagram}: for example, when $G = C_p$ this is a diagram of the form:
+    \[
+    \lew{\ul{M}(C_p)}{\ul{M}(e)}{R}{I}{C_p}
+    \]
+\end{remark}
+\begin{example}
+    Given an $\bbZ[G]$-module $M$ we can produce a Mackey functor $\ul{M}$ defined by
+    \[
+    \ul{M}(H) = M^H. 
+    \]
+    Here restriction is defined by inclusion of fixed points for a larger subgroup, which the transfer map is defined by
+    \[
+    I_K^H \colon M^K \to M_H, \quad I_K^H(m) = \sum_{hK \in H/K} h \cdot M
+    \]
+    This does not depend on coset representatives, since $m$ is assumed to be fixed by $K$. Finally, conjugation $c_g$ is multiplication by $g$. 
+
+    This gives a functor $FP \colon \Mod_{\bbZ[G]} \to \Mack_G$
+\end{example}
+\begin{lemma}
+    The functor $FP$ is right adjoint to the evaluation functor that takes a Mackey functor $\ul{M}$ to the $\bbZ[G]$-module $\ul{M}(e)$. 
+\end{lemma}
+\begin{proof}
+    Given a morphism $\alpha \colon \ul{M}(e) \to V$ of $\bbZ[G]$-modules we show that there is a unique morphism $\ul{\alpha} \colon \ul{M} \to FP(V)$ of Mackey functors (the converse association is easy, and is just given by evaluation at $e$). This is defined by setting
+    \[
+    \ul{\alpha}(H) \colon \ul{M}(H)  \to V^H
+    \]
+    to be the composite 
+    \[
+    \ul{M}(H) \xrightarrow{R^H_e} \ul{M}(e) \xrightarrow{\alpha} V^H.
+    \]
+    Note that this does indeed land in $V^H$ as $h$ acts trivially on $\ul{M}(H)$ and commutes with $\alpha$, so that $c_h\alpha R^H_e = \alpha R^H_e$. It follows that we get a commutative diagram
+    % https://q.uiver.app/#q=WzAsNCxbMCwwLCJcXHVse019KEgpIl0sWzAsMSwiXFx1bHtNfShlKSJdLFsxLDAsIlZeSCJdLFsxLDEsIlYiXSxbMiwzLCIiLDAseyJzdHlsZSI6eyJ0YWlsIjp7Im5hbWUiOiJob29rIiwic2lkZSI6InRvcCJ9fX1dLFsxLDMsIlxcYWxwaGEiLDJdLFswLDEsIlJeSF9lIiwyXSxbMCwyLCJcXHVse1xcYWxwaGF9KEgpIl1d
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{\ul{M}(H)} \& {V^H} \\
+	{\ul{M}(e)} \& V
+	\arrow[hook, from=1-2, to=2-2]
+	\arrow["\alpha"', from=2-1, to=2-2]
+	\arrow["{R^H_e}"', from=1-1, to=2-1]
+	\arrow["{\ul{\alpha}(H)}", from=1-1, to=1-2]
+\end{tikzcd}\]
+We must show that 
+\[
+\ul{\alpha}(H) I^H_K = I^H_K \ul{\alpha}(K)
+\]
+and
+\[
+\ul{\alpha}(H) R^H_K = R^H_K \ul{\alpha}(K).
+\]
+We show the first, and leave the second as an exercise. We have\footnote{Note that $H \backslash G/K  = H \backslash G$ if $K = e$. }
+\[
+\ul{\alpha}(H) I^H_K = \alpha R^H_eI^H_K = \alpha \sum_{hK \in H/K} c_hR^K_e = \sum_{hK \in H/K} h \cdot \alpha R^K_e = I^H_K \alpha R^K_e = I^H_K \ul{\alpha}(K).
+\]
+The second equation is similar, but simpler, and we leave it for the reader. 
+\end{proof}
+\begin{remark}
+    Evaluation also has a left adjoint, the `fixed quotient' Mackey functor, defined by $\ul{M}(H) = M_H$, the largest quotient of $M$ on which $H$ acts trivially. 
+\end{remark}
+\begin{remark}
+    A special case of the fixed-point Mackey functor comes from taking an abelian group $M$ considered with trivial $G$-action. This gives the \emph{constant Mackey functor} $\ul{M}$ with $\ul{M}(H) = H$, restriction and conjugation the identity, and transfer from $K$ to $H$ given by multiplication by the index of $K$ in $H$. 
+\end{remark}
+\begin{example}
+    There is a $C_2$-Mackey functor described by the Lewis diagram
+    \[
+    \lew{\bbZ}{\bbZ \oplus \bbZ}{\Delta}{\nabla}{\text{swap}}
+    \]
+    This is an example of a fixed-point Mackey functor applied to the free module $\bbZ[C_2]$. 
+\end{example}
+\section{The Burnside ring}
+Another example of a Mackey functor comes from the Burnside ring. This is very important in both the theory of Mackey functors and in equivariant homotopy theory, as it plays the role of the unit $\bbZ$.
+\begin{definition}
+    The Burnside ring of a finite group $G$ is the Grothendieck group of the category of finite $G$-sets under coproduct. More explicitly, 
+        \[
+A(G) \coloneqq \mathbb{Z}\left\{ \parbox{15em}{isomorphism classes of finite $G$-set} \right\}/\langle [ X \amalg Y] - [X] - [Y] \rangle .
+    \]
+\end{definition}
+\begin{remark}
+    Because every finite $G$-set decomposes into a coproduct of orbits and the isomorphism type of an orbit $G/H$ only depends on the conjugacy class of $H$, we have an additive decomposition
+    \[
+    A(G) \cong \bigoplus_{\Conj(G)} \bbZ.
+    \]
+    Suppose $H \le G$ then there are maps $A(G) \to A(H)$ induced by restriction of $G$-sets, and $A(H) \to A(K)$, induced by taking an $H$-set $X$ to the $G$-set $G \times_H X$. There is also a conjugation map $c_g \colon A(H) \to A(H^g)$ defined by taking a $H$-set $X$ defined by $H \to \Aut(X)$ to the $H^g$-set defined by $H^g \xrightarrow{c_g^{-1}} H \to \Aut(X)$.  
+\end{remark}
+\begin{definition}
+    The Burnside Mackey functor $\mathbb{A}_G$ is the Mackey functor with $\mathbb{A}_G(H) = A(H)$, and structure maps as in the previous remark. 
+\end{definition}
+\begin{remark}
+    Sending a $G$-set $X$ to the associated permutation representation, we get a ring morphism $A(G) \to R(G)$, which extends to a morphism of Mackey functors. 
+\end{remark}
+\begin{example}
+    Let $G = C_p$, then there are two orbits, namely $C_p/C_p$ and $C_p/e$, so we have
+    \[
+A(C_p) \cong \bbZ \{C_p/C_p,C_p\}
+    \]
+    while clearly
+    \[
+    A(e) \cong \bbZ \{ e \}. 
+    \]
+    The Mackey functor looks as follows
+    \[
+    \lew{\bbZ \{ C_p/C_p,C_p/e \}}{\bbZ\{ e\}}{R}{I}{}
+    \]
+    where the maps are determined by $C_p/C_p \mapsto e$, $C_p/e \mapsto p$ (essentially, counting the number of points in the set), while the transfer sends $e$ to $C_p/e$ (it takes $p$ copies of the singleton, with action that permutes the copies). The Weyl group action is trivial. 
+\end{example}
 \par\bigskip\noindent
 	% End the document without loading the bibliography
 	% or the index, or the list of notation.
