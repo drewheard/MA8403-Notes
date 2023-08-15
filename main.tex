@@ -17,10 +17,15 @@
 \nc{\bbC}{\mathbb{C}}
 \nc{\cat}[1]{\mathscr{#1}}
 \nc{\Mid}{\,\big|\,}
+\nc{\normal}{\trianglelefteq}
 \nc{\SET}[2]{\big\{\,#1\Mid#2\,\big\}}
 
 \dmo{\Mack}{Mack}
+\dmo{\FinSet}{Fin}
 \dmo{\End}{End}
+\dmo{\Top}{Top}
+\dmo{\Inf}{Inf}
+\dmo{\ev}{ev}
 \dmo{\Conj}{Conj}
 \dmo{\Mod}{Mod}
 \dmo{\Res}{Res}
@@ -29,6 +34,7 @@
 \dmo{\Grp}{Grp}
 \dmo{\Aut}{Aut}
 \dmo{\Iso}{Iso}
+\dmo{\Map}{Map}
 \dmo{\sgn}{sgn}
 \dmo{\Hom}{Hom}
 \dmo{\id}{id}
@@ -57,7 +63,7 @@ We recall that if $X$ is an object in a category $\cat C$, then the set of endom
 \]
 
 Note that any group is a monoid, simply by forgetting the existence of inverses. 
-\begin{definition}
+\begin{definition}\label{def:group-action}
     An action of a group $G$ on an object $X \in \cat C$ is a monoid homomorphism $a \colon G \to \End(X)$, or equivalently a group homomorphism $a \colon G \to \Aut(X)$ (note that a monoid homomorphism between groups is a group homomorphism). 
 \end{definition}
 \begin{remark}
@@ -543,7 +549,7 @@ The second equation is similar, but simpler, and we leave it for the reader.
 \begin{remark}
     A special case of the fixed-point Mackey functor comes from taking an abelian group $M$ considered with trivial $G$-action. This gives the \emph{constant Mackey functor} $\ul{M}$ with $\ul{M}(H) = H$, restriction and conjugation the identity, and transfer from $K$ to $H$ given by multiplication by the index of $K$ in $H$. 
 \end{remark}
-\begin{example}
+\begin{example}[label=ex:fixed-point-mackey]
     There is a $C_2$-Mackey functor described by the Lewis diagram
     \[
     \lew{\bbZ}{\bbZ \oplus \bbZ}{\Delta}{\nabla}{\text{swap}}
@@ -586,7 +592,229 @@ A(C_p) \cong \bbZ \{C_p/C_p,C_p\}
     \]
     where the maps are determined by $C_p/C_p \mapsto e$, $C_p/e \mapsto p$ (essentially, counting the number of points in the set), while the transfer sends $e$ to $C_p/e$ (it takes $p$ copies of the singleton, with action that permutes the copies). The Weyl group action is trivial. 
 \end{example}
+\section{Induction, restriction and inflation for Mackey functors}
+We have seen that we can defined (co)induction and restriction for Mackey functors. A similar construction exists for Mackey functors. The restriction functor is particularly simple. 
+\begin{definition}
+    Given a $G$-Mackey functor $\ul{M}$ and a subgroup $H \le G$ the restricted Mackey functor $H$-Mackey functor $\Res^G_H\ul{M}$ is the Mackey functor with $\ul{M}(K) = \ul{M}(K)$ for $K \le H$. 
+\end{definition}
+\begin{remark}
+    Although simple, there is one small subtlety to be aware of: when we restrict the Mackey functor we have less conjugation maps available: the Weyl group is smaller. For example, restriction to the trivial group gives a functor to $\Mack_{e} \simeq \Mod_{\bbZ}$, i.e., we have to Weyl group action anymore. 
+\end{remark}
+\begin{remark}
+    Similarly to representations, this functor has a left and right adjoint. From our definition of a Mackey functor, this is a little annoying to define, but really this comes from similar functors on the category of finite $G$-sets. Indeed, we have indexed our Mackey functors on subgroup $H \le G$, but we could equally well have done this on the $G$-set $G/H$. Since any finite $G$-set decomposes as a disjoint union of orbits, we can define $\ul{M}(X)$ for $X$ a finite $G$-set to be the direct sum of $\ul{M}(G/H)$ for the orbits appearing in a decomposition of $X$. 
+
+    In fact, one can define a Mackey functor as a bifunctor $\ul{M} = (\ul{M}^*,\ul{M}_*)$ from finite $G$-sets to abelian groups satisfying some axioms: here $\ul{M}^*$ and $\ul{M}_*$ are contravariant and covariant functors that agree on objects. 
+\end{remark}
+\begin{definition}
+    Let $\ul{M}$ be a $H$-Mackey functor, then the induction from $H$ to $G$, $\Ind_H^G(\ul{M})$ is the $G$-Mackey functor defined on a finite $G$-set $X$ by
+    \[
+    \Ind_H^G(\ul{M})(X) = \ul{M}(\Res^G_HX). 
+    \]
+\end{definition}
+\begin{remark}
+    One can give an explicit description of this Mackey functor as
+    \[
+    \Ind_H^G\ul{M}(K) = \bigoplus_{HgK \in H \backslash G/K} \ul{M}(H \cap K^g)
+    \]
+    It is rather tedious to check the axioms for this, but see \cite[Section 2]{Sasaki1982Green} if you want the details.
+\end{remark}
+\begin{remark}
+    Similarly, restriction is equivalently defined by
+    \[
+\Res^G_H(\ul{M})(X) = \ul{M}(\Ind_H^G X).
+    \]
+\end{remark}
+\begin{remark}
+    The following result is slightly surprising since induction is the left, but not right, adjoint of restriction on the category of finite $G$-sets.
+\end{remark}
+\begin{proposition}
+    Induction for Mackey functors is both the left and right adjoint of restriction. 
+\end{proposition}
+\begin{proof}
+    Let
+    \[
+    \epsilon \colon (G \times_H X \downarrow^G_H) \to X \quad \text{ and } \quad \eta \colon Y \to (G \times_H Y) \downarrow^G_H
+    \]
+    by the counit and unit for the adjunction on the category of finite $G$-sets. Here $\epsilon$ maps the class of $(g,x)$ to $gx$ and $\eta$ maps $y$ to the class of $(1,y)$. 
+
+    To show that induction is left adjoint, we define the counit and unit on Mackey functors 
+    \[
+p(N) \colon \Ind^G_H\Res^G_H N \to N, \quad N_*(\epsilon)
+    \]
+    and
+    \[
+    q(M) \colon M \to \Res^G_H\Ind_H^G M 
+    \]
+    by specifying their value on a $G$-set $X$ and a $H$-set $Y$ by
+    \[
+    p(N) = N_*(\epsilon) \quad \text{ and } q(M) = M_*(\eta).
+    \]
+    That this defines an adjunction then follows from the fact that $\epsilon$ and $\eta$ are the counit and unit of an adjunction. 
+
+    To show induction is right adjoint is very similar, except we use the contravariant structure $M^*$ instead of the covariant structure. 
+\end{proof}
+\begin{example}
+    What is $\Ind_{e}^{C_p}(\bbZ)$? Note that on $G$-sets we have that $\Res^G_e(C_p/C_p)$ is a point, while $\Res^G_e(C_p/e)$ is $p$ points. We deduce that 
+    \[
+    \Ind_e^{C_p}\bbZ = \lew{\bbZ}{\bbZ[C_p]}{\Delta}{\nabla}{W}
+    \]
+    where the Weyl group acts by cyclic permutations. When $p = 2$, we have seen this Mackey functor in Example~\eqref{ex:fixed-point-mackey}.
+
+    If you want a fun exercise, you can try and compute $\Ind_{C_2}^{C_4}\ul{M}$ for $\ul{M} \in \Mack_{C_2}$. 
+\end{example}
+There is one final functor that we would like to introduce for Mackey functors, and that is inflation. 
+
+\begin{definition}
+    Let $N \normal G$ be a normal subgroup. We define the inflation functor $\Mack_{G/N} \to \Mack_G$ by
+    \[
+    \Inf_{G/N}^GM(H) = \begin{cases}
+        M(H/N) & \text{ if } N \le H \\
+        0 & \text{ else}. 
+    \end{cases}
+    \]
+    Restriction, transfer, and conjugation are defined in the obvious way. 
+\end{definition}
+\begin{example}
+    For any abelian group $M$ (seen as an object of $\Mack_e$), and group $G$, there is an inflated Mackey functor $\Inf_{G/G}^GM$ whose value is $M$ at $G$ and is zero elsewhere. 
+\end{example}
+\begin{example}
+    Let $G = C_{p^2}$ and $N = C_p$, and suppose $M \in \Mack_{C_p^2/C_p} \simeq \Mack_{C_p}$. Then $N \coloneqq \Inf_{C_p}^{C_p^2}$ is the Mackey functor with $N(C_{p^2}) = \ul{M}(C_p),N(C_p) = \ul{M}(e)$ and $N(e) = 0$. 
+\end{example}
+Inflation has both a left and a right adjoint. 
+\begin{definition}
+    Let $M \in \Mack_G$ and $N \normal G$, then we define $G/N$-Mackey functors $M^+$ and $M^-$ by
+    \[
+    M^+(G/K) = M(G)/\sum_{J \le K, J \not \ge N} I^K_J M(J)
+    \]
+    and
+    \[
+    M^-(G/K) = \bigcap_{J \le K, J \not \ge N} \ker(R^K_J)
+    \]
+    Restrictions, transfer, and conjugation come from those for $L$. These define functors
+    \[
+    {}^+,{}^- \colon \Mack_{G/N} \to \Mack_G.
+    \]
+\end{definition}
+\begin{proposition}
+    ${}^+$ is left adjoint to $\Inf_{G/N}^G$ and ${}^-$ is right adjoint to $\Inf_{G/N}^G$ . 
+\end{proposition}
+\begin{proof}
+    Let $L$ be a Mackey functor for $G$ and $M$ a Mackey functor for $G/N$. Given a morphism $L \to \Inf_{G/N}^GM$, we note that this is necessarily zero on $L(J)$ with $J \not \ge N$, and hence must vanish on $\sum_{J \le K, J \not \ge N} I^K_J M(J)$ for each subgroup $K$. We therefore get an induced morphism $L^+ \to M$. Conversely, given $\beta \colon L^+ \to M$ we can construct a morphism $L \to \Inf_{G/N}^GM$ by defining it to be 0 on $L(J)$ when $J \not \ge N$, and defining it to be the composite
+    \[
+    L(K) \to L(K)/\sum_{J \le K, J \not \ge N} I^K_J L(J) = L^+(K/N) \xrightarrow{\beta} M(K/N) = \Inf_{G/N}^G M(K)
+    \]
+    when $K \ge N$. One can check that this defines a map of Mackey functors, and that this defines an adjunction. The proof for ${}^-$ is similar. 
+\end{proof}
+\begin{remark}
+    From the perspective of $G$-sets, inflation arises in the following way: a functor $M \colon \FinSet_{G/N} \to \Mod_{\bbZ}$ gives rise to a functor $\FinSet_G \to \Mod_{\bbZ}$ by composition with the fixed-point functor $\FinSet_G \to \FinSet_{G/N}$.
+\end{remark}
 \par\bigskip\noindent
+\section{The category of $G$-spaces}
+\begin{definition}
+    A $G$-spaces is a topological space $X$ with a continuous action $G \times X \to X$ (this is the special case of \Cref{def:group-action} in the case $\cat C = \Top$). We let $G\Top$ denote the category of $G$-spectra, where the morphisms are morphisms of topological spaces that commute with the $G$-action. By taking based spaces, we can define $G\Top_*$, the category of \emph{based} $G$-spaces. 
+\end{definition}
+\begin{example}
+    We can always give a topological space the trivial action. However, there are of course many more examples. For example, the $n$-sphere $S^n$ has a natural $C_2$-action, giving by sending a point to its antipode. This is the same as saying that the non-trivial element of $C_2$-acts by $-1$. This action is \emph{free}, in the sense it has no fixed-points. 
+\end{example}
+\begin{example}[label=ex:rep-spheres]
+    Here is an important example, and is the reason why representations show up in equivariant homotopy theory. Let $V$ be a real representation of $G$ of dimension $n$. We let $S^V$ denote the one-point compactification of $V$. This is (non-equivariantly) an $n$-sphere $S^n$. This has a natural $G$-action where the new point $\infty$ is fixed by $G$. In fact, $S^V$ is a based topological space, with base point $\infty$. If $V = \bbR^n$, this is $S^n$ with the trivial action, so our representation spheres generalize the usual notion of a sphere. 
+
+    For a non-trivial example of a representation sphere, we can consider $G = C_2$ and the sign representation $\mathbf{1}_{\sgn}$. In this case, we can draw the sphere $S^{\mathbf{1}_{\sgn}}$ (usually denoted $S^{\sigma}$ or $S^{1,1}$)
+\[
+    \begin{tikzpicture}[scale=0.6]
+  % Draw the circle
+  \draw (0,0) circle [radius=2cm];
+
+  % Draw the points on top and bottom
+  \coordinate (top) at (0,2);
+  \coordinate (bottom) at (0,-2);
+  \fill (top) circle [radius=2pt];
+  \fill (bottom) circle [radius=2pt];
+
+  % Draw the dashed arrow passing through the points
+  \draw[dashed] (0,2.1) -- (0,-2.1);
+
+  % Draw the horizontal arrows passing through the center
+  \draw[<->, shorten >=2pt, shorten <=2pt] (-0.5,0) -- (0.5,0);
+
+    % Add labels at the top and bottom
+  \node[above] at (top) {$\infty$};
+  \node[below] at (bottom) {$0$};
+\end{tikzpicture}
+\]
+This is simply the circle with the $C_2$-action given by reflection across the equator. The two marked points are the only points fixed by the $C_2$-action.
+
+We can also consider the regular representation $\rho$. This is a two dimensional representation, and so the underlying space is a 2-sphere. We can think of it as the one point complexification of $\mathbb{C}$, also known as $\mathbb{C}P^1$, equipped with the complex conjugation action. Since $\mathbb{R} \subseteq \mathbb{C}$ is fixed by conjugation, we see that $\mathbb{R}P^1 \subseteq \mathbb{C}P^1$ is fixed by this action. 
+\[
+\begin{tikzpicture}[scale=0.6]
+  % Draw the circle
+  \draw (0,0) circle [radius=2cm];
+
+    % Draw the points on top and bottom
+  \coordinate (top) at (0,2);
+  \coordinate (bottom) at (0,-2);
+
+    % Define the control points to adjust the curve
+  \coordinate (control1) at (-1,0);
+    \coordinate (control3) at (-0.5,0.25);
+  \coordinate (control2) at (1,0);
+
+  % Draw the horizontal arrows passing through the center
+  \draw[<->, shorten >=2pt, shorten <=2pt] (-0.5,2.25) -- (0.5,2.25);
+
+    % Draw the curved lines
+  \draw (top) .. controls (control3) and (control1) .. (bottom);
+    \draw[dashed] (top) .. controls (control2) .. (bottom);
+\end{tikzpicture}
+\]
+The  $C_2$-action is again given by reflection across an equator. 
+\end{example}
+\begin{remark}
+    Given a group homomorphism $H \to G$ we get a pullback functor $\phi^* \colon G\Top \to H\Top$ is the obvious way. For a injective homomorphisms, this gives us restriction functors $\Res^G_H \colon G\Top \to H\Top$. This has a left and right adjoint, as we now explain. 
+\end{remark}
+\begin{definition}
+    Let $X$ be a $H$-space, then we define a $G$-space $\Ind_H^G X = G \times_H X$ as the quotient of $G \times X$ by the relation $(g \cdot h, x) \sim (g, h \cdot x)$ for $g \in G, h \in H$. 
+\end{definition}
+\begin{example}
+    If $H = e$ is the trivial group, then $\Ind_e^GX \cong G \times X$ is a free $G$-space. 
+\end{example}
+\begin{example}
+    We have $\Ind_H^G(\ast) \cong G/H$. More generally, if $X$ is a space with trivial $H$-action, we have $\Ind_H^G(X) \cong X \times G/H$, where $G$ acts on $G/H$, and trivially on $X$. 
+\end{example}
+In analogy with Mackey functors, we have the following:
+\begin{proposition}
+    The functor $\Ind_H^G \colon H\Top \to G\Top$ is left adjoint to $\Res^G_H \colon G\Top \to H\Top$.
+\end{proposition}
+\begin{remark}
+    Similarly, there is a functor $\Coind_H^G \colon H\Top \to G\Top$, which sends $X$ to $\Map_H(G,X)$, the space of $H$-equivariant maps from $G$ to $X$, with $G$-action given by $(gf) \cdot g' = f(g \cdot g')$. This functor is right adjoint to restriction.
+
+    In contrast to what we saw for Mackey functors, the left and right adjoint do not agree for spaces (Exercise: try and find an example). 
+\end{remark}
+\begin{remark}
+    In fact, given $f \colon H \to G$ a group homomorphism, the pullback functor $f^* \colon G\Top \to H\Top$ always has a left and right adjoint. Taking $H$ to be the trivial group we can get functors called fixed points and orbits, which we now explicitly define. 
+\end{remark}
+\begin{definition}
+    For $X \in G\Top$, the fixed points $X^G$ is the subspace
+    \[
+    X^G = \SET{x \in X}{g \cdot x = x \text{ for all } g \in G} \subseteq X.
+    \]
+This defines a functor $(-)^G \colon G\Top \to \Top$, which is right adjoint to pullback along $G \to e$. 
+    
+    More generally, we can define $X^H$ as the composite
+    \[
+    G\Top \xrightarrow{\Res^G_H} H\Top \xrightarrow{(-)^H} \Top.
+    \]
+\end{definition}
+\begin{example}
+    Returning to the representation spheres considered in Example~\eqref{ex:rep-spheres} we have $(S^{\sigma})^{C_2}  = S^0$, while $(S^{\rho})^{C_2} = S^1$. 
+\end{example}
+\begin{definition}
+   For $X \in G\Top$, the orbit of a point $x \in X$ is the set 
+   \[
+   G \cdot x = \SET{g \cdot x}{g \in G}
+   \]
+   We can define an equivalence relation on $X$ by saying that $x \sim y$ if and only if there exists a $g \in G$ such that $g \cdot x = y$. The quotient by this equivalence relation is the orbit space $X/G$ of the action. This is the right adjoint of pullback along $G \to e$. 
+\end{definition}
 	% End the document without loading the bibliography
 	% or the index, or the list of notation.
 \end{document}
