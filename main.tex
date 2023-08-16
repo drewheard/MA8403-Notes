@@ -12,6 +12,7 @@
 \newcommand{\nc}{\newcommand}
 \nc{\ul}{\underline}
 \nc{\dmo}{\DeclareMathOperator}
+\dmo{\Sub}{Sub}
 \nc{\bbZ}{\mathbb{Z}}
 \nc{\bbR}{\mathbb{R}}
 \nc{\bbC}{\mathbb{C}}
@@ -324,7 +325,7 @@ There is also another functor, which will turn out to be adjoint to restriction.
     Directly from the definition we deduce the following:
 \end{remark}
 \begin{lemma}
-If $K \le H \le G$ then $\Ind_H^G\Ind_K^H V$ for any $K$-representation $V$. 
+If $K \le H \le G$ then $\Ind_H^G\Ind_K^H V \simeq \Ind_K^G V$ for any $K$-representation $V$. 
 \end{lemma}
 \begin{example}
     The regular representation $\rho_G = k[G] \cong k[G] \otimes_{k[G]} k \simeq \Ind_e^G(\mathbf{1})$. More generally, we have $\Ind_H^G\rho_H \cong \rho_G$. 
@@ -344,7 +345,7 @@ If $K \le H \le G$ then $\Ind_H^G\Ind_K^H V$ for any $K$-representation $V$.
   \rho_{C_4} \cong \Ind_{C_2}^{C_4}(\rho_{C_2})) = \Ind_{C_2}^{C_4}(\mathbf{1} \oplus \mathbf{1}_{\sgn}) &\cong \Ind_{C_2}^{C_4}(\mathbf{1}) \oplus \Ind_{C_2}^{C_4}(\mathbf{1}_{\sgn})\\ &  \cong 1 \oplus \sigma  \oplus \Ind_{C_2}^{C_4}(\mathbf{1}_{\sgn}) .
   \end{split}
     \]
-    By $\rho_{C_4} \cong \mathbf{1} \oplus \sigma \oplus \lambda_4$,. To see this, once can note that
+    But $\rho_{C_4} \cong \mathbf{1} \oplus \sigma \oplus \lambda_4$,. To see this, one can note that
     \[
     \bbR[\bbZ/4] \cong \bbR[X]/(X^4-1) \cong \bbR[X]/\prod_{d \mid 4} \Phi_d \cong \bigoplus_{d \mid 4}\bbR[X]/\Phi_d
     \]
@@ -421,7 +422,7 @@ Hence,
     \]
 \end{remark}
 \section{The double-coset formula}
-Let us return to a moment to $RO(C_4)$. We have constructed maps
+Let us return for a moment to $RO(C_4)$. We have constructed maps
 \[
 RO(C_2) \to RO(C_4) \to RO(C_2)
 \]
@@ -433,7 +434,7 @@ and
 \[
 \mathbf{1}_{\sgn} \mapsto \lambda_4 \mapsto 2 \cdot \mathbf{1}_{\sgn}
 \]
-so that the composite map $RO(C_2) \to RO(C_2)$ is multiplication by 2. This is actually a complete general phenomena. 
+so that the composite map $RO(C_2) \to RO(C_2)$ is multiplication by 2. This is actually a completely general phenomena. 
 \begin{definition}
     Let $H,K \le G$ be subgroups, then a double coset $HgK$ is the set
     \[
@@ -769,8 +770,15 @@ We can also consider the regular representation $\rho$. This is a two dimensiona
 \]
 The  $C_2$-action is again given by reflection across an equator. 
 \end{example}
+\begin{notation}
+Let $X$ and $Y$ be based spaces, then we let $\Map_G(X,Y) \subseteq \Map(X,Y)$ denote the space of $G$-equivariant maps $X \to Y$, with the subspace topology. Moreover, we can write define a $G$-space $G\Map(X,Y)$ to have underlying space $\Map(X,Y)$ with $G$-action given by 
+\[
+(g \cdot f)(x) \coloneqq g^{-1}f(gx). 
+\]
+The two are related: We have $G\Map(X,Y)^G = \Map_G(X,Y)$ as topological spaces, essentially by definition. 
+\end{notation}
 \begin{remark}
-    Given a group homomorphism $H \to G$ we get a pullback functor $\phi^* \colon G\Top \to H\Top$ is the obvious way. For a injective homomorphisms, this gives us restriction functors $\Res^G_H \colon G\Top \to H\Top$. This has a left and right adjoint, as we now explain. 
+    Given a group homomorphism $H \to G$ we get a pullback functor $\phi^* \colon G\Top \to H\Top$ is the obvious way. For an injective homomorphism, this gives us restriction functors $\Res^G_H \colon G\Top \to H\Top$. This has a left and right adjoint, as we now explain. 
 \end{remark}
 \begin{definition}
     Let $X$ be a $H$-space, then we define a $G$-space $\Ind_H^G X = G \times_H X$ as the quotient of $G \times X$ by the relation $(g \cdot h, x) \sim (g, h \cdot x)$ for $g \in G, h \in H$. 
@@ -785,6 +793,9 @@ In analogy with Mackey functors, we have the following:
 \begin{proposition}
     The functor $\Ind_H^G \colon H\Top \to G\Top$ is left adjoint to $\Res^G_H \colon G\Top \to H\Top$.
 \end{proposition}
+\begin{remark}
+    There is a based version, which sends $X$ to $G_+ \wedge_HX $, the quotient of $G_+ \wedge X$ by the same relation as before. 
+\end{remark}
 \begin{remark}
     Similarly, there is a functor $\Coind_H^G \colon H\Top \to G\Top$, which sends $X$ to $\Map_H(G,X)$, the space of $H$-equivariant maps from $G$ to $X$, with $G$-action given by $(gf) \cdot g' = f(g \cdot g')$. This functor is right adjoint to restriction.
 
@@ -813,8 +824,93 @@ This defines a functor $(-)^G \colon G\Top \to \Top$, which is right adjoint to 
    \[
    G \cdot x = \SET{g \cdot x}{g \in G}
    \]
-   We can define an equivalence relation on $X$ by saying that $x \sim y$ if and only if there exists a $g \in G$ such that $g \cdot x = y$. The quotient by this equivalence relation is the orbit space $X/G$ of the action. This is the right adjoint of pullback along $G \to e$. 
+   We can define an equivalence relation on $X$ by saying that $x \sim y$ if and only if there exists a $g \in G$ such that $g \cdot x = y$. The quotient by this equivalence relation is the orbit space $X/G$ of the action. This is the left adjoint of pullback along $G \to e$. 
 \end{definition}
+\begin{remark}
+In summary: we have
+\[
+\Map_G(Y,X) \simeq \Map(Y,X^G)
+\]
+and
+\[
+\Map_G(X,Y) \cong \Map(X/G,Y)
+\]
+where $X$ is a $G$-space and $Y$ has the trivial $G$-action. 
+\end{remark}
+There is an obvious notion of homotopy in equivariant homotopy. 
+\begin{definition}
+    Two equivariant maps $f,g \colon X \to Y$ between $G$-spaces are said to be $G$-homotopic if there is an equivariant map $h \colon I \times X \to Y$ such that $h|_{\{ 0\} \times X} \simeq f$ and $h|_{\{ 1\} \times X} \simeq g$. Here we give $I$ the trivial $G$-action. 
+\end{definition}
+\begin{example}
+    Let % https://q.uiver.app/#q=WzAsMixbMCwwLCJcXGFzdCJdLFsxLDAsIlNee1xcc2lnbWF9Il0sWzAsMSwiXFxpbmZ0eSIsMCx7Im9mZnNldCI6LTF9XSxbMCwxLCIwIiwyLHsib2Zmc2V0IjoxfV1d
+$\begin{tikzcd}[ampersand replacement=\&]
+	\ast \& {S^{\sigma}}
+	\arrow["\infty", shift left, from=1-1, to=1-2]
+	\arrow["0"', shift right, from=1-1, to=1-2]
+\end{tikzcd}$  be the inclusion of the two fixed-points of $S^{\sigma}$. Because $S^{\infty}$ is path-connected, these are non-equivariantly homotopic. But they are not equivariantly homotopic, since the space of fixed points is not path-connected. 
+\end{example}
+We can now define $G$-homotopy groups, $G$-homotopy equivalences, etc. Note that by adjointness, the notion of equivariant homotopy will just be computing $\pi_n(X^G)$. Instead, it is better to remember the fixed points of all subgroups $H \le G$. To fix notation, let $\pi_n^H(X) \coloneqq \pi_n(X^H)$. 
+\begin{definition}
+    A morphism $f \colon X \to Y$ of $G$-spaces is a weak $G$-homotopy equivalence if the induced maps $\pi_n^H(f) \colon \pi_n^H(X) \to \pi_n^H(Y)$ are isomorphisms for all $H \le G$. 
+\end{definition}
+\begin{remark}
+    By playing around with adjunctions we have $\pi_n^H(Y) = [G/H \times S^n,X]$, and so this leads naturally to the notion of $G$-CW-complex. 
+\end{remark}
+\begin{definition}
+    A $G$-CW-complex is a sequential colimit of spaces $X_n$ where $X_{n+1}$ is a pushout (in $G\Top$)
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJcXGNvcHJvZCBHL0ggXFx0aW1lcyBTXm4iXSxbMSwwLCJYX24iXSxbMCwxLCJcXGNvcHJvZCBHL0ggXFx0aW1lcyBEXm4iXSxbMSwxLCJYX3tuKzF9Il0sWzAsMV0sWzAsMl0sWzIsM10sWzEsM10sWzMsMCwiIiwxLHsic3R5bGUiOnsibmFtZSI6ImNvcm5lci1pbnZlcnNlIn19XV0=
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{\coprod G/H \times S^n} \& {X_n} \\
+	{\coprod G/H \times D^{n+1}} \& {X_{n+1}}
+	\arrow[from=1-1, to=1-2]
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=2-1, to=2-2]
+	\arrow[from=1-2, to=2-2]
+	\arrow["\ulcorner"{anchor=center, pos=0.125, rotate=180}, draw=none, from=2-2, to=1-1]
+\end{tikzcd}\]
+and $H$ ranges over all the subgroups of $G$. 
+\end{definition}
+\begin{example}
+    We consider again the representation sphere $S^{\sigma}$. Here we start with the $C_2$-fixed 0-skeleton $S^0$. Here we attach a single free 1-cell $(C_2/e) \times D_1$ where one (free) endpoint is attached to 0 and the other to the point $\infty$. 
+\end{example}
+\section{The $G$-Whitehead theorem}
+Our next goal is to prove the equivariant Whitehead theorem.
+\begin{theorem}[Equivariant Whitehead theorem]
+A weak $G$-homotopy equivalence between $G$-CW complexes is a $G$-homotopy equivalence. 
+\end{theorem}
+There are two ways to prove this theorem, both generalizing the two non-equivariant ways. The first is an inductive argument, and can be found in \cite[Theorem 2.1.31]{guillou}. The second is to prove a more general theorem, the equivariant homotopy extension and lifting property (HELP). The main subtly when extending the proof from the non-equivariant case is to define a suitable notion of the connectivity of a map. 
+\begin{definition}
+    Let $\theta \colon \Sub(G)/G \to \SET{x \in \bbZ}{x \ge -1}$. A map $f \colon X \to Y$ of $G$-spaces is $\theta$-connected if $f^H$ is $\theta(H)$-connected for all $H \le G$. A $G$-CW complex is $\theta$-dimensional if all cells of orbit type $G/H$ have non-equivariant dimension at most $\theta(H)$. 
+\end{definition}
+With these definitions in place, we now have an equivariant version of the HELP theorem.\footnote{For the details in the non-equivariant case, see \cite[Chapter 10.3]{May1999concise}.} 
+\begin{proposition}
+Let $A$, $X$, $Y$, and $Z$ be $G$-CW complexes such that $A \subseteq X$ is $\theta$-dimensional,
+and let $e \colon Y \to Z$ be a $\theta$-connected $G$-map. Given $g \colon A \to Y$, $h \colon A \times I \to Z$, and $f \colon X \to Z$ such that $eg = hi_1$ and
+$f|_A = hi_0$, there exist maps $\widetilde{g} \colon X \to Y$ and $\widetilde{h} \colon X \times I \to Z$ that make the following diagram commute:
+
+% https://q.uiver.app/#q=WzAsOCxbMCwwLCJBIl0sWzIsMCwiQSBcXHRpbWVzIEkiXSxbNCwwLCJBIl0sWzAsMiwiWCJdLFsxLDEsIloiXSxbMiwyLCJYIFxcdGltZXMgSSJdLFs0LDIsIlgiXSxbMywxLCJZIl0sWzAsMSwiaV8wIl0sWzIsMSwiaV8xIiwyXSxbMCwzXSxbMyw0LCJmIiwyXSxbMSw0LCJoIiwyXSxbMSw1XSxbMyw1LCJpXzAiLDJdLFs2LDUsImlfMSJdLFsyLDZdLFsyLDcsImciXSxbNiw3LCJcXHRpbGRlIGciLDAseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XSxbNyw0LCJlIiwyLHsibGFiZWxfcG9zaXRpb24iOjMwfV0sWzUsNCwiXFx0aWxkZXtofSIsMix7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRhc2hlZCJ9fX1dXQ==
+\[\begin{tikzcd}[ampersand replacement=\&]
+    A \&\& {A \times I} \&\& A \\
+    \& Z \&\& Y \\
+    X \&\& {X \times I} \&\& X
+    \arrow["{i_0}", from=1-1, to=1-3]
+    \arrow["{i_1}"', from=1-5, to=1-3]
+    \arrow[from=1-1, to=3-1]
+    \arrow["f"', from=3-1, to=2-2]
+    \arrow["h"', from=1-3, to=2-2]
+    \arrow[from=1-3, to=3-3]
+    \arrow["{i_0}"', from=3-1, to=3-3]
+    \arrow["{i_1}", from=3-5, to=3-3]
+    \arrow[from=1-5, to=3-5]
+    \arrow["g", from=1-5, to=2-4]
+    \arrow["{\tilde g}", dashed, from=3-5, to=2-4]
+    \arrow["e"'{pos=0.3}, from=2-4, to=2-2]
+    \arrow["{\tilde{h}}"', dashed, from=3-3, to=2-2]
+\end{tikzcd}\]
+\end{proposition}
+\begin{proof}[Sketch of proof]
+The desired maps are constructed by induction on the skeleton of $X$, and then cell by cell, so we can assume that $X = G/H \times D^{n+1}$ and $A = G/H \times S^{n}$. By playing around with adjunctions, this reduces to the ordinary non-equivariant HELP theorem with $e \colon Y^H \to Z^H$, $X = D^n$ and $A = S^{n-1}$. 
+\end{proof}
 	% End the document without loading the bibliography
 	% or the index, or the list of notation.
 \end{document}
