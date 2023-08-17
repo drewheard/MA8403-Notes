@@ -868,7 +868,7 @@ We can now define $G$-homotopy groups, $G$-homotopy equivalences, etc. Note that
 	\arrow[from=1-2, to=2-2]
 	\arrow["\ulcorner"{anchor=center, pos=0.125, rotate=180}, draw=none, from=2-2, to=1-1]
 \end{tikzcd}\]
-and $H$ ranges over all the subgroups of $G$. 
+and $H$ ranges over all the subgroups of $G$. There is also a relative version where we allow $X_{-1} = A$, for some $G$-space $A$. 
 \end{definition}
 \begin{example}
     We consider again the representation sphere $S^{\sigma}$. Here we start with the $C_2$-fixed 0-skeleton $S^0$. Here we attach a single free 1-cell $(C_2/e) \times D_1$ where one (free) endpoint is attached to 0 and the other to the point $\infty$. 
@@ -884,8 +884,8 @@ There are two ways to prove this theorem, both generalizing the two non-equivari
 \end{definition}
 With these definitions in place, we now have an equivariant version of the HELP theorem.\footnote{For the details in the non-equivariant case, see \cite[Chapter 10.3]{May1999concise}.} 
 \begin{proposition}
-Let $A$, $X$, $Y$, and $Z$ be $G$-CW complexes such that $A \subseteq X$ is $\theta$-dimensional,
-and let $e \colon Y \to Z$ be a $\theta$-connected $G$-map. Given $g \colon A \to Y$, $h \colon A \times I \to Z$, and $f \colon X \to Z$ such that $eg = hi_1$ and
+Let $(A,X)$ be a $\theta$-dimensional relative $G$-CW complex,
+and let $e \colon Y \to Z$ be a $\theta$-connected $G$-map between $G$-CW complexes. Given $g \colon A \to Y$, $h \colon A \times I \to Z$, and $f \colon X \to Z$ such that $eg = hi_1$ and
 $f|_A = hi_0$, there exist maps $\widetilde{g} \colon X \to Y$ and $\widetilde{h} \colon X \times I \to Z$ that make the following diagram commute:
 
 % https://q.uiver.app/#q=WzAsOCxbMCwwLCJBIl0sWzIsMCwiQSBcXHRpbWVzIEkiXSxbNCwwLCJBIl0sWzAsMiwiWCJdLFsxLDEsIloiXSxbMiwyLCJYIFxcdGltZXMgSSJdLFs0LDIsIlgiXSxbMywxLCJZIl0sWzAsMSwiaV8wIl0sWzIsMSwiaV8xIiwyXSxbMCwzXSxbMyw0LCJmIiwyXSxbMSw0LCJoIiwyXSxbMSw1XSxbMyw1LCJpXzAiLDJdLFs2LDUsImlfMSJdLFsyLDZdLFsyLDcsImciXSxbNiw3LCJcXHRpbGRlIGciLDAseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XSxbNyw0LCJlIiwyLHsibGFiZWxfcG9zaXRpb24iOjMwfV0sWzUsNCwiXFx0aWxkZXtofSIsMix7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRhc2hlZCJ9fX1dXQ==
@@ -911,6 +911,57 @@ $f|_A = hi_0$, there exist maps $\widetilde{g} \colon X \to Y$ and $\widetilde{h
 \begin{proof}[Sketch of proof]
 The desired maps are constructed by induction on the skeleton of $X$, and then cell by cell, so we can assume that $X = G/H \times D^{n+1}$ and $A = G/H \times S^{n}$. By playing around with adjunctions, this reduces to the ordinary non-equivariant HELP theorem with $e \colon Y^H \to Z^H$, $X = D^n$ and $A = S^{n-1}$. 
 \end{proof}
+\begin{remark}
+An equivalent way of phrasing it: under the assumption of the theorem, any diagram
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJBIFxcdGltZXMgXFx7IDFcXH0iXSxbMCwxLCJBIFxcdGltZXMgSSBcXGN1cCBYIFxcdGltZXMgXFx7IDBcXH0iXSxbMSwwLCJZIl0sWzEsMSwiWiJdLFswLDEsIiIsMCx7InN0eWxlIjp7InRhaWwiOnsibmFtZSI6Imhvb2siLCJzaWRlIjoidG9wIn19fV0sWzAsMiwiZyJdLFsyLDMsImUiXSxbMSwzXV0=
+\[\begin{tikzcd}[ampersand replacement=\&]
+    {A \times \{ 1\}} \& Y \\
+    {A \times I \cup X \times \{ 0\}} \& Z
+    \arrow[hook, from=1-1, to=2-1]
+    \arrow["g", from=1-1, to=1-2]
+    \arrow["e", from=1-2, to=2-2]
+    \arrow["{h \cup f}"',from=2-1, to=2-2]
+\end{tikzcd}\]
+can be completed to the diagram
+% https://q.uiver.app/#q=WzAsNixbMCwwLCJBIFxcdGltZXMgXFx7IDFcXH0iXSxbMCwzLCJBIFxcdGltZXMgSSBcXGN1cCBYIFxcdGltZXMgXFx7IDBcXH0iXSxbMywwLCJZIl0sWzMsMywiWiJdLFsxLDEsIlggXFx0aW1lcyBcXHsgMSBcXH0iXSxbMSwyLCJYIFxcdGltZXMgSSJdLFswLDEsIiIsMCx7InN0eWxlIjp7InRhaWwiOnsibmFtZSI6Imhvb2siLCJzaWRlIjoidG9wIn19fV0sWzAsMiwiZyJdLFsyLDMsImUiXSxbMSwzLCJoIFxcY3VwIGYiLDJdLFswLDQsIiIsMix7InN0eWxlIjp7InRhaWwiOnsibmFtZSI6Imhvb2siLCJzaWRlIjoidG9wIn19fV0sWzQsNSwiIiwyLHsic3R5bGUiOnsidGFpbCI6eyJuYW1lIjoiaG9vayIsInNpZGUiOiJ0b3AifX19XSxbMSw1LCIiLDIseyJzdHlsZSI6eyJ0YWlsIjp7Im5hbWUiOiJob29rIiwic2lkZSI6InRvcCJ9fX1dLFs1LDMsIlxcdGlsZGUgaCIsMix7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRhc2hlZCJ9fX1dLFs0LDIsIlxcdGlsZGUgZyIsMCx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRhc2hlZCJ9fX1dXQ==
+\[\begin{tikzcd}[ampersand replacement=\&]
+    {A \times \{ 1\}} \&\&\& Y \\
+    \& {X \times \{ 1 \}} \\
+    \& {X \times I} \\
+    {A \times I \cup X \times \{ 0\}} \&\&\& Z
+    \arrow[hook, from=1-1, to=4-1]
+    \arrow["g", from=1-1, to=1-4]
+    \arrow["e", from=1-4, to=4-4]
+    \arrow["{h \cup f}"', from=4-1, to=4-4]
+    \arrow[hook, from=1-1, to=2-2]
+    \arrow[hook, from=2-2, to=3-2]
+    \arrow[hook, from=4-1, to=3-2]
+    \arrow["{\tilde h}"', dashed, from=3-2, to=4-4]
+    \arrow["{\tilde g}", dashed, from=2-2, to=1-4]
+\end{tikzcd}\]
+\end{remark}
+\begin{theorem}
+Let $X$ be a $G$-CW complex and let $e \colon Y \to Z$ be a $\theta$-connected map between $G$-CW complexes, then 
+\[
+e_* \colon [X,Y]_G \to [X,Z]_G
+\]
+is a bijection if $\dim(X) \le \theta$ and surjective if $\dim X = \theta$. In particular, if $e$ is a weak equivalence and $X$ is any $G$-CW complexes, then $e_*$ is a bijection. 
+\end{theorem}
+\begin{proof}
+Taking $A = \emptyset$ gives a map $\tilde g \colon X \to Y$ and a homotopy $\tilde h \colon X \times I \to Z$ satisfying $h(-,0) = f$ and $h(-,1) = e \circ \tilde g$, hence $[f] = [e \circ \tilde g] \in [X,Z]_G$ and therefore $e_*$ is surjective. Now assume we are given two maps $g_0,g_1 \colon X \to Y$ and an equivalence $[e \circ g_0] = [e \circ g_1]$. In particular, there exists a $G$-homotopy $H \colon X \times [0,1] \to Z$. 
+
+We want to apply HELP to the pair $(X \times [0,1],X \times \{0,1\})$. We define $g \colon X \times \{ 0, 1 \} \to Y$ to be $e_0$ at time 0, and $e_1$ at time 1. Similarly, we define $h \colon X \times \{0,1\} \times I \to Z$ to be $H(x,s)$. The HELP theorem then gives us a $G$-homotopy $\tilde g$ between $e_0$ and $e_1$. 
+\end{proof}
+As a corollary, we obtain an equivariant version of Whitehead's theorem. 
+\begin{corollary}
+Any $\theta$-connected $G$-map $e \colon Y \to Z$ between $G$-CW complexes of dimension less than $\theta$ is a $G$-homotopy equivalence. In particular, if $e$ is a weak equivalence, then it is a $G$-homotopy equivalence. 
+\end{corollary}
+\begin{proof}
+A map $f \colon Z \to Y$ such that $e_*[f] = \text{id}$ is a homotopy inverse to $e$. 
+\end{proof}
+\begin{remark}
+Using the equivariant version of HELP, one can also prove equivariant versions of cellular approximation and $G$-CW approximation. 
+\end{remark}
 	% End the document without loading the bibliography
 	% or the index, or the list of notation.
 \end{document}
