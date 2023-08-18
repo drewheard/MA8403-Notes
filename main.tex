@@ -7,7 +7,7 @@
 \colorlet{lgray}{gray!25}
 \colorlet{llgray}{gray!50}
 \usepackage{tikz-cd}
-\usepackage{cleveref}
+
 
 \newcommand{\nc}{\newcommand}
 \nc{\ul}{\underline}
@@ -16,14 +16,20 @@
 \nc{\bbZ}{\mathbb{Z}}
 \nc{\bbR}{\mathbb{R}}
 \nc{\bbC}{\mathbb{C}}
+\dmo{\Sets}{Set}
 \nc{\cat}[1]{\mathscr{#1}}
 \nc{\Mid}{\,\big|\,}
 \nc{\normal}{\trianglelefteq}
 \nc{\SET}[2]{\big\{\,#1\Mid#2\,\big\}}
 
 \dmo{\Mack}{Mack}
+\dmo{\Ho}{Ho}
+\dmo{\Fun}{Fun}
 \dmo{\FinSet}{Fin}
 \dmo{\End}{End}
+\dmo{\sSet}{sSet}
+\dmo{\Kan}{Kan}
+\dmo{\Quillen}{Quillen}
 \dmo{\Top}{Top}
 \dmo{\Inf}{Inf}
 \dmo{\ev}{ev}
@@ -47,7 +53,6 @@
 \end{tikzcd}
 }
 
-\Crefname{example}{Example}{Examples}
 \Title{MA8403  - Equivariant homotopy theory}
 \Author{Drew Heard}
 \BibliographyFile{ma8403} 		
@@ -962,6 +967,120 @@ A map $f \colon Z \to Y$ such that $e_*[f] = \text{id}$ is a homotopy inverse to
 \begin{remark}
 Using the equivariant version of HELP, one can also prove equivariant versions of cellular approximation and $G$-CW approximation. 
 \end{remark}
+\section{Elmendorf's theorem}
+An abstract way to `do' homotopy theory in a category is to put a model structure on it. In case you haven't seen these before, we will briefly state the definitions:
+
+ 
+\begin{definition}
+A weak factorization system (WFS) on a category $\mathcal{C}$ is a pair $(\mathcal{L}, \mathcal{R})$ of classes of morphisms of $\mathcal{C}$ such that:
+\begin{itemize}
+    \item Every morphism $f \colon X \to Y$ of $\mathcal{C}$ may be factored as the composition of a morphism in $\mathcal{L}$ followed by one in $\mathcal{R}$:
+    \[
+    f \colon X \xrightarrow{\in \mathcal{L}} Z \xrightarrow{\in \mathcal{R}} Y.
+    \]
+    \item The classes are closed under having the lifting property against each other:
+    \begin{itemize}
+        \item $\mathcal{L}$ is precisely the class of morphisms having the left lifting property against every morphism in $\mathcal{R}$.
+        \item $\mathcal{R}$ is precisely the class of morphisms having the right lifting property against every morphism in $\mathcal{L}$.
+    \end{itemize}
+    % https://q.uiver.app/#q=WzAsNCxbMCwwLCJ7fSJdLFswLDEsInt9Il0sWzEsMCwie30iXSxbMSwxLCJ7fSJdLFswLDEsInUiLDJdLFswLDIsImUgXFxpbiBcXG1hdGhjYWx7TH0iXSxbMiwzLCJ2Il0sWzMsMSwidyBcXGluIFxcbWF0aGNhbHtSfSJdLFsyLDEsIm0iLDIseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkb3R0ZWQifX19XV0=
+\[\begin{tikzcd}
+	{{}} & {{}} \\
+	{{}} & {{}}
+	\arrow["u"', from=1-1, to=2-1]
+	\arrow["{e \in \mathcal{L}}", from=1-1, to=1-2]
+	\arrow["v", from=1-2, to=2-2]
+	\arrow["{w \in \mathcal{R}}", from=2-2, to=2-1]
+	\arrow["m"', dotted, from=1-2, to=2-1]
+\end{tikzcd}\]
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Model Structure]
+A model structure on a category $\mathcal{C}$ is a choice of three distinguished classes of morphisms: cofibrations $\mathcal{C}$, fibrations $\mathcal{F}$, and weak equivalences $\mathcal{W}$, satisfying the following conditions:
+\begin{itemize}
+    \item $\mathcal{W}$ contains all isomorphisms and is closed under two-out-of-three: given a composable pair of morphisms $f$ and $g$, if two out of the three morphisms $f$, $g$, $g \circ f$ are in $\mathcal{W}$, then so is the third.
+    \item $(\mathcal{C}, \mathcal{F} \cap \mathcal{W})$ and  $(\mathcal{C} \cap \mathcal{W}, \mathcal{F})$ are two weak factorization systems on $\mathcal{C}$. The morphisms $\mathcal{F} \cap \mathcal{W}$ are called acyclic fibrations while those in $\mathcal{C} \cap \mathcal{W}$ are called acyclic cofibrations.
+\end{itemize}
+When a category $\mathcal{C}$ is a complete and cocomplete category with a model structure, we call it a model category.
+\end{definition}
+\begin{remark}
+    Some more terminology: An object is cofibrant if the unique morphism $\emptyset \to X$ from the initial object is a cofibration, and is fibrant if the unique morphism $X \to \ast$ is a fibration.\footnote{If $\mathcal C$ is a model category, then it has an initial object, the colimit of the empty
+diagram, and a terminal object, the limit of the empty diagram.}
+
+The homotopy category $\Ho(\mathcal{C})$ of a model category is the universal way of inverting the weak equivalences in $\mathcal{C}$: $\Ho(\mathcal{C}) \coloneqq \mathcal{C}[\mathcal{W}^{-1}]$. 
+\end{remark}
+\begin{remark}
+    This definition of homotopy category does not depend on the choice of fibrations and cofibrations. It only depends on the underlying category with weak
+equivalences. However, the model structure makes the homotopy category easier to handle. In fact, with a model structure, the homotopy category is equivalent to the category whose objects are those which are both fibrant and cofibrant, and morphisms are the equivalence classes of morphism under left homotopy. This definition of homotopy category avoids the set theory technical issues one may meet with while doing localization.
+\end{remark}
+
+\begin{remark}
+The axioms for a model category are over-determined. Indeed, one can show that a map is a cofibration (a trivial cofibration) if and only if it has the left lifting property with respect to all trivial fibrations (fibrations). Dually, a map is a fibration (a  trivial fibration) if and only if it has the right lifting property with respect to all trivial cofibrations (cofibrations). In particular, we only need to specify the weak equivalences and (co)fibrations, and then the remaining class is formally determined. 
+\end{remark}
+\begin{example}
+    The category $\Top$ of topological spaces has a model structure with fibrations as Serre fibrations, equivalences are the weak homotopy equivalences, and  cofibrations are the retracts of relative cell complexes. We denote this by $\Top_{\Quillen}$. 
+
+    The category $\Sets$ of sets has exactly 9 model structures on it!
+\end{example}
+
+\begin{definition}
+  Suppose that $\mathcal{C}$ and $\mathcal{D}$ are model categories. We say that a pair $F \colon \mathcal{C} \leftrightarrows \mathcal{D} \colon U$ of adjoint functors with $F$ the left adjoint is a Quillen adjunction if the following equivalent conditions are satisfied:
+\begin{itemize}
+    \item $F$ preserves cofibrations and acyclic cofibrations;
+    \item $U$ preserves fibrations and acyclic fibrations;
+    \item $F$ preserves cofibrations and $U$ preserves fibrations;
+    \item $F$ preserves acyclic cofibrations and $U$ preserves acyclic fibrations.
+\end{itemize}  
+\end{definition}
+\begin{definition}
+Let $\mathcal{C}$  and $\mathcal{D}$ be model categories equipped with a Quillen adjunction $F \colon \mathcal{C} \leftrightarrows \mathcal{D} \colon U$. Then we say that $\mathcal{C}$ and $\mathcal{D}$ are Quillen equivalent if the derived adjunction $F \colon \Ho(\mathcal C) \leftrightarrows \Ho(\mathcal D) \colon U$ is an equivalence of categories. 
+\end{definition}
+ \begin{example}
+     There is a model structure (the Kan model structure) on simplicial sets, where a morphism $f \colon X \to Y$ is 
+      \begin{itemize}
+        \item cofibration if it is a monomorphism (i.e., a level-wise injection).
+        \item weak equivalence if its geometric realization is a weak equivalence in $\Top$. 
+    \end{itemize}
+    Then there is a Quillen equivalence
+    \[
+    |-| \colon \sSet_{\Kan} \leftrightarrows \Top_{\Quillen} \colon S(-)
+    \]
+    given by geometric realization and singular functors. 
+ \end{example}
+ \begin{proposition}\label{prop:model-gtop}
+    There is a model structure on $G\Top$ where a map $f \colon X \to Y$ is a 
+    \begin{itemize}
+        \item fibration if $f^H \colon X^H \to Y^H$ is a fibration for all $H \le G$.
+        \item weak equivalence if $f^H \colon X^H \to Y^H$ is a weak equivalence for all $H \le G$. 
+    \end{itemize}
+\end{proposition}
+Elmendorf's theorem relates this to the category of presheaves on the orbit category. 
+\begin{definition}
+    The orbit category of a finite group $\mathcal{O}_G$ is the category whose objects are the orbits $G/H$ for $H \le G$ a subgroup, and whose morphisms are the $G$-equivariant continuous functions. Equivalently, this is the full subcategory of $G\Top$ on the objects $G/H$. 
+\end{definition}
+\begin{proposition}\label{prop:model-functor}
+    There is a model structure on $\Fun(\mathcal{O}_G^{op},\Top)$ where the weak equivalences and fibrations are taken objectwise. 
+\end{proposition}
+\begin{lemma}\label{lem:elmendorf-adjunction}
+    There is an adjunction
+    \[
+    \theta \colon \Fun(\mathcal{O}_G^{op},\Top) \leftrightarrows G\Top \colon \psi 
+    \]
+    where $\theta$ is evaluation at $G/e$ and $\psi(X)(G/H) = X^H$. 
+\end{lemma}
+\begin{proof}[Sketch of proof]
+    We show this by constructing a unit and a counit. The unit is a natural transformation $\eta \colon \text{id} \to \psi \circ \theta$. Let $T \colon \mathcal{O}_G^{op} \to \Top$.  To construct the unit, suppose we have a morphism $R_e \colon G/e \to G/H$ in the orbit category. After applying $T$, this is a functor $T(R_e) \colon T(G/H) \to T(G/e)$ in $\Top$. The image of $T(R_e)$ actually lies in the $H$-fixed point set of $\theta(T) = T(G/e)$, and hence in $\psi \circ \theta (T)$. For the counit, we observe that $\theta \circ \psi(X) = X^{e}$, and one checks that the $G$-action agrees with the original one. We can then take $\epsilon \colon \theta \circ \psi \to \text{id}$ to be the identity, and then $\eta,\epsilon$ define the unit and counit of the adjunction. 
+\end{proof}
+\begin{remark}
+    Since the counit is an equivalence, the right adjoint is fully-faithful. 
+\end{remark}
+\begin{theorem}[Elmendorf's theorem]
+    The adjunction of \Cref{lem:elmendorf-adjunction} is a Quillen equivalence with respect to the model structures of \Cref{prop:model-gtop,prop:model-functor}.
+\end{theorem}
+\begin{proof}
+    We first show that the adjunction is Quillen. But this is straightforward: the functor $\psi$ preserves fibrations and weak equivalences essentially by definition .
+\end{proof}
 	% End the document without loading the bibliography
 	% or the index, or the list of notation.
 \end{document}

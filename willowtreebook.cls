@@ -280,6 +280,7 @@ Analphabetics
 %  {} % {\thmnote{#3}}% Thm head spec
 %\theoremstyle{RegularStyle}
 %{%
+\usepackage{cleveref}
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
@@ -287,6 +288,10 @@ Analphabetics
 \theoremstyle{remark}
 \newtheorem{definition}[theorem]{Definition}\newtheorem{remark}[theorem]{Remark}
 \newtheorem{notation}[theorem]{Notation}
+
+\Crefname{example}{Example}{Examples}
+\Crefname{lemma}{Lemma}{Lemmas}
+\Crefname{proposition}{Proposition}{Propositions}
 %.......Colours
 \colorlet{exampleBackgroundColour}{gray!16}
 \newtcolorbox[auto counter,number within=chapter]{example}[1][]{%%
