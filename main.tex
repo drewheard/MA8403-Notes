@@ -1004,12 +1004,12 @@ A model structure on a category $\mathcal{C}$ is a choice of three distinguished
 \end{itemize}
 When a category $\mathcal{C}$ is a complete and cocomplete category with a model structure, we call it a model category.
 \end{definition}
-\begin{remark}
+\begin{notation}
     Some more terminology: An object is cofibrant if the unique morphism $\emptyset \to X$ from the initial object is a cofibration, and is fibrant if the unique morphism $X \to \ast$ is a fibration.\footnote{If $\mathcal C$ is a model category, then it has an initial object, the colimit of the empty
 diagram, and a terminal object, the limit of the empty diagram.}
 
 The homotopy category $\Ho(\mathcal{C})$ of a model category is the universal way of inverting the weak equivalences in $\mathcal{C}$: $\Ho(\mathcal{C}) \coloneqq \mathcal{C}[\mathcal{W}^{-1}]$. 
-\end{remark}
+\end{notation}
 \begin{remark}
     This definition of homotopy category does not depend on the choice of fibrations and cofibrations. It only depends on the underlying category with weak
 equivalences. However, the model structure makes the homotopy category easier to handle. In fact, with a model structure, the homotopy category is equivalent to the category whose objects are those which are both fibrant and cofibrant, and morphisms are the equivalence classes of morphism under left homotopy. This definition of homotopy category avoids the set theory technical issues one may meet with while doing localization.
@@ -1034,7 +1034,10 @@ The axioms for a model category are over-determined. Indeed, one can show that a
 \end{itemize}  
 \end{definition}
 \begin{definition}
-Let $\mathcal{C}$  and $\mathcal{D}$ be model categories equipped with a Quillen adjunction $F \colon \mathcal{C} \leftrightarrows \mathcal{D} \colon U$. Then we say that $\mathcal{C}$ and $\mathcal{D}$ are Quillen equivalent if the derived adjunction $F \colon \Ho(\mathcal C) \leftrightarrows \Ho(\mathcal D) \colon U$ is an equivalence of categories. 
+Let $\mathcal{C}$  and $\mathcal{D}$ be model categories equipped with a Quillen adjunction $F \colon \mathcal{C} \leftrightarrows \mathcal{D} \colon U$. Then we say that $\mathcal{C}$ and $\mathcal{D}$ are Quillen equivalent if the derived adjunction $F \colon \Ho(\mathcal C) \leftrightarrows \Ho(\mathcal D) \colon U$ is an equivalence of categories. This is equivalent to the following condition:
+\begin{itemize}
+    \item For any cofibrant $X \in \mathcal{C}$ and fibrant $Y \in \mathcal{D}$, $FX \to Y$ is a weak equivalence if and only if the adjoint $X \to UY$ is an equivalence. 
+\end{itemize}
 \end{definition}
  \begin{example}
      There is a model structure (the Kan model structure) on simplicial sets, where a morphism $f \colon X \to Y$ is 
@@ -1070,7 +1073,13 @@ Elmendorf's theorem relates this to the category of presheaves on the orbit cate
     where $\theta$ is evaluation at $G/e$ and $\psi(X)(G/H) = X^H$. 
 \end{lemma}
 \begin{proof}[Sketch of proof]
-    We show this by constructing a unit and a counit. The unit is a natural transformation $\eta \colon \text{id} \to \psi \circ \theta$. Let $T \colon \mathcal{O}_G^{op} \to \Top$.  To construct the unit, suppose we have a morphism $R_e \colon G/e \to G/H$ in the orbit category. After applying $T$, this is a functor $T(R_e) \colon T(G/H) \to T(G/e)$ in $\Top$. The image of $T(R_e)$ actually lies in the $H$-fixed point set of $\theta(T) = T(G/e)$, and hence in $\psi \circ \theta (T)$. For the counit, we observe that $\theta \circ \psi(X) = X^{e}$, and one checks that the $G$-action agrees with the original one. We can then take $\epsilon \colon \theta \circ \psi \to \text{id}$ to be the identity, and then $\eta,\epsilon$ define the unit and counit of the adjunction. 
+    We show this by constructing a unit and a counit. We first note that $\theta \circ \psi(X) = X^e$, and this comes with a $G$-action (by functoriality) that agrees with the original $G$-action. We can then take the counit $\epsilon \colon \theta \circ \psi \to \text{id}$ to be the identity. 
+    
+  For the unit, note that for any $T \colon \mathcal{O}_G^{op} \to \Top$ and subgroups $K \le H \le G$, the map $T(G/H) \to T(G/K)$ factors through the fixed points $T(G/K)^H$. We then have
+  \[
+  (\psi \circ \theta (T))(G/H) = (\psi T(G/e))(G/H) = T(G/e)^H,
+  \]
+  and the factorization of the map $T(G/H) \to T(G/e)$ through $T(G/e)^H$ defines $\eta$. It is then straightforward to check the unit and counit identities. 
 \end{proof}
 \begin{remark}
     Since the counit is an equivalence, the right adjoint is fully-faithful. 
@@ -1078,9 +1087,37 @@ Elmendorf's theorem relates this to the category of presheaves on the orbit cate
 \begin{theorem}[Elmendorf's theorem]
     The adjunction of \Cref{lem:elmendorf-adjunction} is a Quillen equivalence with respect to the model structures of \Cref{prop:model-gtop,prop:model-functor}.
 \end{theorem}
-\begin{proof}
-    We first show that the adjunction is Quillen. But this is straightforward: the functor $\psi$ preserves fibrations and weak equivalences essentially by definition .
+\begin{proof}[Sketch of proof]
+    We first show that the adjunction is Quillen. But this is straightforward: the functor $\psi$ preserves fibrations and weak equivalences essentially by definition.
+
+    Now in general, the unit of the adjunction of \Cref{lem:elmendorf-adjunction} is not an equivalence. But when claim that it is for any $\mathcal X$ that is cofibrant. Indeed, one can explicitly check that the cofibrant objects in the model structure on $\Fun(\mathcal{O}_G^{op},\Top)$ are retracts of the cellular objects, and these are generated under pushouts along inclusions and directed colimits by 
+    \[
+\SET{\Map_G(-,G/H) \times X}{H \subseteq G, X \text{ is a cell in } \Top}
+    \]
+    Now in general the fixed point functors $(-)^H$ do not preserve colimits, but one can show that they do preserve retracts, pushouts and directed colimits. One can then directly check the claim from the following sequence of equivalences:
+    \[
+    \mathcal X(G/K) = \Map_G(G/K,G/H) \times Y = (G/H)^K \times Y = (G/H \times Y)^K = \mathcal{X}(G/e)^K
+    \]
+
+    Now suppose we are given a morphism $f \colon \theta(\mathcal X) \to \mathcal Y$ in $G\Top$ (note that in fact every object in $G\Top$ is fibrant). We can factor the $H$-fixed points of the adjoint $g^H \colon \mathcal{X}(G/H) \to \psi(\mathcal Y)^H = \mathcal{Y}^H$ as
+    \[
+    \mathcal{X}(G/H) \xrightarrow[\cong]{\eta_{G/H}} \mathcal{X}(G/e)^H \xrightarrow{f^H} Y^H.
+    \]
+    By the 2 out of 3 axiom, we see that $g^H$ is an equivalence if and only if $f^H$ is an equivalence. By the definition of the model structures, we deduce that $g$ is an equivalence if and only if $f$ is an equivalence, as required. 
 \end{proof}
+\begin{remark}
+    Elmendorf's original theorem was only a statement about homotopy categories. More specifically, one defines a homotopy inverse to $\psi$ by using the bar construction. 
+\end{remark}
+\begin{remark}
+    Here is an application. Let $\mathcal{F}$ be a family of subgroups (i.e., a collection closed under taking subgroups and conjugations). Then we can construct a $G$-space determined by the property that
+    \[
+    E\mathcal{F}^K = \begin{cases}
+        \ast &\text{ if } K \in \mathcal{F} \\
+        \emptyset &\text{ if } K \not \in \mathcal{F}.
+    \end{cases}
+    \]
+    Indeed, simply define $E\mathcal{F}'$ to be the presheaf with the analogous property, and define $E\mathcal{F}$ to be the image under the Quillen equivalence. 
+\end{remark}
 	% End the document without loading the bibliography
 	% or the index, or the list of notation.
 \end{document}
