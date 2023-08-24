@@ -75,8 +75,8 @@ Note that any group is a monoid, simply by forgetting the existence of inverses.
 \begin{remark}
     Unwinding the definition, this means that we have:
     \begin{enumerate}
-        \item For each $g \in G$, there is a morphism $a(g) \colon G \to G$.
-        \item $a$ preserves composition, i.e., $a(g \cdot h) = a(h) \cdot a(h)$. 
+        \item For each $g \in G$, there is a morphism $a(g) \colon X \to X$.
+        \item $a$ preserves composition, i.e., $a(g \cdot h) = a(g) \cdot a(h)$. 
         \item $a$ preserves identifies, so $a(e) = \id_X$.
     \end{enumerate}
 \end{remark}
@@ -103,7 +103,7 @@ Note that any group is a monoid, simply by forgetting the existence of inverses.
 \end{tikzcd}\]
 commute, where $m \colon G \times G \to G$ denotes the group multiplication. Equivalently, in symbols, we have
 \[
-\overline{a}(h,\overline{a}(h,x)) = \overline{a}(gh,x) 
+\overline{a}(g,\overline{a}(h,x)) = \overline{a}(gh,x) 
 \]
 and
 \[
@@ -205,10 +205,10 @@ representation splits as a direct sum of irreducible representations.
 We used the assumption on $k$ to ensure that we could divide by $|G|$. Without that assumption, the theorem is false. Indeed, let $G = C_2$, $R = \mathbb{F}_2$ and consider the representation defined by $\rho(\tau) =\begin{pmatrix}
 1 & 1 \\
 1 & 0 
-\end{pmatrix} $. This is not irreducible, but does not split as a direct sum of indecomposable representations. 
+\end{pmatrix} $. This is not irreducible, but does not split as a direct sum of irreducible representations. 
 \end{remark}
 \begin{corollary}
-Suppose that $k$ is a field of characteristic not dividing $|G|$.  If $V$ is an irreducible representation, then $V$ is isomorphism to a subgroup of $k[G]$ (slogan: all irreducibles are submodules of the regular representation). 
+Suppose that $k$ is a field of characteristic not dividing $|G|$.  If $V$ is an irreducible representation, then $V$ is isomorphism to a submodule of $k[G]$ (slogan: all irreducibles are submodules of the regular representation). 
 \end{corollary}
 \begin{proof}
     Let $\mathbf{v} \in V$ be non-trivial. Then the homomorphism $\phi \colon k[G] \to V$ given by sending $1$ to $\mathbf{v}$ must be surjective, because $V$ is irreducible. Let $U = \ker(\phi)$, then apply Maschke's theorem. 
@@ -243,7 +243,7 @@ We leave it for the reader to verify the following straightforward computations:
 \chi_{\lambda_3 \otimes \lambda_3}(1) = 4, \quad \chi_{\lambda_3 \otimes \lambda_3}(\tau) = 1
     \]
         \[
-\chi_{\mathbf{4}}(1) = 4, \quad \chi_{\mathbf{4}}(\tau) = 1
+\chi_{\mathbf{4}}(1) = 4, \quad \chi_{\mathbf{4}}(\tau) =     4
     \]
         \[
 \chi_{\mathbf{2} \oplus \lambda_3}(1) = 4, \quad \chi_{\mathbf{2} \oplus \lambda_3}(\tau) = 1
@@ -1090,7 +1090,7 @@ Elmendorf's theorem relates this to the category of presheaves on the orbit cate
 \begin{proof}[Sketch of proof]
     We first show that the adjunction is Quillen. But this is straightforward: the functor $\psi$ preserves fibrations and weak equivalences essentially by definition.
 
-    Now in general, the unit of the adjunction of \Cref{lem:elmendorf-adjunction} is not an equivalence. But when claim that it is for any $\mathcal X$ that is cofibrant. Indeed, one can explicitly check that the cofibrant objects in the model structure on $\Fun(\mathcal{O}_G^{op},\Top)$ are retracts of the cellular objects, and these are generated under pushouts along inclusions and directed colimits by 
+    Now in general, the unit of the adjunction of \Cref{lem:elmendorf-adjunction} is not an equivalence. But we claim that it is for any $\mathcal X$ that is cofibrant. Indeed, one can explicitly check that the cofibrant objects in the model structure on $\Fun(\mathcal{O}_G^{op},\Top)$ are retracts of the cellular objects, and these are generated under pushouts along inclusions and directed colimits by 
     \[
 \SET{\Map_G(-,G/H) \times X}{H \subseteq G, X \text{ is a cell in } \Top}
     \]
@@ -1118,6 +1118,53 @@ Elmendorf's theorem relates this to the category of presheaves on the orbit cate
     \]
     Indeed, simply define $E\mathcal{F}'$ to be the presheaf with the analogous property, and define $E\mathcal{F}$ to be the image under the Quillen equivalence. 
 \end{remark}
+\chapter{Forms of cohomology}
+There are several different flavors of cohomology for equivariant homotopy. We begin with Borel (co)homology, before moving on to the more powerful Bredon (co)homology. 
+\section{Borel cohomology}
+The simplest, and perhaps most common, form of equivariant cohomology is known as Borel equivariant cohomology. 
+
+The following can always be constructed, for example using the Milnor construction. 
+\begin{definition}
+    For any group $G$, we let $EG$ denote a $G$-CW complex whose underlying space is contractible, and such that the action of $G$-is free. We let the orbit space $EG/G$ be denoted by $BG$. This is known as the classifying space of the group $G$. 
+\end{definition}
+\begin{example}
+    Let $G = C_2$ then a model for $EC_2$ is $S^{\infty}$ with the antipodal action. Here we have $S^{\infty}/C_2 \simeq \mathbb{R}P^{\infty}$, and so $BC_2 \simeq \mathbb{R}P^{\infty}$. 
+
+    More generally, taking the limit of the inclusion of the unit sphere $S^{2n-1} \subseteq \mathbb{C}^n$, we can think of $S^{\infty}$ as the unit sphere inside of $\mathbb{C}^{\infty}$. We can think of $C_n$ as acting on each complex coordinate as multiplication by an $n$-th root of unity. This gives a free action of $C_n$ on $S^{\infty}$, and so $EC_n \simeq S^{\infty}$. We deduce that $BC_n \simeq S^{\infty}/C_n$. This is known as an infinite-dimensional lens space.  
+\end{example}
+\begin{remark}
+    It is a good exercise to check that $EG \times EH \simeq E(G \times H)$. In particular, we deduce that $B(G \times H) \simeq BG \times BH$. 
+\end{remark}
+\begin{proposition}
+    The space $BG$ is a $K(G,1)$, i.e., $\pi_1(BG) \simeq G$ and all other homotopy groups are trivial. 
+\end{proposition}
+\begin{proof}
+    This follows from the fact that $G \to EG \to BG$ is a fibration, and the long exact sequence in homotopy. 
+\end{proof}
+\begin{definition}
+    Give a $G$-space $X$, the \emph{Borel construction} on $X$ is the orbit space of the diagonal $G$-action on $EG \times X$. This is usually denoted $EG \times_G X$. The Borel equivariant homology and cohomology are defined by
+    \[
+    H_*^{Borel}(X) \coloneqq H_*(EG \times_G X) \quad \text{ and } \quad H^*_{Borel}(X) \coloneqq H_*(EG \times_G X). 
+    \]
+\end{definition}
+\begin{remark}
+    When compared with Bredon cohomology, this is much easier to compute. On the other hand, it can't tell the difference between $EG$ and a point. More generally, we have the following:
+\end{remark}
+\begin{definition}
+    A map $f \colon X \to Y$ of $G$-spaces is an underlying equivalence if it induces an equivalence on underlying spaces. 
+\end{definition}
+The following follows essentially by definition (check on fixed points!):
+\begin{proposition}
+    The functor $EG \times (-) \colon G\Top \to G\Top$ takes underlying equivalences to $G$-equivalences. Therefore, Borel cohomology takes underlying equivalences to cohomology isomorphisms. 
+\end{proposition}
+\begin{remark}
+    Taking $X$ to be a point, we see that
+    \[
+    H_*^{Borel}(\ast) = H_*(BG) \quad \text{ and }     H^*_{Borel}(\ast) 
+    \]
+    It is either a theorem, or a definition, that this is the group (co)homology of the group $G$. 
+\end{remark}
+\section{Bredon cohomology}
 	% End the document without loading the bibliography
 	% or the index, or the list of notation.
 \end{document}
