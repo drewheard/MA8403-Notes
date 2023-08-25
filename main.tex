@@ -25,6 +25,7 @@
 \dmo{\Mack}{Mack}
 \dmo{\Ho}{Ho}
 \dmo{\Fun}{Fun}
+\dmo{\Alg}{Alg}
 \dmo{\FinSet}{Fin}
 \dmo{\End}{End}
 \dmo{\sSet}{sSet}
@@ -43,6 +44,7 @@
 \dmo{\Iso}{Iso}
 \dmo{\Map}{Map}
 \dmo{\sgn}{sgn}
+\dmo{\Ab}{Ab}
 \dmo{\Hom}{Hom}
 \dmo{\id}{id}
 %%Alternative command for C_p-Lewis diagrams
@@ -137,7 +139,7 @@ a \colon G \to \Hom_R(M,M).
 \begin{remark}
     Categorically, the group ring construction is left adjoint to the functor that takes an $R$-algebra to its group of units, i.e., there is an adjudication
     \[
-R[-] \colon \Grp \leftrightarrows \Mod_R \colon (-)^{
+R[-] \colon \Grp \leftrightarrows \Alg_R \colon (-)^{
 \times}
     \]
 \end{remark}
@@ -333,7 +335,7 @@ There is also another functor, which will turn out to be adjoint to restriction.
 If $K \le H \le G$ then $\Ind_H^G\Ind_K^H V \simeq \Ind_K^G V$ for any $K$-representation $V$. 
 \end{lemma}
 \begin{example}
-    The regular representation $\rho_G = k[G] \cong k[G] \otimes_{k[G]} k \simeq \Ind_e^G(\mathbf{1})$. More generally, we have $\Ind_H^G\rho_H \cong \rho_G$. 
+    The regular representation $\rho_G = k[G] \cong k[G] \otimes_{k} k \simeq \Ind_e^G(\mathbf{1})$. More generally, we have $\Ind_H^G\rho_H \cong \rho_G$. 
 \end{example}
 \begin{example}
     Let $C_2 \subseteq C_4$ and $k = \bbR$. What is $\Ind_{C_2}^{C_4}(\mathbf{1})$? We have
@@ -356,7 +358,7 @@ If $K \le H \le G$ then $\Ind_H^G\Ind_K^H V \simeq \Ind_K^G V$ for any $K$-repre
     \]
     so that
     \[
-\bbR[\bbZ/4] \cong \bbR[X]/(X-1) \oplus \bbR[X]/(X+1) \oplus \bbR[X]/(X^2-1). 
+\bbR[\bbZ/4] \cong \bbR[X]/(X-1) \oplus \bbR[X]/(X+1) \oplus \bbR[X]/(X^2+1). 
     \]
 Hence, 
     $\Ind_{C_2}^{C_4}(\mathbf{1}_{\sgn}) \cong \lambda_4$. 
@@ -1165,6 +1167,35 @@ The following follows essentially by definition (check on fixed points!):
     It is either a theorem, or a definition, that this is the group (co)homology of the group $G$. 
 \end{remark}
 \section{Bredon cohomology}
+There is a more refined version of equivariant cohomology known as Bredon cohomology. We need the following definition:
+\begin{definition}
+Let $G$ be a finite group, then a \emph{coefficient system} is a presheaf $X \in \Fun(\mathcal{O}_G^{op},\Ab)$.
+\end{definition}
+Note that Elemendorf's theorem says that for any coefficient system we can produce an Eilenberg--MacLane $G$-space. 
+\begin{example}
+Any Mackey functor $\underline{M}$ gives rise to a coefficient system by forgetting the data of the transfer map. Strictly speaking, given our definition of Mackey functors, this is not entirely obvious: one needs to note that any $G$-map $\phi \colon G/H \twoheadrightarrow G/K$ can be factored (not uniquely) as a composite $G/H \twoheadrightarrow G/K^\gamma \cong G/K$ where $H$ is contained in the conjugate $K^{\gamma}$. Then the map $M(\phi) \colon M(G/K) \to M(G/H)$ is defined by to 
+\[
+\underline{M}(K) \xrightarrow{c_{\gamma}} \underline{M}(K^{\gamma}) \xrightarrow{R_H^{K^{\gamma}}} \underline{M}(H).
+\]
+One can check that the composite does not depend on the choice of factorization. 
+\end{example}
+\begin{example}
+For $n \ge 2$ the equivariant homotopy groups $\pi_n(X^H)$ for $H \le G$ assemble into a coefficient system denoted $\underline{\pi}_n(X)$. Indeed, the functor $G/H \mapsto X^H$ defines a coefficient system valued in spaces, and then we simply apply $\pi_n$ to this. This clearly applies in other contexts, for example the assignment $\underline{H}_n(X;A) \coloneqq H_n(X^K;A)$ determines a coefficient system. 
+\end{example}
+\begin{example}
+Let $G = C_2$ and $X = S^{\sigma}$. Then $X^{C_2} \simeq S^0$ and $X^1 \simeq S^1$. It follows that 
+% https://q.uiver.app/#q=WzAsNixbMCwxLCJcXHVuZGVybGluZXtIfV8wKFNee1xcc2lnbWF9O1xcYmJaKVxcY29uZyJdLFsxLDAsIlxcYmJaXjIiXSxbMSwyLCJcXGJiWiJdLFszLDEsIlxcdW5kZXJsaW5le0h9XzEoU157XFxzaWdtYX07XFxiYlopXFxjb25nIl0sWzQsMCwiMCJdLFs0LDIsIlxcYmJaX3tcXHNnbn0iXSxbMSwyLCJcXG5hYmxhIl1d
+\[\begin{tikzcd}[row sep=0.01in,column sep=0.01in,ampersand replacement=\&]
+    \& {\bbZ^2} \&\&\&\& 0 \\
+    {\underline{H}_0(S^{\sigma};\bbZ)\cong} \&\&\& \quad \& {\underline{H}_1(S^{\sigma};\bbZ)\cong} \\
+    \& \bbZ \&\&\&\& {\bbZ_{\sgn}}
+    \arrow["\nabla", from=1-2, to=3-2]
+\end{tikzcd}\]
+Here we have written $\bbZ_{\sgn}$ for $\underline{H}_1(S^{\sigma})(C_2/e)$ since the nontrivial element of $C_2$ acts as an orientation-reversing map on $S^{\sigma}$.
+\end{example}
+\begin{example}
+Here is an important example: for a $G$-CW complex $X$, the functor that sends $G/K$ to $C_n^{cell}(X^K)$ defines a coefficient system denoted $\underline{C_n}(X)$. This relies on the observation that the $H$-fixed points of a $G$-CW complex inhert a CW-structure. 
+\end{example}
 	% End the document without loading the bibliography
 	% or the index, or the list of notation.
 \end{document}
