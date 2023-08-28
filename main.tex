@@ -21,7 +21,7 @@
 \nc{\Mid}{\,\big|\,}
 \nc{\normal}{\trianglelefteq}
 \nc{\SET}[2]{\big\{\,#1\Mid#2\,\big\}}
-
+\dmo{\coeff}{coeff}
 \dmo{\Mack}{Mack}
 \dmo{\Ho}{Ho}
 \dmo{\Fun}{Fun}
@@ -583,12 +583,12 @@ A(G) \coloneqq \mathbb{Z}\left\{ \parbox{15em}{isomorphism classes of finite $G$
     The Burnside Mackey functor $\mathbb{A}_G$ is the Mackey functor with $\mathbb{A}_G(H) = A(H)$, and structure maps as in the previous remark. 
 \end{definition}
 \begin{remark}
-    Sending a $G$-set $X$ to the associated permutation representation, we get a ring morphism $A(G) \to R(G)$, which extends to a morphism of Mackey functors. 
+    Sending a $G$-set $X$ to the associated permutation representation, we get a ring morphism $A(G) \to RO(G)$, which extends to a morphism of Mackey functors $\mathbb{A}_G \to \underline{RO}(G)$. 
 \end{remark}
 \begin{example}
     Let $G = C_p$, then there are two orbits, namely $C_p/C_p$ and $C_p/e$, so we have
     \[
-A(C_p) \cong \bbZ \{C_p/C_p,C_p\}
+A(C_p) \cong \bbZ \{C_p/C_p,C_p/e\}
     \]
     while clearly
     \[
@@ -707,7 +707,7 @@ Inflation has both a left and a right adjoint.
     ${}^+$ is left adjoint to $\Inf_{G/N}^G$ and ${}^-$ is right adjoint to $\Inf_{G/N}^G$ . 
 \end{proposition}
 \begin{proof}
-    Let $L$ be a Mackey functor for $G$ and $M$ a Mackey functor for $G/N$. Given a morphism $L \to \Inf_{G/N}^GM$, we note that this is necessarily zero on $L(J)$ with $J \not \ge N$, and hence must vanish on $\sum_{J \le K, J \not \ge N} I^K_J M(J)$ for each subgroup $K$. We therefore get an induced morphism $L^+ \to M$. Conversely, given $\beta \colon L^+ \to M$ we can construct a morphism $L \to \Inf_{G/N}^GM$ by defining it to be 0 on $L(J)$ when $J \not \ge N$, and defining it to be the composite
+    Let $L$ be a Mackey functor for $G$ and $M$ a Mackey functor for $G/N$. Given a morphism $L \to \Inf_{G/N}^GM$, we note that this is necessarily zero on $L(J)$ with $J \not \ge N$, and hence must vanish on $\sum_{J \le K, J \not \ge N} I^K_J M(J)$ for each subgroup $K$. We therefore get an induced morphism $L^+ \to M$. Conversely, given $\beta \colon L^+ \to M$ we can construct a morphism $L \to \Inf_{G/N}^GM$ by defining it to be $0$ on $L(K)$ when $K \not \ge N$, and defining it to be the composite
     \[
     L(K) \to L(K)/\sum_{J \le K, J \not \ge N} I^K_J L(J) = L^+(K/N) \xrightarrow{\beta} M(K/N) = \Inf_{G/N}^G M(K)
     \]
@@ -877,7 +877,7 @@ We can now define $G$-homotopy groups, $G$-homotopy equivalences, etc. Note that
 \end{tikzcd}\]
 and $H$ ranges over all the subgroups of $G$. There is also a relative version where we allow $X_{-1} = A$, for some $G$-space $A$. 
 \end{definition}
-\begin{example}
+\begin{example}[label=ex:cell-structure-sign]
     We consider again the representation sphere $S^{\sigma}$. Here we start with the $C_2$-fixed 0-skeleton $S^0$. Here we attach a single free 1-cell $(C_2/e) \times D_1$ where one (free) endpoint is attached to 0 and the other to the point $\infty$. 
 \end{example}
 \section{The $G$-Whitehead theorem}
@@ -1064,6 +1064,19 @@ Elmendorf's theorem relates this to the category of presheaves on the orbit cate
 \begin{definition}
     The orbit category of a finite group $\mathcal{O}_G$ is the category whose objects are the orbits $G/H$ for $H \le G$ a subgroup, and whose morphisms are the $G$-equivariant continuous functions. Equivalently, this is the full subcategory of $G\Top$ on the objects $G/H$. 
 \end{definition}
+\begin{remark}
+    It is useful to note that $\Hom_{\mathcal{O}_G}(G/H,G/K)$ is non-zero if $H$ is subconjugate in $G$ to $K$. Moreover, the automorphism group of $G/H$ is exactly the Weyl group, $W_G(H)$. 
+\end{remark}
+\begin{example}
+    When $G = C_2$, the orbit category is the following category:
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRAGEB9AJgHpWAvqXSZc+QijIBGKrUYs2XPkpADZMKAHN4RUADMAThAC2SMiBwQkUofqOnE5y2eoMIENESkAOMnsZwMLIMdABGMAwACqJ4BGwGWJoAFjiqFAJAA
+\[
+\begin{tikzcd}
+C_2/e \arrow[d] \arrow[loop, distance=2em, in=125, out=55,"C_2"'] \\
+C_2/C_2                                           
+\end{tikzcd}
+\]
+\end{example}
 \begin{proposition}\label{prop:model-functor}
     There is a model structure on $\Fun(\mathcal{O}_G^{op},\Top)$ where the weak equivalences and fibrations are taken objectwise. 
 \end{proposition}
@@ -1120,7 +1133,7 @@ Elmendorf's theorem relates this to the category of presheaves on the orbit cate
     \]
     Indeed, simply define $E\mathcal{F}'$ to be the presheaf with the analogous property, and define $E\mathcal{F}$ to be the image under the Quillen equivalence. 
 \end{remark}
-\chapter{Forms of cohomology}
+\chapter{Forms of equivariant cohomology}
 There are several different flavors of cohomology for equivariant homotopy. We begin with Borel (co)homology, before moving on to the more powerful Bredon (co)homology. 
 \section{Borel cohomology}
 The simplest, and perhaps most common, form of equivariant cohomology is known as Borel equivariant cohomology. 
@@ -1193,9 +1206,131 @@ Let $G = C_2$ and $X = S^{\sigma}$. Then $X^{C_2} \simeq S^0$ and $X^1 \simeq S^
 \end{tikzcd}\]
 Here we have written $\bbZ_{\sgn}$ for $\underline{H}_1(S^{\sigma})(C_2/e)$ since the nontrivial element of $C_2$ acts as an orientation-reversing map on $S^{\sigma}$.
 \end{example}
-\begin{example}
-Here is an important example: for a $G$-CW complex $X$, the functor that sends $G/K$ to $C_n^{cell}(X^K)$ defines a coefficient system denoted $\underline{C_n}(X)$. This relies on the observation that the $H$-fixed points of a $G$-CW complex inhert a CW-structure. 
+\begin{example}[label=ex:cell-coefficient]
+Here is an important example: for a $G$-CW complex $X$, the functor that sends $G/K$ to $C_n^{cell}(X^K)$ defines a coefficient system denoted $\underline{C_n}(X)$. This relies on the observation that the $H$-fixed points of a $G$-CW complex inherit a CW-structure. 
 \end{example}
+\begin{example}[label=ex:sign-sphere-cell-complex]
+We constructed a cell structure on $S^{\sigma}$ in Example~\eqref{ex:cell-structure-sign}. On fixed points this gives $S^0$, with two 0-cells and no higher cells, while on the underlying space it gives the cell structure for $S^1$ with two 0-cells and two 1-cells. Then:
+\[\begin{tikzcd}[row sep=0.01in,column sep=0.01in,ampersand replacement=\&]
+    \& {\bbZ^2} \&\&\&\& 0 \\
+    {\underline{C}_0(S^{\sigma};\bbZ)\cong} \&\&\& \quad \& {\underline{C}_1(S^{\sigma};\bbZ)\cong} \\
+    \& \bbZ^2 \&\&\&\& {\bbZ[C_2]}
+    \arrow["\text{id}", from=1-2, to=3-2]
+\end{tikzcd}\]
+Here we write $\bbZ[C_2]$ for $\underline{C}_1(S^{\sigma})(C_2/e)$ since the $C_2$-action exchanges the two 1-cells in $(S^{\sigma})^e$.
+\end{example}
+\begin{definition}
+    A map of $G$-coefficient systems $C \to D$ is a natural transformation. We will write $\Hom_{\coeff}(C,D)$ for the set (actually abelian group) of maps between $C$ and $D$. 
+\end{definition}
+\begin{remark}
+    If we fix a subgroup $K$ and allow $n$ to vary in Example~\eqref{ex:cell-coefficient}, then $\underline{C}_*(X) = C_*^{cell}(X^K)$ is a chain complex. The differentials commute with restriction and conjugation in the obvious manner, and so we have maps
+    \[
+d_n \colon \underline{C}_n(X) \to \underline{C}_{n-1}(X)    
+    \]
+    of coefficient systems, which make $\underline{C}_*(X)$ into a chain complex. 
+\end{remark}
+\begin{definition}[Bredon cohomology]
+    Let $X$ be a $G$-space, and $M$ a $G$-coefficient system. $\Hom_{coeff}(\underline{C}_*(X),M)$ is a cochain complex of abelian groups, which we write $C^*_{\coeff}(X;M)$, and the \emph{Bredon cohomology} of $X$ with coefficients in $M$ is 
+    \[
+    H_G^n(X;M) \coloneqq H^n(C^*_{\coeff}(X;M)). 
+    \]
+\end{definition}
+In the case of $M = \underline{\bbZ}$, this turns out to be very simple. 
+\begin{lemma}\label{lem:coefficient-hom-z}
+    Let $C$ be a $G$-coefficient system, then 
+    \[
+    \Hom_{\coeff}(C,\underline{\bbZ}) \cong \Hom_{AbGrps}(C(G/e)/G,\mathbb{Z}).
+    \]
+\end{lemma}
+\begin{proof}[Sketch of proof:]
+    Given a morphism of coefficient systems $C \to \mathbb{Z}$, we can evaluate at $G/e$ to get a map $C(G/e) \to \bbZ$, which factors through $C(G/e)/G$ because the action on $\mathbb{Z}(G/e) = \mathbb{Z}$ is trivial.  In the other direction, any morphism $C(G/K) \to C(G/e)$ must make the following diagram commute: 
+    % https://q.uiver.app/#q=WzAsNCxbMCwwLCJDKEcvSykiXSxbMCwxLCJDKEcvZSkiXSxbMSwwLCJcXG1hdGhiYntafSJdLFsxLDEsIlxcbWF0aGJie1p9Il0sWzAsMV0sWzAsMiwiZl9LIiwyXSxbMiwzLCIiLDIseyJsZXZlbCI6Miwic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFsxLDMsImZfZSIsMl1d
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{C(G/K)} \& {\mathbb{Z}} \\
+	{C(G/e)} \& {\mathbb{Z}}
+	\arrow[from=1-1, to=2-1]
+	\arrow["{f_K}", from=1-1, to=1-2]
+	\arrow[Rightarrow, no head, from=1-2, to=2-2]
+	\arrow["{f_e}"', from=2-1, to=2-2]
+\end{tikzcd}\]
+and so $f_K$ is determined by $f_e$. 
+\end{proof}
+\begin{example}
+    In Example~\eqref{ex:sign-sphere-cell-complex} we computed the cellular complex for $S^{\sigma}$, up to determining the boundary maps. There is only one map left to determine, and that is the map
+    \[
+    \bbZ[C_2] \cong \underline{C}_1(S^{\sigma})(C_2/e) \to \underline{C}_0(S^{\sigma})(C_2/e) \cong \mathbb{Z} \oplus \mathbb{Z}. 
+    \]
+    Recall that the differential of a 1-cell is just the signed sum of its two boundary 0-cells:
+    \[
+    d(e) = \phi(1) - \phi(0)
+    \]
+    for $\phi \colon S^0 \to X^0$ the attached map. In other words, $\underline{C}_*(S^{\sigma})$ is
+    % https://q.uiver.app/#q=WzAsNCxbMCwwLCIwIl0sWzEsMCwiXFxtYXRoYmJ7Wn0gXFxvcGx1cyBcXG1hdGhiYntafSJdLFsxLDEsIlxcbWF0aGJie1p9IFxcb3BsdXMgXFxtYXRoYmJ7Wn0iXSxbMCwxLCJcXG1hdGhiYntafVtDXzJdIl0sWzAsMV0sWzEsMiwiXFx0ZXh0e2lkfSJdLFswLDNdLFszLDJdXQ==
+\[\begin{tikzcd}[ampersand replacement=\&]
+	0 \& {\mathbb{Z} \oplus \mathbb{Z}} \\
+	{\mathbb{Z}[C_2]} \& {\mathbb{Z} \oplus \mathbb{Z}}
+	\arrow[from=1-1, to=1-2]
+	\arrow["{\text{id}}", from=1-2, to=2-2]
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=2-1, to=2-2,"{\begin{psmallmatrix} 1 & -1 \\ 1 & -1 \end{psmallmatrix}}"']
+\end{tikzcd}\]
+Now we want to apply $\Hom_{coeff}(-,\underline{\mathbb{Z}})$. By \Cref{lem:coefficient-hom-z} this is
+\[
+\mathbb{Z} \oplus  \mathbb{Z} \xrightarrow{{\begin{psmallmatrix} 1 & -1 \end{psmallmatrix}}} \mathbb{Z}
+\]
+Hence,
+\[
+H_{C_2}^i(S^{\sigma};\underline{\mathbb{Z}}) \cong \begin{cases}
+    \mathbb{Z} & i = 0 \\
+    0 & \text{otherwise.}
+\end{cases}
+\]
+\end{example}
+\begin{example}
+    Let us do the case $S = S^{2\sigma}$. This is the 2-sphere with action given by rotation by a half-turn. This has a $C_2$-CW structure given by the following:
+    \begin{enumerate}
+        \item There are two-zero cells corresponding to the two-fixed points, the north and south poles. 
+        \item There is a single free one-cell corresponding to the boundary of the hemispheres. 
+        \item There is a single 2-cell. 
+    \end{enumerate}
+    See \Cref{s2-sign}. We can then produce the cellular chain complex:
+% https://q.uiver.app/#q=WzAsNixbMCwwLCIwIl0sWzEsMCwiMCJdLFsyLDAsIlxcYmJaIFxcb3BsdXMgXFxiYloiXSxbMCwxLCJcXGJiWltDXzJdIl0sWzEsMSwiXFxiYlpbQ18yXSJdLFsyLDEsIlxcYmJTIFxcb3BsdXMgXFxiYloiXSxbMiw1LCJcXHRleHR7aWR9Il0sWzEsMl0sWzQsNV0sWzEsNF0sWzAsMV0sWzAsM10sWzMsNF1d
+\[\begin{tikzcd}[ampersand replacement=\&]
+	0 \& 0 \& {\bbZ \oplus \bbZ} \\
+	{\bbZ[C_2]} \& {\bbZ[C_2]} \& {\bbZ \oplus \bbZ}
+	\arrow["{\text{id}}", from=1-3, to=2-3]
+	\arrow[from=1-2, to=1-3]
+	\arrow[from=2-2, to=2-3,"{\begin{psmallmatrix} 1 & -1 \\ 1 & -1 \end{psmallmatrix}}"']
+	\arrow[from=1-2, to=2-2]
+	\arrow[from=1-1, to=1-2]
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=2-1, to=2-2, "1-g"']
+\end{tikzcd}\]
+where $C_2 = \langle g \rangle$. Applying $\Hom_{\coeff}(-,\bbZ)$  we get the chain complex
+\[
+\mathbb{Z} \oplus  \mathbb{Z}  \xrightarrow{{\begin{psmallmatrix} 1 & -1 \end{psmallmatrix}}} \mathbb{Z} \xrightarrow{0}\mathbb{Z}
+\]
+and so
+\[
+H^i_{C_2}(S^{2\sigma};\underline{\mathbb{Z}}) \cong \begin{cases}
+    \bbZ & i = 0,2 \\
+    0 & \text{otherwise.}
+\end{cases}
+\]
+\end{example}
+
+\begin{figure}    \includegraphics[width=0.5\textwidth]{s2.png}\caption{$C_2$-CW structure on $S^{2\sigma}$, the 2-sphere with a $C_2$-action by rotation through 180\textdegree.
+The two green dots are the two 0-cells $C_2/C_2 \times D^0$; the red circle is the single 1-cell $C2/e \times D^1$,
+and the gray hemispheres are the single 2-cell $C_2/e \times D^2$.}\label{s2-sign}. 
+    \end{figure}
+    Both of these could have been computed using the following general result. 
+    \begin{lemma}
+        For any $G$-space $X$ we have
+        \[
+        H_G^i(X;\underline{\mathbb{Z}}) \cong H^i(X/G;\mathbb{Z}).
+        \]
+    \end{lemma}
+    Indeed, in our first computation the orbit space is contractible, while in the second example, it is equivalent to $S^2$ (we have attached a two-cell to a contractible 1-skeleton). This lemma is an easy consequence of \Cref{lem:coefficient-hom-z}, but will also follow from an axiomatric treatment of equivariant cohomology theories. 
 	% End the document without loading the bibliography
 	% or the index, or the list of notation.
 \end{document}
