@@ -451,7 +451,7 @@ so that the composite map $RO(C_2) \to RO(C_2)$ is multiplication by 2. This is 
 \begin{theorem}[Double coset formula]
 For subgroups $H,K,\le G$ and a $H$-representation $K$ we have a decomposition of $K$-representations
 \[
-\Res^G_K\Ind_H^G(V) = \sum_{HgK \in H \backslash G/K} \Ind_{H^{g-1} \cap K}^{K} c_g^*\Res^H_{H \cap K^g}(V)
+\Res^G_K\Ind_H^G(V) = \sum_{HgK \in H \backslash G/K} \Ind_{H^{g^{-1}} \cap K}^{K} c_g^*\Res^H_{H \cap K^g}(V)
 \]
 where $c_g \colon H \cap K^g \xrightarrow{\sim}H^{g^{-1}}\cap K$ is the conjugation by $g$ homomorphism. 
 \end{theorem}
@@ -509,7 +509,7 @@ R^{H}_L \circ I_K^H = \sum_{KhL \in K\backslash H/L} I^L_{K^{h}\cap L} R^{K^h}_{
     \]
     Here restriction is defined by inclusion of fixed points for a larger subgroup, which the transfer map is defined by
     \[
-    I_K^H \colon M^K \to M_H, \quad I_K^H(m) = \sum_{hK \in H/K} h \cdot M
+    I_K^H \colon M^K \to M^H, \quad I_K^H(m) = \sum_{hK \in H/K} h \cdot m
     \]
     This does not depend on coset representatives, since $m$ is assumed to be fixed by $K$. Finally, conjugation $c_g$ is multiplication by $g$. 
 
@@ -601,15 +601,15 @@ A(C_p) \cong \bbZ \{C_p/C_p,C_p/e\}
     where the maps are determined by $C_p/C_p \mapsto e$, $C_p/e \mapsto p$ (essentially, counting the number of points in the set), while the transfer sends $e$ to $C_p/e$ (it takes $p$ copies of the singleton, with action that permutes the copies). The Weyl group action is trivial. 
 \end{example}
 \section{Induction, restriction and inflation for Mackey functors}
-We have seen that we can defined (co)induction and restriction for Mackey functors. A similar construction exists for Mackey functors. The restriction functor is particularly simple. 
+We have seen that we can define (co)induction and restriction for Mackey functors. A similar construction exists for Mackey functors. The restriction functor is particularly simple. 
 \begin{definition}
     Given a $G$-Mackey functor $\ul{M}$ and a subgroup $H \le G$ the restricted Mackey functor $H$-Mackey functor $\Res^G_H\ul{M}$ is the Mackey functor with $\ul{M}(K) = \ul{M}(K)$ for $K \le H$. 
 \end{definition}
 \begin{remark}
-    Although simple, there is one small subtlety to be aware of: when we restrict the Mackey functor we have less conjugation maps available: the Weyl group is smaller. For example, restriction to the trivial group gives a functor to $\Mack_{e} \simeq \Mod_{\bbZ}$, i.e., we have to Weyl group action anymore. 
+    Although simple, there is one small subtlety to be aware of: when we restrict the Mackey functor we have less conjugation maps available: the Weyl group is smaller. For example, restriction to the trivial group gives a functor to $\Mack_{e} \simeq \Mod_{\bbZ}$, i.e., we have no Weyl group action anymore. 
 \end{remark}
 \begin{remark}
-    Similarly to representations, this functor has a left and right adjoint. From our definition of a Mackey functor, this is a little annoying to define, but really this comes from similar functors on the category of finite $G$-sets. Indeed, we have indexed our Mackey functors on subgroup $H \le G$, but we could equally well have done this on the $G$-set $G/H$. Since any finite $G$-set decomposes as a disjoint union of orbits, we can define $\ul{M}(X)$ for $X$ a finite $G$-set to be the direct sum of $\ul{M}(G/H)$ for the orbits appearing in a decomposition of $X$. 
+    Similarly to representations, this functor has a left and right adjoint. From our definition of a Mackey functor, this is a little annoying to define, but really this comes from similar functors on the category of finite $G$-sets. Indeed, we have indexed our Mackey functors on subgroups $H \le G$, but we could equally well have done this on $G$-sets $G/H$. Since any finite $G$-set decomposes as a disjoint union of orbits, we can define $\ul{M}(X)$ for $X$ a finite $G$-set to be the direct sum of $\ul{M}(G/H)$ for the orbits appearing in a decomposition of $X$. 
 
     In fact, one can define a Mackey functor as a bifunctor $\ul{M} = (\ul{M}^*,\ul{M}_*)$ from finite $G$-sets to abelian groups satisfying some axioms: here $\ul{M}^*$ and $\ul{M}_*$ are contravariant and covariant functors that agree on objects. 
 \end{remark}
@@ -635,7 +635,7 @@ We have seen that we can defined (co)induction and restriction for Mackey functo
 \begin{remark}
     The following result is slightly surprising since induction is the left, but not right, adjoint of restriction on the category of finite $G$-sets.
 \end{remark}
-\begin{proposition}
+\begin{proposition}\label{prop:induction-left-right-adjoint-mackey}
     Induction for Mackey functors is both the left and right adjoint of restriction. 
 \end{proposition}
 \begin{proof}
@@ -647,7 +647,7 @@ We have seen that we can defined (co)induction and restriction for Mackey functo
 
     To show that induction is left adjoint, we define the counit and unit on Mackey functors 
     \[
-p(N) \colon \Ind^G_H\Res^G_H N \to N, \quad N_*(\epsilon)
+p(N) \colon \Ind^G_H\Res^G_H N \to N
     \]
     and
     \[
@@ -662,7 +662,7 @@ p(N) \colon \Ind^G_H\Res^G_H N \to N, \quad N_*(\epsilon)
     To show induction is right adjoint is very similar, except we use the contravariant structure $M^*$ instead of the covariant structure. 
 \end{proof}
 \begin{example}
-    What is $\Ind_{e}^{C_p}(\bbZ)$? Note that on $G$-sets we have that $\Res^G_e(C_p/C_p)$ is a point, while $\Res^G_e(C_p/e)$ is $p$ points. We deduce that 
+    What is $\Ind_{e}^{C_p}(\bbZ)$? Note that on $G$-sets we have that $\Res^{C_p}_e(C_p/C_p)$ is a point, while $\Res^{C_p}_e(C_p/e)$ is $p$ points. We deduce that 
     \[
     \Ind_e^{C_p}\bbZ = \lew{\bbZ}{\bbZ[C_p]}{\Delta}{\nabla}{W}
     \]
@@ -692,19 +692,19 @@ Inflation has both a left and a right adjoint.
 \begin{definition}
     Let $M \in \Mack_G$ and $N \normal G$, then we define $G/N$-Mackey functors $M^+$ and $M^-$ by
     \[
-    M^+(G/K) = M(G)/\sum_{J \le K, J \not \ge N} I^K_J M(J)
+    M^+(K/N) = M(K)/\sum_{J \le K, J \not \ge N} I^K_J M(J)
     \]
     and
     \[
-    M^-(G/K) = \bigcap_{J \le K, J \not \ge N} \ker(R^K_J)
+    M^-(K/N) = \bigcap_{J \le K, J \not \ge N} \ker(R^K_J)
     \]
-    Restrictions, transfer, and conjugation come from those for $L$. These define functors
+    Restrictions, transfer, and conjugation come from those for $M$. These define functors
     \[
     {}^+,{}^- \colon \Mack_{G/N} \to \Mack_G.
     \]
 \end{definition}
 \begin{proposition}
-    ${}^+$ is left adjoint to $\Inf_{G/N}^G$ and ${}^-$ is right adjoint to $\Inf_{G/N}^G$ . 
+    ${}^+$ is left adjoint to $\Inf_{G/N}^G$ and ${}^-$ is right adjoint to $\Inf_{G/N}^G$. 
 \end{proposition}
 \begin{proof}
     Let $L$ be a Mackey functor for $G$ and $M$ a Mackey functor for $G/N$. Given a morphism $L \to \Inf_{G/N}^GM$, we note that this is necessarily zero on $L(J)$ with $J \not \ge N$, and hence must vanish on $\sum_{J \le K, J \not \ge N} I^K_J M(J)$ for each subgroup $K$. We therefore get an induced morphism $L^+ \to M$. Conversely, given $\beta \colon L^+ \to M$ we can construct a morphism $L \to \Inf_{G/N}^GM$ by defining it to be $0$ on $L(K)$ when $K \not \ge N$, and defining it to be the composite
@@ -878,7 +878,7 @@ We can now define $G$-homotopy groups, $G$-homotopy equivalences, etc. Note that
 and $H$ ranges over all the subgroups of $G$. There is also a relative version where we allow $X_{-1} = A$, for some $G$-space $A$. 
 \end{definition}
 \begin{example}[label=ex:cell-structure-sign]
-    We consider again the representation sphere $S^{\sigma}$. Here we start with the $C_2$-fixed 0-skeleton $S^0$. Here we attach a single free 1-cell $(C_2/e) \times D_1$ where one (free) endpoint is attached to 0 and the other to the point $\infty$. 
+    We consider again the representation sphere $S^{\sigma}$. Here we start with the $C_2$-fixed 0-skeleton $S^0$. Here we attach a single free 1-cell $(C_2/e) \times D_1$ where one (free) endpoint is attached to $0$ and the other to the point $\infty$. 
 \end{example}
 \section{The $G$-Whitehead theorem}
 Our next goal is to prove the equivariant Whitehead theorem.
@@ -1330,7 +1330,53 @@ and the gray hemispheres are the single 2-cell $C_2/e \times D^2$.}\label{s2-sig
         H_G^i(X;\underline{\mathbb{Z}}) \cong H^i(X/G;\mathbb{Z}).
         \]
     \end{lemma}
-    Indeed, in our first computation the orbit space is contractible, while in the second example, it is equivalent to $S^2$ (we have attached a two-cell to a contractible 1-skeleton). This lemma is an easy consequence of \Cref{lem:coefficient-hom-z}, but will also follow from an axiomatric treatment of equivariant cohomology theories. 
+    Indeed, in our first computation the orbit space is contractible, while in the second example, it is equivalent to $S^2$ (we have attached a two-cell to a contractible 1-skeleton). This lemma is an easy consequence of \Cref{lem:coefficient-hom-z}, but will also follow from an axiomatic treatment of equivariant cohomology theories. 
+
+    There is also a way to get fixed points instead of orbits.
+    \begin{lemma}
+    For any $G$-space $X$ we have $H_G^n(X;\Inf_e^G(\bbZ)) \cong H^n(X^G;\bbZ)$. 
+    \end{lemma} 
+    \begin{proof}
+    We recall that $\Inf_e^G(\bbZ)$ is the Mackey functor whose value at $G$ is $\bbZ$ and is $0$ elsewhere. Then it is clear that $\Hom_{\coeff}(C,\Inf_e^G(\bbZ)) \cong \Hom_{AbGrp}(C(G/G),\bbZ)$, and the result follows by definition of Bredon homology. 
+    \end{proof}
+    Finally, we can also get the ordinary homology of the underlying non-equivariant space of $X$:
+    \begin{lemma}
+    For any $G$-space $X$, we have $H^n(X;\Ind_e^G(\bbZ)) \cong H^n(X;\bbZ)$. 
+    \end{lemma}
+    \begin{proof}
+ This follows from the following claim: there is an equivalence \[
+ \Hom_{\coeff}(C,\Ind_e^G(\bbZ)) \cong \Hom_{AbGrp}(C(e),\bbZ),\]
+  which is essentially a consequence of \Cref{prop:induction-left-right-adjoint-mackey}: induction is right adjoint to the forgetful functor. 
+    \end{proof}
+    \begin{remark}
+    There was nothing special about $\bbZ$ in these three results; we could have used any abelian group $A$. Later we will consider the case $A = \mathbb{F}_p$. 
+    \end{remark}
+    \section{Bredon homology}
+    To define Bredon homology with need to work with functors $\mathcal{O}_G \to \Ab$ rather than $\mathcal{O}_G^{op} \to \Ab$. We call these $\mathcal{O}_G$-modules. With $M$ such an $\mathcal{O}_G$-module we define:
+    \begin{definition}
+    The Bredon homology of $X$ with coefficients in $M$ is
+    \[
+    H_n^G(X;M) \coloneqq H_n(\underline{C}_n(X) \otimes_{\mathcal{O}_G} M).
+    \]
+    Here $\underline{C}_n(X) \otimes_{\mathcal{O}_G} M$ denotes the coend
+    \[
+    \begin{split}
+    \underline{C}_n(X) \otimes_{\mathcal{O}_G} M &\coloneqq \int_{}^{G/H \in \mathcal{O}_G} \underline{C}_n(X)(G/H) \otimes M(G/H).
+    \end{split}
+    \]
+    \end{definition}
+    \begin{remark}
+    One gets an $\mathcal{O}_G$-module from a Mackey functor by forgetting the \emph{restriction} maps. 
+    \end{remark}
+    One has analogs of the results about Bredon cohomology:
+    \begin{lemma}
+    There are isomorphisms
+    \begin{enumerate}[label=(\roman*)]
+        \item $H_n^G(X;\underline{\mathbb{Z}}) \cong H_n(X/G;\mathbb{Z})$,
+        \item $H_n^G(X;\Inf_e^G(\bbZ)) \cong H_n(X^G;\mathbb{Z})$, and 
+        \item $H_n^G(X;\Ind_e^G(\bbZ)) \cong H_n(X;\mathbb{Z})$. 
+    \end{enumerate}
+    \end{lemma}
 	% End the document without loading the bibliography
 	% or the index, or the list of notation.
 \end{document}
