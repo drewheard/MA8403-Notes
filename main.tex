@@ -15,6 +15,7 @@
 \dmo{\Sub}{Sub}
 \nc{\bbZ}{\mathbb{Z}}
 \nc{\bbR}{\mathbb{R}}
+\nc{\bbF}{\mathbb{F}}
 \nc{\bbC}{\mathbb{C}}
 \dmo{\Sets}{Set}
 \nc{\cat}[1]{\mathscr{#1}}
@@ -882,7 +883,7 @@ and $H$ ranges over all the subgroups of $G$. There is also a relative version w
 \end{example}
 \section{The $G$-Whitehead theorem}
 Our next goal is to prove the equivariant Whitehead theorem.
-\begin{theorem}[Equivariant Whitehead theorem]
+\begin{theorem}[Equivariant Whitehead theorem]\label{thm:whitehead}
 A weak $G$-homotopy equivalence between $G$-CW complexes is a $G$-homotopy equivalence. 
 \end{theorem}
 There are two ways to prove this theorem, both generalizing the two non-equivariant ways. The first is an inductive argument, and can be found in \cite[Theorem 2.1.31]{guillou}. The second is to prove a more general theorem, the equivariant homotopy extension and lifting property (HELP). The main subtly when extending the proof from the non-equivariant case is to define a suitable notion of the connectivity of a map. 
@@ -1364,6 +1365,19 @@ and the gray hemispheres are the single 2-cell $C_2/e \times D^2$.}\label{s2-sig
     \underline{C}_n(X) \otimes_{\mathcal{O}_G} M &\coloneqq \int_{}^{G/H \in \mathcal{O}_G} \underline{C}_n(X)(G/H) \otimes M(G/H).
     \end{split}
     \]
+    If you haven't seen coends before, they can be given as a coequalizer: If $S \colon \cat C^{op} \times \cat C \to \cat C$ is a functor, then the coend of $S$ is equivalent to the coequalizer
+    % https://q.uiver.app/#q=WzAsMyxbMCwwLCJcXGNvcHJvZF97YycgXFx0byBjfVMoYycsYykiXSxbMSwwLCJcXGNvcHJvZF97YyBcXGluIFxcY2F0IEN9UyhjLGMpIl0sWzIsMCwiXFxpbnRee1xcY2F0IEN9UyJdLFswLDEsIiIsMCx7Im9mZnNldCI6MX1dLFswLDEsIiIsMix7Im9mZnNldCI6LTF9XSxbMSwyXV0=
+\[\begin{tikzcd}[ampersand replacement=\&]
+   \displaystyle {\coprod_{c' \to c}S(c',c)} \& \displaystyle{\coprod_{c \in \cat C}S(c,c)} \& {\int^{c \in \cat C}S(c,c)}
+    \arrow[shift right, from=1-1, to=1-2]
+    \arrow[shift left, from=1-1, to=1-2]
+    \arrow[from=1-2, to=1-3]
+\end{tikzcd}\]
+To ground your intuition, thinking of a ring as an Ab-enriched category with one object, then a left $R$-module $B$ is an additive functor $R \to Ab$ sending the one object of $R$ to the abelian group $B$ and sending each arrow $r \in R$ to the scalar multiplication $r_* \colon b \mapsto rb$. A right $R$-module is an additive functor $R^{op} \to Ab$. In particular, $R \mapsto A \otimes B$ is a bifunctor $R^{op} \times R \to Ab$. Then,
+\[
+\int^R A \otimes B = A \otimes_R B
+\]
+is the usual tensor product over $R$. 
     \end{definition}
     \begin{remark}
     One gets an $\mathcal{O}_G$-module from a Mackey functor by forgetting the \emph{restriction} maps. 
@@ -1377,6 +1391,74 @@ and the gray hemispheres are the single 2-cell $C_2/e \times D^2$.}\label{s2-sig
         \item $H_n^G(X;\Ind_e^G(\bbZ)) \cong H_n(X;\mathbb{Z})$. 
     \end{enumerate}
     \end{lemma}
+    \begin{remark}
+    Let us relate Bredon (co)homology with Borel cohomology. We have
+        \[
+    H^*_{Borel}(X;\mathbb{Z}) \coloneqq H^*(EG \times_G X;\mathbb{Z})  \cong H^*(EG \times X;\underline{\mathbb{Z}})
+    \]
+    and
+    \[
+    H_*^{Borel}(X;\mathbb{Z}) \coloneqq H_*(EG \times_G X;\mathbb{Z})  \cong H_*(EG \times X;\underline{\mathbb{Z}})
+    \]
+    So Borel (co)homology is just a special case of Bredon (co)homology. Note then that the projection map $EG \times X \to X$ induces a map
+    \[
+\phi \colon H^*(X;\underline{\mathbb{Z}}) \to     H^*_{Borel}(X;\mathbb{Z})  
+    \]
+
+    \end{remark}
+    \begin{lemma}
+    Suppose that $X$ is a free $G$-CW complex,  i.e., it can be built from free cells $G_+ \times D^n$, then $\phi$ is an isomorphism.
+    \end{lemma}
+    \begin{proof}
+For such spaces the projection map $EG \times X \to X$ is a $G$-equivariant weak equivalence. Since $X$ was assumed to be a $G$-CW complex, the Whitehead theorem (\Cref{thm:whitehead}) implies that the projection is a $G$-equivariant homotopy equivalence. 
+    \end{proof}
+    \section{Application - Smith theory}
+    We will use Bredon homology to proof the following theorem. 
+    \begin{theorem}[Smith]
+    Let $G$ be a finite $p$-group and $X$ be a finite $G$-CW complex such that the underlying topological space of $X$ is an $\mathbb{F}_p$-cohomology sphere, i.e.,  $H^*(X;\mathbb{F}_p) \cong H^*(S^n;\mathbb{F}_p)$ for some $n$. Then $X^G$ is either empty of an $\mathbb{F}_p$-cohomology sphere (of equal or smaller dimension).  
+    \end{theorem}
+    \begin{proof}
+We claim that we can easily reduce to the case $G = \bbZ/p$. Indeed, if $H \subseteq G$ is a normal subgroup, then $X^G \cong (X^H)^{(G/H)}$, and so we can induct on the order of the group using the Sylow theorems. We have already seen that there exist coefficient systems $M$ and $N$ such that 
+\[
+H_G^*(X;M) \cong H^*(X;\bbF_p) \quad \text{ and } \quad H_G^*(X;M) \cong H^*(X^G;\mathbb{F}_p). 
+\]
+namely $M = \Ind_e^{G}(\bbF_p)$ and $N = \Inf_e^G(\bbF_p)$. We claim that there also exists a coefficient system $L$ such that $H_G^*(X;L) \cong \widetilde H^*((X/X^G)/G;\mathbb{F}_p)$. Indeed, we leave it as an exercise to show that $L \coloneqq \ker(\underline{\bbF}_p \to \Inf_e^G(\bbF_p))$ works. 
+
+We now fix $p = 2$ for simplicity. We have a short exact sequence
+\[
+\bbF_2 \xrightarrow{\Delta} \bbF_2[C_2] \xrightarrow{\nabla} \bbF_2
+\]
+which extends to a short exact sequence of coefficient systems 
+\[
+0 \to L \to M \to I \oplus L \to 0
+\]
+where $I$ is the inflation from $e$ to $C_2$ of $\bbF_2$. This induces a long exact sequence in cohomology, which we can rewrite (using the definitions of the coefficient systems) as 
+\[
+\begin{split}
+\cdots \to \widetilde H^n((X/X^{C_2})/C_2;\mathbb{F}_2) &\to H^n(X;\bbF_2) \to \widetilde H^n((X/X^{C_2})/C_2;\mathbb{F}_2) \oplus H^n(X^{C_2};\bbF_2) \\ &\to \widetilde H^{n+1}((X/X^{C_2})/C_2;\mathbb{F}_2) \to \cdots
+\end{split}
+\]
+Let 
+\[
+a_n = \dim \widetilde H^n((X/X^{C_2})/C_2;\mathbb{F}_2), \quad b_n = \dim  H^n(X;\bbF_2), \quad c_n = H^n(X^{C_2};\bbF_2). \]
+Then exactness of the long exact sequence implies that
+\[
+a_n + c_n \le b_n + a_{n+1}. 
+\]
+Note that
+\[
+a_0 + c_0 + c_1 \le b_0 + a_1 + c_1 \le b_0 + b_1 + a_2
+\]
+or more generally that 
+\[
+a_0 + c_0 + c_1 + \ldots c_n \le b_0 + b_1 + \cdots + b_n + a_{n-1}
+\]
+for any $n$. Since $X$ was assumed to be a finite complex, we know that $a_n$ vanishes for $n$ large enough, so that $\sum c_i \le \sum b_i$. But by assumption $\sum b_i = 2$. It follows that $\sum c_i \le 2$. If we assume that $X^{C_2}$ is non-zero, then we must have $\sum c_i > 0$, so it remains to eliminate the possibility that $\sum c_i = 1$. But applying the Euler characteristic\footnote{Recall that this is the alternating sum of the ranks of the cohomology} we deduce that 
+\[
+\chi(X) = \chi(X^{C_2}) + 2\chi((X/X^{C_2})/C_2)\equiv \chi(X^{C_2}) \mod (2). 
+\]
+This finishes the proof. 
+\end{proof}
 	% End the document without loading the bibliography
 	% or the index, or the list of notation.
 \end{document}
