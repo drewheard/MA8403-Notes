@@ -758,7 +758,7 @@ Inflation has both a left and a right adjoint.
 \par\bigskip\noindent
 \chapter{The category of $G$-spaces}
 \begin{definition}
-    A $G$-spaces is a topological space $X$ with a continuous action $G \times X \to X$ (this is the special case of \Cref{def:group-action} in the case $\cat C = \Top$). We let $G\Top$ denote the category of $G$-spectra, where the morphisms are morphisms of topological spaces that commute with the $G$-action. By taking based spaces, we can define $G\Top_*$, the category of \emph{based} $G$-spaces. 
+    A $G$-spaces is a topological space $X$ with a continuous action $G \times X \to X$ (this is the special case of \Cref{def:group-action} in the case $\cat C = \Top$). We let $G\Top$ denote the category of $G$-spaces, where the morphisms are morphisms of topological spaces that commute with the $G$-action. By taking based spaces, we can define $G\Top_*$, the category of \emph{based} $G$-spaces. 
 \end{definition}
 \begin{example}
     We can always give a topological space the trivial action. However, there are of course many more examples. For example, the $n$-sphere $S^n$ has a natural $C_2$-action, giving by sending a point to its antipode. This is the same as saying that the non-trivial element of $C_2$-acts by $-1$. This action is \emph{free}, in the sense it has no fixed-points. 
@@ -893,7 +893,7 @@ $\begin{tikzcd}[ampersand replacement=\&]
 	\ast \& {S^{\sigma}}
 	\arrow["\infty", shift left, from=1-1, to=1-2]
 	\arrow["0"', shift right, from=1-1, to=1-2]
-\end{tikzcd}$  be the inclusion of the two fixed-points of $S^{\sigma}$. Because $S^{\infty}$ is path-connected, these are non-equivariantly homotopic. But they are not equivariantly homotopic, since the space of fixed points is not path-connected. 
+\end{tikzcd}$  be the inclusion of the two fixed-points of $S^{\sigma}$. Because $S^{\sigma}$ is path-connected, these are non-equivariantly homotopic. But they are not equivariantly homotopic, since the space of fixed points is not path-connected. 
 \end{example}
 We can now define $G$-homotopy groups, $G$-homotopy equivalences, etc. Note that by adjointness, the notion of equivariant homotopy will just be computing $\pi_n(X^G)$. Instead, it is better to remember the fixed points of all subgroups $H \le G$. To fix notation, let $\pi_n^H(X) \coloneqq \pi_n(X^H)$. 
 \begin{definition}
@@ -917,7 +917,7 @@ We can now define $G$-homotopy groups, $G$-homotopy equivalences, etc. Note that
 and $H$ ranges over all the subgroups of $G$. There is also a relative version where we allow $X_{-1} = A$, for some $G$-space $A$. 
 \end{definition}
 \begin{example}[label=ex:cell-structure-sign]
-    We consider again the representation sphere $S^{\sigma}$. Here we start with the $C_2$-fixed 0-skeleton $S^0$. Here we attach a single free 1-cell $(C_2/e) \times D_1$ where one (free) endpoint is attached to $0$ and the other to the point $\infty$. 
+    We consider again the representation sphere $S^{\sigma}$. Here we start with the $C_2$-fixed 0-skeleton $S^0$. Here we attach a single free 1-cell $(C_2/e) \times D^1$ where one (free) endpoint is attached to $0$ and the other to the point $\infty$. 
 \end{example}
 \section{The $G$-Whitehead theorem}
 Our next goal is to prove the equivariant Whitehead theorem.
