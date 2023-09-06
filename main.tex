@@ -4,10 +4,44 @@
 \usepackage{quiver}
 \usetikzlibrary{shapes}
 \usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{hobby,backgrounds,calc,trees}
 \colorlet{lgray}{gray!25}
 \colorlet{llgray}{gray!50}
 \usepackage{tikz-cd}
+\usepackage{sseq}
 
+\newcommand{\convexpath}[2]{
+[   
+    create hullnodes/.code={
+        \global\edef\namelist{#1}
+        \foreach [count=\counter] \nodename in \namelist {
+            \global\edef\numberofnodes{\counter}
+            \node at (\nodename) [draw=none,name=hullnode\counter] {};
+        }
+        \node at (hullnode\numberofnodes) [name=hullnode0,draw=none] {};
+        \pgfmathtruncatemacro\lastnumber{\numberofnodes+1}
+        \node at (hullnode1) [name=hullnode\lastnumber,draw=none] {};
+    },
+    create hullnodes
+]
+($(hullnode1)!#2!-90:(hullnode0)$)
+\foreach [
+    evaluate=\currentnode as \previousnode using \currentnode-1,
+    evaluate=\currentnode as \nextnode using \currentnode+1
+    ] \currentnode in {1,...,\numberofnodes} {
+  let
+    \p1 = ($(hullnode\currentnode)!#2!-90:(hullnode\previousnode)$),
+    \p2 = ($(hullnode\currentnode)!#2!90:(hullnode\nextnode)$),
+    \p3 = ($(\p1) - (hullnode\currentnode)$),
+    \n1 = {atan2(\y3,\x3)},
+    \p4 = ($(\p2) - (hullnode\currentnode)$),
+    \n2 = {atan2(\y4,\x4)},
+    \n{delta} = {-Mod(\n1-\n2,360)}
+  in 
+    {-- (\p1) arc[start angle=\n1, delta angle=\n{delta}, radius=#2] -- (\p2)}
+}
+-- cycle
+}
 
 \newcommand{\nc}{\newcommand}
 \nc{\ul}{\underline}
@@ -29,6 +63,7 @@
 \dmo{\Alg}{Alg}
 \dmo{\FinSet}{Fin}
 \dmo{\End}{End}
+\dmo{\Ext}{Ext}
 \dmo{\sSet}{sSet}
 \dmo{\Kan}{Kan}
 \dmo{\Quillen}{Quillen}
@@ -48,6 +83,9 @@
 \dmo{\Ab}{Ab}
 \dmo{\Hom}{Hom}
 \dmo{\id}{id}
+
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
 %%Alternative command for C_p-Lewis diagrams
 \newcommand{\lew}[5]{
 \begin{tikzcd}
@@ -807,10 +845,10 @@ In analogy with Mackey functors, we have the following:
 \begin{remark}
     Similarly, there is a functor $\Coind_H^G \colon H\Top \to G\Top$, which sends $X$ to $\Map_H(G,X)$, the space of $H$-equivariant maps from $G$ to $X$, with $G$-action given by $(gf) \cdot g' = f(g \cdot g')$. This functor is right adjoint to restriction.
 
-    In contrast to what we saw for Mackey functors, the left and right adjoint do not agree for spaces (Exercise: try and find an example). 
+    In contrast to what we saw for Mackey functors, the left and right adjoint do not agree for spaces (we will see an example on the exercise sheet). 
 \end{remark}
 \begin{remark}
-    In fact, given $f \colon H \to G$ a group homomorphism, the pullback functor $f^* \colon G\Top \to H\Top$ always has a left and right adjoint. Taking $H$ to be the trivial group we can get functors called fixed points and orbits, which we now explicitly define. 
+    In fact, given $f \colon H \to G$ a group homomorphism, the pullback functor $f^* \colon G\Top \to H\Top$ always has a left and right adjoint. Taking $G$ to be the trivial group we can get functors called fixed points and orbits, which we now explicitly define. 
 \end{remark}
 \begin{definition}
     For $X \in G\Top$, the fixed points $X^G$ is the subspace
@@ -1325,7 +1363,7 @@ The two green dots are the two 0-cells $C_2/C_2 \times D^0$; the red circle is t
 and the gray hemispheres are the single 2-cell $C_2/e \times D^2$.}\label{s2-sign}. 
     \end{figure}
     Both of these could have been computed using the following general result. 
-    \begin{lemma}
+    \begin{lemma}\label{lem:bredon-constant}
         For any $G$-space $X$ we have
         \[
         H_G^i(X;\underline{\mathbb{Z}}) \cong H^i(X/G;\mathbb{Z}).
@@ -1383,7 +1421,7 @@ is the usual tensor product over $R$.
     One gets an $\mathcal{O}_G$-module from a Mackey functor by forgetting the \emph{restriction} maps. 
     \end{remark}
     One has analogs of the results about Bredon cohomology:
-    \begin{lemma}
+    \begin{lemma}\label{lem:bredon-homology}
     There are isomorphisms
     \begin{enumerate}[label=(\roman*)]
         \item $H_n^G(X;\underline{\mathbb{Z}}) \cong H_n(X/G;\mathbb{Z})$,
@@ -1415,7 +1453,7 @@ For such spaces the projection map $EG \times X \to X$ is a $G$-equivariant weak
     \section{Application - Smith theory}
     We will use Bredon homology to proof the following theorem. 
     \begin{theorem}[Smith]
-    Let $G$ be a finite $p$-group and $X$ be a finite $G$-CW complex such that the underlying topological space of $X$ is an $\mathbb{F}_p$-cohomology sphere, i.e.,  $H^*(X;\mathbb{F}_p) \cong H^*(S^n;\mathbb{F}_p)$ for some $n$. Then $X^G$ is either empty of an $\mathbb{F}_p$-cohomology sphere (of equal or smaller dimension).  
+    Let $G$ be a finite $p$-group and $X$ be a finite $G$-CW complex such that the underlying topological space of $X$ is an $\mathbb{F}_p$-cohomology sphere, i.e.,  $H^*(X;\mathbb{F}_p) \cong H^*(S^n;\mathbb{F}_p)$ for some $n$. Then $X^G$ is either empty or an $\mathbb{F}_p$-cohomology sphere (of equal or smaller dimension).  
     \end{theorem}
     \begin{proof}
 We claim that we can easily reduce to the case $G = \bbZ/p$. Indeed, if $H \subseteq G$ is a normal subgroup, then $X^G \cong (X^H)^{(G/H)}$, and so we can induct on the order of the group using the Sylow theorems. We have already seen that there exist coefficient systems $M$ and $N$ such that 
@@ -1459,6 +1497,162 @@ for any $n$. Since $X$ was assumed to be a finite complex, we know that $a_n$ va
 \]
 This finishes the proof. 
 \end{proof}
+\section{Axioms for equivariant homology and cohomology}
+We know that (co)homology can be characterized on CW complexes by the Eilenberg--Steenrod axioms. Are there similar axioms for equivariant (co)homology theories? The answer is yes. This takes place in the category of pairs of $G$-CW complexes, i.e., the category with objects $(X,A)$ for $X$ a $G$-CW complex and $A$ a sub-complex, and morphisms $(X,A) \to (Y,B)$ morphisms $f \colon X \to Y$ such that $f(A) \subseteq B$. 
+\begin{definition}
+    A (ordinary) homology theory on $G$-CW complexes is a sequence of functors $h_n(X,A)$ on pairs of $G$-CW complexes and natural transformations $\delta \colon h_n(X,A) \to h_{n-1}(A,\emptyset)$ satisfying the following axioms:
+    \begin{enumerate}[label=(\arabic*)]
+        \item(Homotopy invariance) If $f \simeq g$, then $f_*   = g_*$. 
+        \item(Long exact sequence) If we let $h_n(X) \coloneqq h_n(X,\emptyset)$ then there is an exact sequence
+        \[
+        \cdots \to h_n(A) \to h_n(X) \to h_n(X,A) \xrightarrow{\delta} h_{n-1}(A) \to \cdots 
+        \]
+        \item(Excision) If $X$ is the union of subcomplexes $A$ and $B$, then the inclusion $(A,A \cap B) \hookrightarrow (X,B)$ induces an isomorphism
+        \[
+        h_n(A,A \cap B) \cong h_n(X,B)
+        \]
+        \item(Additivity) If $(X,A)$ is a disjoint union of pairs $(X_i,A_i)$, then the inclusions $(X_i,A_i) \to (X,A)$ induce an isomorphism
+        \[
+        \bigoplus_ih_n(X_i,A) \cong h_n(X,A). 
+        \]
+        \item(Dimension) $h_n(G/H) = 0$ if $n \ne 0$. 
+    \end{enumerate}
+    For cohomology theories, reverse the directions of the arrows. 
+\end{definition}
+\begin{theorem}
+    Bredon (co)homology is an equivariant (co)cohomology theory, where we set $\underline C_*(X,A) = \widetilde{\underline C}_*(X/A)$. 
+\end{theorem}
+\begin{proof}
+    Homotopy invariant, excision and additivity and excision are relatively straightforward. Let us discuss the dimension axiom and the long exact sequence. Recall that $\underline{C}_*(X)$ is a coefficient system whose value at $(G/K)$ is the free abelian group $C_*^{cell}(X^K)$. We can do homological algebra in the category of coefficient systems, and we claim that $\underline{C}_*(X)$ is a projective object here. We will not prove this, but it is a consequence of a more general result:
+    \begin{lemma}
+        If $S$ is a finite $G$-set, then the coefficient system $F_S$ with 
+        \[
+        F_S(G/H) = F(S^H)
+        \]
+        the free abelian group on the set $S^H$, is a projective object in the category of coefficient systems. 
+    \end{lemma}
+    This lemma implies that $\Hom(\underline C_*(X),-)$ preserves short exact sequences of coefficient systems, and it follows that we get the desired long exact sequence. A Yoneda lemma argument shows that 
+    \[
+    H_G^0(G/H;M) \coloneqq H^0(\Hom_{\coeff}(\underline{C}_*(G/H),M)) \cong M(G/H)
+    \]
+    while
+    \[
+    H_G^i(G/H;M) \cong 0
+    \]
+    for $i > 0$. 
+\end{proof}
+\begin{remark}
+    In fact, a uniqueness theorem similar to the usual theorem for non-equivariant cohomology shows that Bredon cohomology with coefficients in $M$ is the only equivariant cohomology theory with those coefficients. 
+\end{remark}
+\begin{remark}
+    There is a spectral sequence
+    \[
+    \Ext^p_{coeff}(h_q(X),M) \implies H_G^{p+q}(X;M),
+    \]
+    where $h_q(X)(G/H) = H_q(X^H)$. 
+\end{remark}
+\begin{remark}[$RO(G)$-grading]
+So far we have indexed our cohomology theories on the integers $\bbZ$. However, we have already seen that we have more notions of a sphere in equivariant homotopy. So, can we (and should be) grade on the group $RO(G)$? There are some subtle issues here.\footnote{For amusement, see \cite[Section 6]{MR764596}.} The point is that $RO(G)$ consists of \emph{equivalence} classes, and we really want to the remember the isomorphisms between isomorphic representations. The usual fix is to rather fix an choice of preferred representatives. For example, this is easy to do when we talk about $G = \bbZ/2$ when the representation is simple. We will tend to ignore this remark from now, but please be aware of it. 
+\end{remark}
+In any case, we end up with suspension and loop functors for a representation $V$, and the following axiom:
+\begin{axiom}[Equivariant suspension axiom]
+For each $\alpha \in RO(G)$and actual representation $V$, there is a natural isomorphism
+\[
+\Sigma^V\colon \widetilde H_G^{\alpha}(X) \xrightarrow{\sim} \widetilde H_G^{\alpha+V}(\Sigma^VX) = \widetilde H_G^{\alpha+V}(S^V \wedge X).
+\]
+\end{axiom}
+In general, even determining $\widetilde H_G^{\alpha}(G/K_+)$ for $\alpha \not \in \bbZ$ is very complicated. 
+\begin{remark}
+    One might wonder if Bredon cohomology with coefficients in $M$ extends to an $RO(G)$-graded cohomology theory in general. This turns out to not be true. In fact, it is a theorem of Lewis, May, and McClure that it does so if and only $M$ is the underlying coefficient system of a Mackey functor. 
+\end{remark}
+We will do one single computation, that of the Bredon cohomology of a point with $G = \bbZ/2$ and coefficients in the constant coefficient system $\underline{\mathbb{F}_2}$. We recall that $RO(C_2) \cong \bbZ\{ \mathbf{1} \} \oplus \bbZ\{\sigma\}$, so our groups will be bigraded. The result is best described pictorially:
+\begin{theorem}
+The bigraded groups $H_{C_2}^{n+k\sigma}(\ast,\ul{\mathbb{F}_2})$ are as follows, where each dot represents a copy of $\bbF_2$:
+
+\begin{figure}[h!]
+\begin{tikzpicture}[scale=0.4]
+\draw[->] (-5,0)--(5,0);
+\draw[->] (0,-5)--(0,5);
+\draw[help lines, thin, lgray] (-5,-5) grid (5,5);
+\node[right] at (5,0) {$n$};
+\foreach \x in {-5,...,5}{
+   \node[left] at (-5.5,\x) {$\x$}; 
+}
+\foreach \x in {-5,...,5}{
+   \node[below] at (\x,-5.5) {$\x$}; 
+}
+\node[above] at (0,5.3) {$k$};
+\foreach \x in {2,3,4,5}{
+    \foreach \y in {-2,-3,-4,-5}{
+        \ifnum\x<\numexpr-\y+1
+            \node[circle,fill,scale=0.5] at (\x,\y){};
+        \fi
+    }
+}
+\foreach \x in {0,...,-5}{
+    \foreach \y in {0,...,5}{
+        \ifnum\x>\numexpr-\y-1
+            \node[circle,fill,scale=0.5] at (\x,\y){};
+        \fi
+    }
+}
+\node[circle,fill,scale=0.5] (a) at (2,-2){};
+\node[circle,fill,scale=0.5] (b) at (2,-5){};
+\node[circle,fill,scale=0.5] (c) at (5,-5){};
+\node[circle,fill,scale=0.5] (d) at (0,0){};
+\node[circle,fill,scale=0.5] (e) at (-5,5){};
+\node[circle,fill,scale=0.5] (f) at (0,5){};
+\begin{pgfonlayer}{background}
+    % the requested case
+\fill[blue,opacity=0.3] \convexpath{a,c,b}{8pt};
+\fill[red,opacity=0.3] \convexpath{d,e,f}{8pt};
+\end{pgfonlayer}
+\end{tikzpicture}
+\end{figure}
+\end{theorem}
+\begin{proof}
+    We will start with the blue region. These are the groups $H^{n-k\sigma}(\ast,\ul{\bbF_2})$ for $k >0$, which, using the suspension axiom becomes, 
+    \[
+    H_{C_2}^{n-k\sigma}(\ast,\ul{\bbF_2}) \cong \widetilde H_{C_2}^{n-k\sigma}(S^0,\ul{\bbF_2}) \cong \widetilde H_{C_2}^n(S^{k\sigma},\ul{\bbF_2}) \cong \widetilde H^n(S^{k\sigma}/C_2,\bbF_2)
+    \]
+    by the $\bbF_2$-analog of \Cref{lem:bredon-constant}. It is an exercise on the worksheet to show that $S^{k\sigma}/C_2 \simeq \Sigma \bbR \mathbb{P}^{k-1}$. These groups are determined by
+    \[
+    \widetilde H^n(\Sigma \bbR \mathbb{P}^{k-1};\bbF_2) \cong \begin{cases} \bbF_2, & n = 2,3,\ldots,k \\ 0 & \text{else}. \end{cases}
+    \]
+    So, for $k > 0$, we have
+    \[
+    H^{n-k\sigma}(\ast;\ul{\bbF}_2) \cong \begin{cases}  \bbF_2 & 2 \le n \le k \\ 0 &\text{else}\end{cases}
+    \]
+    These determines the blue region of the diagram (this is often referred to as the `negative' cone). 
+
+    Now we turn to the harder part, which is the computation of $ H_{C_2}^{n+k\sigma}(\ast;\ul{\bbF}_2)$ for $k\ge 0$. Here we have
+    \[
+    H_{C_2}^{n+k\sigma}(\ast;\ul{\bbF}_2) \cong \widetilde H_{C_2}^{n+k\sigma}(S^0;\ul{\bbF_2}) \cong \widetilde H^{C_2}_{-n-k\sigma}(S^0;\ul{\bbF}_2)
+    \]
+    where the last equivalence uses an equivariant version of Poincar\'{e} duality. This is in fact the motivation for $RO(G)$-grading - if we want to have Poincar\'{e} duality, we are forced into grading over representations. Taking this on faith, we must therefore compute the groups $\widetilde H^{C_2}_{-n}(S^{k\sigma},\ul{\bbF_2})$
+    Since we work with homology, the $\mathcal{O}_G$-module $\ul{\bbF}_2$ here refers to the $\mathcal{O}_G$-module whose transfer maps are all 0. This $\mathcal{O}_G$-module splits as $\Inf_e^{C_2}\bbF_2 = N$ and $L$, the $\mathcal{O}_G$-module that is $\bbF_2$ at the bottom, and $0$ at the top. So
+    \[
+ \widetilde H^{C_2}_{-n}(S^{k\sigma};\ul{\bbF_2}) \cong \widetilde H^{C_2}_{-n}(S^{k\sigma};N \oplus L) 
+\cong \widetilde H^{C_2}_{-n}(S^{k\sigma};N) \oplus \widetilde H^{C_2}_{-n}(S^{k\sigma};L)
+    \]
+    By \Cref{lem:bredon-homology} and the homology analog of the argument given in the proof of Smith theory, we have 
+    \[
+     \widetilde H^{C_2}_{-n}(S^{k\sigma};\ul{\bbF_2})  \cong \widetilde H_{-n}(S^0;\bbF_2) \oplus \widetilde H_{-n}(((S^{k\sigma})/S^0)/C_2;\bbF_2)
+    \]
+    The first term gives us an $\bbF_2$ when $n = 0$, and gives the dots on the positive $y$-axis in the figure.  In order to compute this, we note that there is a cofiber sequence 
+\[S(k\sigma)_+ \to  D(k\sigma)_+ \to  S^{k\sigma},\]
+where $S(V)$ and $D(V)$ denote the unit sphere and unit disk, respectively, inside an orthogonal
+representation. Now $S(k\sigma)$ is actually $S^{k-1}_a$, the antipodal sphere of dimension $k-1$. Using the $D(k\sigma)$ is equivariantly contractible, passing to quotients gives us the sequence
+\[
+\bbR \mathbb{P}^{k-1}_+ \to S^0 \to S^{k\sigma}/C_2 \to \Sigma \bbR \mathbb{P}^{k-1}_+
+\]
+In the end, we deduce that
+    \[
+     \widetilde H^{C_2}_{-n}(S^{k\sigma};\ul{\bbF_2})  \cong \widetilde H_{-n}(S^0;\bbF_2) \oplus \widetilde H_{-n}(\Sigma \bbR\mathbb{P}^{k-1}_+;\bbF_2)
+    \]
+    The first term contributes an $\bbF_2$ when $n = 0$, while the second does so whenever $n \in [1,k]$. This gives the red region in the diagram. 
+\end{proof}
+\chapter{From spaces to spectra}
 	% End the document without loading the bibliography
 	% or the index, or the list of notation.
 \end{document}

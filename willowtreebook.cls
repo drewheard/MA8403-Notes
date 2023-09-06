@@ -282,6 +282,7 @@ Analphabetics
 %{%
 \usepackage{cleveref}
 \newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{axiom}[theorem]{Axiom}
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{proposition}[theorem]{Proposition}
