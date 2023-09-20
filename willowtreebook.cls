@@ -42,6 +42,7 @@
 \RequirePackage{isomath}
 \RequirePackage[tt=lining]{cfr-lm}
 \RequirePackage[mathscr]{eucal}
+%\RequirePackage{mathrsfs}
 \RequirePackage[%
 activate={true,nocompatibility},%
 final,%

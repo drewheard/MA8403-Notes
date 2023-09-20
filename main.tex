@@ -76,6 +76,7 @@
 \dmo{\Ind}{Ind}
 \dmo{\Coind}{Coind}
 \dmo{\Grp}{Grp}
+\dmo{\Sp}{Sp}
 \dmo{\Aut}{Aut}
 \dmo{\Iso}{Iso}
 \dmo{\Map}{Map}
@@ -996,7 +997,7 @@ is a bijection if $\dim(X) \le \theta$ and surjective if $\dim X = \theta$. In p
 \begin{proof}
 Taking $A = \emptyset$ gives a map $\tilde g \colon X \to Y$ and a homotopy $\tilde h \colon X \times I \to Z$ satisfying $h(-,0) = f$ and $h(-,1) = e \circ \tilde g$, hence $[f] = [e \circ \tilde g] \in [X,Z]_G$ and therefore $e_*$ is surjective. Now assume we are given two maps $g_0,g_1 \colon X \to Y$ and an equivalence $[e \circ g_0] = [e \circ g_1]$. In particular, there exists a $G$-homotopy $H \colon X \times [0,1] \to Z$. 
 
-We want to apply HELP to the pair $(X \times [0,1],X \times \{0,1\})$. We define $g \colon X \times \{ 0, 1 \} \to Y$ to be $e_0$ at time 0, and $e_1$ at time 1. Similarly, we define $h \colon X \times \{0,1\} \times I \to Z$ to be $H(x,s)$. The HELP theorem then gives us a $G$-homotopy $\tilde g$ between $e_0$ and $e_1$. 
+We want to apply HELP to the pair $(X \times [0,1],X \times \{0,1\})$. We define $g \colon X \times \{ 0, 1 \} \to Y$ to be $g_0$ at time 0, and $g_1$ at time 1. Similarly, we define $h \colon X \times \{0,1\} \times I \to Z$ to be a constant homotopy. The HELP theorem then gives us a $G$-homotopy $\tilde g$ between $g_0$ and $g_1$. 
 \end{proof}
 As a corollary, we obtain an equivariant version of Whitehead's theorem. 
 \begin{corollary}
@@ -1232,7 +1233,7 @@ Any Mackey functor $\underline{M}$ gives rise to a coefficient system by forgett
 One can check that the composite does not depend on the choice of factorization. 
 \end{example}
 \begin{example}
-For $n \ge 2$ the equivariant homotopy groups $\pi_n(X^H)$ for $H \le G$ assemble into a coefficient system denoted $\underline{\pi}_n(X)$. Indeed, the functor $G/H \mapsto X^H$ defines a coefficient system valued in spaces, and then we simply apply $\pi_n$ to this. This clearly applies in other contexts, for example the assignment $\underline{H}_n(X;A) \coloneqq H_n(X^K;A)$ determines a coefficient system. 
+For $n \ge 2$ the equivariant homotopy groups $\pi_n(X^H)$ for $H \le G$ assemble into a coefficient system denoted $\underline{\pi}_n(X)$. Indeed, the functor $G/H \mapsto X^H$ defines a coefficient system valued in (based) spaces, and then we simply apply $\pi_n$ to this. This clearly applies in other contexts, for example the assignment $\underline{H}_n(X;A)(G/H) \coloneqq H_n(X^K;A)$ determines a coefficient system. 
 \end{example}
 \begin{example}
 Let $G = C_2$ and $X = S^{\sigma}$. Then $X^{C_2} \simeq S^0$ and $X^1 \simeq S^1$. It follows that 
@@ -1281,6 +1282,9 @@ In the case of $M = \underline{\bbZ}$, this turns out to be very simple.
     \Hom_{\coeff}(C,\underline{\bbZ}) \cong \Hom_{AbGrps}(C(G/e)/G,\mathbb{Z}).
     \]
 \end{lemma}
+\begin{proof}Exercise.
+\end{proof}
+\begin{comment}
 \begin{proof}[Sketch of proof:]
     Given a morphism of coefficient systems $C \to \mathbb{Z}$, we can evaluate at $G/e$ to get a map $C(G/e) \to \bbZ$, which factors through $C(G/e)/G$ because the action on $\mathbb{Z}(G/e) = \mathbb{Z}$ is trivial.  In the other direction, any morphism $C(G/K) \to C(G/e)$ must make the following diagram commute: 
     % https://q.uiver.app/#q=WzAsNCxbMCwwLCJDKEcvSykiXSxbMCwxLCJDKEcvZSkiXSxbMSwwLCJcXG1hdGhiYntafSJdLFsxLDEsIlxcbWF0aGJie1p9Il0sWzAsMV0sWzAsMiwiZl9LIiwyXSxbMiwzLCIiLDIseyJsZXZlbCI6Miwic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFsxLDMsImZfZSIsMl1d
@@ -1294,6 +1298,7 @@ In the case of $M = \underline{\bbZ}$, this turns out to be very simple.
 \end{tikzcd}\]
 and so $f_K$ is determined by $f_e$. 
 \end{proof}
+\end{comment}
 \begin{example}
     In Example~\eqref{ex:sign-sphere-cell-complex} we computed the cellular complex for $S^{\sigma}$, up to determining the boundary maps. There is only one map left to determine, and that is the map
     \[
@@ -1376,7 +1381,7 @@ and the gray hemispheres are the single 2-cell $C_2/e \times D^2$.}\label{s2-sig
     For any $G$-space $X$ we have $H_G^n(X;\Inf_e^G(\bbZ)) \cong H^n(X^G;\bbZ)$. 
     \end{lemma} 
     \begin{proof}
-    We recall that $\Inf_e^G(\bbZ)$ is the Mackey functor whose value at $G$ is $\bbZ$ and is $0$ elsewhere. Then it is clear that $\Hom_{\coeff}(C,\Inf_e^G(\bbZ)) \cong \Hom_{AbGrp}(C(G/G),\bbZ)$, and the result follows by definition of Bredon homology. 
+   Exercise.
     \end{proof}
     Finally, we can also get the ordinary homology of the underlying non-equivariant space of $X$:
     \begin{lemma}
@@ -1450,8 +1455,8 @@ is the usual tensor product over $R$.
     \begin{proof}
 For such spaces the projection map $EG \times X \to X$ is a $G$-equivariant weak equivalence. Since $X$ was assumed to be a $G$-CW complex, the Whitehead theorem (\Cref{thm:whitehead}) implies that the projection is a $G$-equivariant homotopy equivalence. 
     \end{proof}
-    \section{Application - Smith theory}
-    We will use Bredon homology to proof the following theorem. 
+    \section{Application - Smith theory and the Conner conjecture}
+    We will use Bredon homology to prove the following theorem. 
     \begin{theorem}[Smith]
     Let $G$ be a finite $p$-group and $X$ be a finite $G$-CW complex such that the underlying topological space of $X$ is an $\mathbb{F}_p$-cohomology sphere, i.e.,  $H^*(X;\mathbb{F}_p) \cong H^*(S^n;\mathbb{F}_p)$ for some $n$. Then $X^G$ is either empty or an $\mathbb{F}_p$-cohomology sphere (of equal or smaller dimension).  
     \end{theorem}
@@ -1460,7 +1465,7 @@ We claim that we can easily reduce to the case $G = \bbZ/p$. Indeed, if $H \subs
 \[
 H_G^*(X;M) \cong H^*(X;\bbF_p) \quad \text{ and } \quad H_G^*(X;M) \cong H^*(X^G;\mathbb{F}_p). 
 \]
-namely $M = \Ind_e^{G}(\bbF_p)$ and $N = \Inf_e^G(\bbF_p)$. We claim that there also exists a coefficient system $L$ such that $H_G^*(X;L) \cong \widetilde H^*((X/X^G)/G;\mathbb{F}_p)$. Indeed, we leave it as an exercise to show that $L \coloneqq \ker(\underline{\bbF}_p \to \Inf_e^G(\bbF_p))$ works. 
+namely $M = \Ind_e^{G}(\bbF_p)$ and $N = \Inf_e^G(\bbF_p)$. We claim that there also exists a coefficient system $L$ such that $H_{C_p}^*(X;L) \cong \widetilde H^*((X/X^{C_p})/C_p;\mathbb{F}_p)$. Indeed, we leave it as an exercise to show that $L \coloneqq \ker(\underline{\bbF}_p \to \Inf_e^{C_p}(\bbF_p))$ works.
 
 We now fix $p = 2$ for simplicity. We have a short exact sequence
 \[
@@ -1479,7 +1484,7 @@ where $I$ is the inflation from $e$ to $C_2$ of $\bbF_2$. This induces a long ex
 Let 
 \[
 a_n = \dim \widetilde H^n((X/X^{C_2})/C_2;\mathbb{F}_2), \quad b_n = \dim  H^n(X;\bbF_2), \quad c_n = H^n(X^{C_2};\bbF_2). \]
-Then exactness of the long exact sequence implies that
+Then exactness of the long exact sequence (at the direct sum) implies that
 \[
 a_n + c_n \le b_n + a_{n+1}. 
 \]
@@ -1489,14 +1494,49 @@ a_0 + c_0 + c_1 \le b_0 + a_1 + c_1 \le b_0 + b_1 + a_2
 \]
 or more generally that 
 \[
-a_0 + c_0 + c_1 + \ldots c_n \le b_0 + b_1 + \cdots + b_n + a_{n-1}
+a_q + c_q + c_{q+1} + \ldots c_{q+n} \le b_q + b_{q+1} + \cdots + b_{q+n} + a_{q+n+1}
 \]
-for any $n$. Since $X$ was assumed to be a finite complex, we know that $a_n$ vanishes for $n$ large enough, so that $\sum c_i \le \sum b_i$. But by assumption $\sum b_i = 2$. It follows that $\sum c_i \le 2$. If we assume that $X^{C_2}$ is non-zero, then we must have $\sum c_i > 0$, so it remains to eliminate the possibility that $\sum c_i = 1$. But applying the Euler characteristic\footnote{Recall that this is the alternating sum of the ranks of the cohomology} we deduce that 
+for any $n$ and $q \ge 0$. Taking $q = 0$ and $n$ large enough, we deduce that $\sum c_i \le \sum b_i$. But by assumption $\sum b_i = 2$. It follows that $\sum c_i \le 2$. If we assume that $X^{C_2}$ is non-zero, then we must have $\sum c_i > 0$, so it remains to eliminate the possibility that $\sum c_i = 1$. But applying the Euler characteristic\footnote{Recall that this is the alternating sum of the ranks of the cohomology} we deduce that 
 \[
 \chi(X) = \chi(X^{C_2}) + 2\chi((X/X^{C_2})/C_2)\equiv \chi(X^{C_2}) \mod (2). 
 \]
 This finishes the proof. 
 \end{proof}
+ \begin{theorem}[Conner conjecture, proved by Oliver]
+Let $G$ be a finite group, and let $X$ have the homotopy type of a finite dimensional $G$-CW complex. Then,
+\[
+\widetilde H^*(X;A) = 0 \implies \widetilde H^*(X/G;A) = 0. 
+\]
+ \end{theorem}
+ \begin{remark}
+ The finiteness assumption is neccessary. Note that the free $G$-space $EG$ is contractible, but $EG/G = BG$ has non trivial cohomology unless $G = e$. 
+ \end{remark}
+
+ \begin{proof}
+We will prove this for $G = C_p$ - again, once can reduce to this case. We will still stick with $p = 2$. First, we assume that $X^{C_2}$ has a fixed point - if not, we can replace it with $\Sigma X$.
+
+ By Smith theory, and the assumption that $X$ is acyclic, we have
+ \[
+ \sum_i c_i = \sum_i \dim(H^i(X^{C_2};\bbF_2)) \le \sum_i b_i = \sum_i \dim(H^i(X;\bbF_2)) = 1.
+ \]
+and
+ \[
+ \chi(X) \equiv \chi(X^{C_2})  = 1 \mod (2).
+ \]
+This is only possible if $\widetilde H^*(X^{C_2};\bbF_2) = 0$. Likewise, summing over the inequalities,
+\[
+a_q+c_q \le b_q + a_{q+1}
+\]
+we deduce that $a_q = 0$ for all $q$ (this uses that $b_0 = a_0 = 1$ and $b_q = a_q = 0$ for $q>0$), so that $\widetilde H^*((X/X^{C_p})/C_p;\mathbb{F}_p) = 0$ as well. This is enough to show that $\widetilde H^*(X/C_p;\mathbb{F}_p) = 0$ as well, by using the long exact sequence of the following:
+\[
+X^{C_p} \hookrightarrow X/X^{C_p} \to (X/X^{C_p})/C_p
+\]
+Now suppose that $A = \mathbb{Q}$. Then the composite
+\[
+\widetilde H^*(X/C_p;\mathbb{Q}) \xrightarrow{} \widetilde H^*(X;\mathbb{Q})  \xrightarrow{\tau} \widetilde H^*(X/C_p;\mathbb{Q})
+\]
+where the second map is the transfer, is multiplication by $|C_p| = p$, and so is an isomorphism. It follows that $\widetilde H^*(X/C_p;\mathbb{Q}) = 0$. Now suppose that the theorem holds for $A = \mathbb{Z}$. Then by universal coefficients $\widetilde H^*(X;A) = 0$ for $A = \mathbb{Q}$ and $A = \mathbb{F}_p$, and so by the above,  $\widetilde H^*(X/C_p;A) = 0$ for $A = \mathbb{Q}$ and $A = \mathbb{F}_p$. Running universal coefficients again, the theorem holds for $A = \mathbb{Z}$, and then finally one last application of the universal coefficient theorem shows that it holds for arbitrary coefficients. 
+ \end{proof}
 \section{Axioms for equivariant homology and cohomology}
 We know that (co)homology can be characterized on CW complexes by the Eilenberg--Steenrod axioms. Are there similar axioms for equivariant (co)homology theories? The answer is yes. This takes place in the category of pairs of $G$-CW complexes, i.e., the category with objects $(X,A)$ for $X$ a $G$-CW complex and $A$ a sub-complex, and morphisms $(X,A) \to (Y,B)$ morphisms $f \colon X \to Y$ such that $f(A) \subseteq B$. 
 \begin{definition}
@@ -1556,7 +1596,7 @@ So far we have indexed our cohomology theories on the integers $\bbZ$. However, 
 \end{remark}
 In any case, we end up with suspension and loop functors for a representation $V$, and the following axiom:
 \begin{axiom}[Equivariant suspension axiom]
-For each $\alpha \in RO(G)$and actual representation $V$, there is a natural isomorphism
+For each $\alpha \in RO(G)$ and actual representation $V$, there is a natural isomorphism
 \[
 \Sigma^V\colon \widetilde H_G^{\alpha}(X) \xrightarrow{\sim} \widetilde H_G^{\alpha+V}(\Sigma^VX) = \widetilde H_G^{\alpha+V}(S^V \wedge X).
 \]
@@ -1652,7 +1692,106 @@ In the end, we deduce that
     \]
     The first term contributes an $\bbF_2$ when $n = 0$, while the second does so whenever $n \in [1,k]$. This gives the red region in the diagram. 
 \end{proof}
-\chapter{From spaces to spectra}
+\chapter{From $G$spaces to $G$-spectra}
+\section{From spaces to spectra}
+We begin with some motivation for the category of spectra. 
+\begin{remark}
+    We recall that for a space $X$ the Freudenthal suspension theorem says that the maps
+    \[
+    \pi_n(X) \to \pi_{n+1}(\Sigma X) \to \pi_{n+2}(\Sigma^2X) 
+    \]
+    eventually stabilize (after finitely many steps). We call these the \emph{stable} homotopy groups of $X$. One can wonder: is there an object whose $n$-th homotopy group is the $n$-th stable homotopy groups of $X$. This is what spectra are designed to do. 
+\end{remark}
+\begin{definition}
+    A spectrum $E$ is a sequence of spaces $E = \{ E_n \}$  and maps $\sigma_n \colon \Sigma E_n \to E_{n+1}$. The $r$-th homotopy group of $E$ is defined to be
+    \[
+    \pi_r(E) \coloneqq \lim_{n \to \infty} \pi_{n+r}(E_n),
+    \]
+    where the colimit is taken over the diagram where the maps are 
+    \[
+    \pi_{n+r}(E_n) \xrightarrow{\Sigma_n} \pi_{n+r+1}(\Sigma E_n) \to \pi_{n+r+1}(E_{n+1}).
+    \]
+    A CW-spectrum additionally has the property that each $E_n$ is a CW-complex, and the maps $\Sigma E_n \to E_{n+1}$ exhibit $\Sigma E_n$ as a subcomplex of $E_{n+1}$. 
+\end{definition}
+\begin{remark}
+    We note that stable homotopy groups are in general defined for all $r \in \mathbb{Z}$, where we must start the colimit for $n+r \ge 0$. For example, $\pi_{-1}(E)$ is the colimit of 
+    \[
+    \pi_0(E_1) \to \pi_1(E_2) \to \cdots 
+    \]
+\end{remark}
+\begin{example}
+    For a based space $X$, the suspension spectrum $\Sigma^{\infty}X$ is the spectrum consisting of spaces $\{ \Sigma^n X\}$ with maps $\sigma_n \colon \Sigma^{n+1}X \to \Sigma^{n+1}X$ the identity map. For example, $\Sigma^{\infty}S^0$ is what people refer to as the \emph{sphere spectrum} and is often denoted by $\mathbb{S}$. The $n$-th homotopy group of $\Sigma^{\infty}X$ is exactly the $n$-th stable homotopy group of $X$. 
+\end{example}
+Another reason to care about these is that they represent cohomology theories. 
+\begin{theorem} (Adams’ Brown representability theorem). Every cohomology (resp.~homology) theory on CW-complexes is represented (resp.~corepresented) by a spectrum.
+\end{theorem}
+
+What is a morphism of spectra? There is an obvious guess:
+\begin{definition}
+    A \emph{strict morphism} of spectra $f \colon E \to F$ of degree $r$ is a sequence of maps $f_n \colon E_n \to F_{n-r}$ such that the diagram
+\[\begin{tikzcd}
+	{\Sigma E_n} & {\Sigma F_{n-r}} \\
+	{E_{n+1}} & {F_{n+1-r}}
+	\arrow["{\Sigma f_n}", from=1-1, to=1-2]
+	\arrow[from=1-1, to=2-1]
+	\arrow["{f_{n+1}}"', from=2-1, to=2-2]
+	\arrow[from=1-2, to=2-2]
+\end{tikzcd}\]
+strictly commutes. 
+\end{definition}
+This turns out to not be the correct thing. For example, we would like the Hopf map $\eta \colon S^3 \to S^2$ to give a morphism $\mathbb{S} \to \mathbb{S}$ of degree 1, but this map does not desuspend to a map $S^2 \to S^1$ or a map $S^1 \to S^0$. There is a fix for this. 
+\begin{definition}
+    Let $E$ be a CW spectrum. A subspectrum of $E$ is a sequence of subcomplexes $F_n \subseteq E_n$ so that $\Sigma F_n$ is a subcomplex of $F_{n+1}$. We
+say that $F$ is cofinal if every cell of $E$ contains an element which is a cell of some $F_n$. This is equivalent to the following: for each $n$ and each finite subcomplex $K \subseteq E_n$ there is a $d$ such that $\Sigma^d K \subseteq F_{n+d}$. 
+\end{definition}
+\begin{definition}
+    A morphism between CW spectra $f \colon X \to Y$ is defined to be a strict map $X' \to Y$ for some cofinal subspectrum $X'$ of $X$. Two maps $X \to Y$ between CW-spectra are considered to be the same if if they take the same values on a common cofinal subspectrum. Since the intersection of two cofinal subspectra is a cofinal subspectrum, this amounts to saying that replacing the cofinal subspectrum on which a spectrum map is defined by a smaller cofinal subspectrum is regarded as giving the same map. We need to check this is well defined, and that we can compose maps, but this can be done. 
+\end{definition}
+One can then go on to define a notion of homotopy by defining $X \times I$ to be the spectrum with $(X \times I)_n \simeq X_n \times I$ (the reduced product, i.e., the basepoint cross $I$ is collapsed to a point). This leads to the stable homotopy category $\Ho(\Sp)$. Here are two useful facts about this category. 
+\begin{theorem}[Whitehead theorem]
+    A morphism $f \colon X \to Y$ between CW-complexs that induces an isomorphism on homotopy groups is a homotopy equivalence. 
+\end{theorem}
+\begin{theorem}
+    The map $[X,Y] \to [\Sigma X,\Sigma Y]$ is a bijection, and $\Sigma$ is an auto-equivalence of our category. 
+\end{theorem}
+\begin{example}
+    Let $X_n = K(G,n)$ for an abelian group $G$. Then we can define a spectrum $HG$ with $(HG)_n \simeq K(G,n)$ and the map $\sigma_n \colon \Sigma K(G,n) \to K(G,n+1)$ the adjoint to the equivalence $K(G,n) \xrightarrow{\simeq} \Omega K(G,n+1)$. We know that
+    \[
+    H^n(X;G) \cong [X,K(G,n)]
+    \]
+    and 
+    \[
+    H^n(X;G) \cong [\Sigma^{\infty}X,HG]_{-n} 
+    \]
+\end{example}
+One could like to get read of the `homotopy' part of $\Ho(\Sp)$ and build a stable model category, or $\infty$-category, whose homotopy category is the homotopy category considered above. It took a long time to find the right technical tools to do this, but there are now several different approaches. Note that what we have really done is inverted the suspension functor, and made its inverse the loops functor. With a bit of machinery, one can even make this into a definition:
+\[
+\Sp \coloneqq \varprojlim(\Top_* \xrightarrow{\Omega} \Top_* \xrightarrow{\Omega} \cdots )
+\]
+Here we take the colimit in the category of categories. Equivalently, this is the colimit in the category of presentable categories
+\[
+\Sp \coloneqq \Top_*[S^{-1}] \simeq \varinjlim(\Top_* \xrightarrow{ - \wedge S^1} \Top_* \xrightarrow{\wedge S^1} \cdots )
+\]
+\begin{remark}
+    It is useful to recall by analogy that in commutative algebra we have
+    \[
+    R[x^{-1}] \cong \varinjlim(R \xrightarrow{\cdot x} R \xrightarrow{\cdot x} R \cdots 
+    \]
+\end{remark}
+\section{$G$-spaces and $G$-spectra}
+We have seen that we have $G$-spaces, and so we can try and stabilize and talk about $G$-spectra. Our first guess might be to directly take the definition of spectra and put a $G$-everywhere. 
+\begin{definition}
+    A $G$-equivariant $S^1$ spectrum $E$ is a sequence of $G$-spaces $E = \{ E_n \}$  and equivariant maps $\sigma_n \colon \Sigma E_n \to E_{n+1}$.
+    \end{definition}
+This defines for us the so-called category of `naive' $G$-spectra. By a variant of Elmendorf's theorem, we have the following:
+\begin{theorem}
+    The category of naive $G$-spectra is equivalent to the category $\Fun(\mathcal{O}_G^{op},\Sp)$. 
+\end{theorem}
+Although these are not ultimately not what we will be interested in, they are still strong enough to represent $\mathbb{Z}$-graded cohomology theories. 
+\begin{theorem}
+    Every cohomology (resp.~homology) theory on $G$-CW complexes is represented (resp.~corepresented) by a naive $G$-spectrum.
+\end{theorem}
+
 	% End the document without loading the bibliography
 	% or the index, or the list of notation.
 \end{document}
