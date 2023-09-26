@@ -43,10 +43,12 @@
 -- cycle
 }
 
+
 \newcommand{\nc}{\newcommand}
 \nc{\ul}{\underline}
 \nc{\dmo}{\DeclareMathOperator}
 \dmo{\Sub}{Sub}
+\dmo{\Ch}{Ch}
 \nc{\bbZ}{\mathbb{Z}}
 \nc{\bbR}{\mathbb{R}}
 \nc{\bbF}{\mathbb{F}}
@@ -84,7 +86,7 @@
 \dmo{\Ab}{Ab}
 \dmo{\Hom}{Hom}
 \dmo{\id}{id}
-
+\usepackage{physics}
 \pgfdeclarelayer{background}
 \pgfsetlayers{background,main}
 %%Alternative command for C_p-Lewis diagrams
@@ -1692,7 +1694,7 @@ In the end, we deduce that
     \]
     The first term contributes an $\bbF_2$ when $n = 0$, while the second does so whenever $n \in [1,k]$. This gives the red region in the diagram. 
 \end{proof}
-\chapter{From $G$spaces to $G$-spectra}
+\chapter{From $G$-spaces to $G$-spectra}
 \section{From spaces to spectra}
 We begin with some motivation for the category of spectra. 
 \begin{remark}
@@ -1749,7 +1751,7 @@ say that $F$ is cofinal if every cell of $E$ contains an element which is a cell
 \end{definition}
 One can then go on to define a notion of homotopy by defining $X \times I$ to be the spectrum with $(X \times I)_n \simeq X_n \times I$ (the reduced product, i.e., the basepoint cross $I$ is collapsed to a point). This leads to the stable homotopy category $\Ho(\Sp)$. Here are two useful facts about this category. 
 \begin{theorem}[Whitehead theorem]
-    A morphism $f \colon X \to Y$ between CW-complexs that induces an isomorphism on homotopy groups is a homotopy equivalence. 
+    A morphism $f \colon X \to Y$ between CW-complexes that induces an isomorphism on homotopy groups is a homotopy equivalence. 
 \end{theorem}
 \begin{theorem}
     The map $[X,Y] \to [\Sigma X,\Sigma Y]$ is a bijection, and $\Sigma$ is an auto-equivalence of our category. 
@@ -1775,10 +1777,10 @@ Here we take the colimit in the category of categories. Equivalently, this is th
 \begin{remark}
     It is useful to recall by analogy that in commutative algebra we have
     \[
-    R[x^{-1}] \cong \varinjlim(R \xrightarrow{\cdot x} R \xrightarrow{\cdot x} R \cdots 
+    R[x^{-1}] \cong \varinjlim(R \xrightarrow{\cdot x} R \xrightarrow{\cdot x} R \cdots )
     \]
 \end{remark}
-\section{$G$-spaces and $G$-spectra}
+\section{$G$-spaces and $G$-spectra - first attempt}
 We have seen that we have $G$-spaces, and so we can try and stabilize and talk about $G$-spectra. Our first guess might be to directly take the definition of spectra and put a $G$-everywhere. 
 \begin{definition}
     A $G$-equivariant $S^1$ spectrum $E$ is a sequence of $G$-spaces $E = \{ E_n \}$  and equivariant maps $\sigma_n \colon \Sigma E_n \to E_{n+1}$.
@@ -1791,7 +1793,198 @@ Although these are not ultimately not what we will be interested in, they are st
 \begin{theorem}
     Every cohomology (resp.~homology) theory on $G$-CW complexes is represented (resp.~corepresented) by a naive $G$-spectrum.
 \end{theorem}
+So what is the problem? One motivation comes from duality. Let us say a few words about this. 
+\begin{definition}
+    Let $(\mathcal{C},\otimes,\mathbf{1})$ be a symmetric monoidal category. An object $B \in \mathcal{C}$ is a strong dual of an object $A$ if there exist morphisms
+    \[
+    \epsilon \colon B \otimes A \to \mathbf{1} \quad \text{ and } \eta \colon  \mathbf{1} \to B \otimes A
+    \]
+    called evaluation and coevaluation, which make the following diagrams commute:
+    % https://q.uiver.app/#q=WzAsMyxbMCwwLCJcXG1hdGhiZnsxfSBcXG90aW1lcyBBIFxcY29uZyBBIl0sWzIsMCwiQSBcXGNvbmcgQSBcXG90aW1lcyBcXG1hdGhiZnsxfSJdLFsxLDEsIkEgXFxvdGltZXMgQiBcXG90aW1lcyBBIl0sWzAsMSwiXFx0ZXh0e2lkfV9BIl0sWzAsMiwiXFxldGEgXFxvdGltZXMgXFx0ZXh0e2lkfV9BIiwyXSxbMiwxLCJcXHRleHR7aWR9X0EgXFxvdGltZXMgXFxlcHNpbG9uIiwyXV0=
+\[\begin{tikzcd}
+	{\mathbf{1} \otimes A \cong A} && {A \cong A \otimes \mathbf{1}} \\
+	& {A \otimes B \otimes A}
+	\arrow["{\text{id}_A}", from=1-1, to=1-3]
+	\arrow["{\eta \otimes \text{id}_A}"', from=1-1, to=2-2]
+	\arrow["{\text{id}_A \otimes \epsilon}"', from=2-2, to=1-3]
+\end{tikzcd}\]
+and 
+% https://q.uiver.app/#q=WzAsMyxbMiwwLCJcXG1hdGhiZnsxfSBcXG90aW1lcyBCIFxcY29uZyBCIl0sWzEsMSwiQiBcXG90aW1lcyBBIFxcb3RpbWVzIEIiXSxbMCwwLCJCIFxcY29uZyBCIFxcb3RpbWVzIFxcbWF0aGJmezF9Il0sWzEsMCwiXFxlcHNpbG9uIFxcb3RpbWVzIFxcdGV4dHtpZH1fQiIsMl0sWzIsMCwiXFx0ZXh0e2lkfV9CIl0sWzIsMSwiXFx0ZXh0e2lkfV9CIFxcb3RpbWVzIFxcZXRhICIsMl1d
+\[\begin{tikzcd}
+	{B \cong B \otimes \mathbf{1}} && {\mathbf{1} \otimes B \cong B} \\
+	& {B \otimes A \otimes B}
+	\arrow["{\epsilon \otimes \text{id}_B}"', from=2-2, to=1-3]
+	\arrow["{\text{id}_B}", from=1-1, to=1-3]
+	\arrow["{\text{id}_B \otimes \eta }"', from=1-1, to=2-2]
+\end{tikzcd}\]
+\end{definition}
+Here are some properties, which will be left as an exercise. 
+\begin{lemma} Let $B$ be a strong dual of $A$. 
+    \begin{enumerate}
+        \item $B$ is a strong dual of $A$ if and only if $A$ is a stong dual of $B$. 
+        \item If $B$ is a stong dual of $A$, then there is an adjunction $ - \otimes A \dashv - \otimes B$. Deduce that the strong dual of $A$, if it exists, is unique up to isomorphism (we typically denote it by $\mathbf{D}A$). 
+        \item If $\mathcal{C}$ is closed with internal hom $F(-,-)$, then the strong dual of an object $A$, if it exists, is $F(A,\mathbf{1})$. 
+    \end{enumerate}
+\end{lemma}
+We often just say that $A$ is strongly dualizable if there exists a strong dual for $A$. These objects have many nice properties, for example the following:
+\begin{proposition}\label{prop:dualizable-property}
+    When $X$ or $Z$ is strongly dualizable, the map
+    \[
+    F(X,Y) \otimes Z \to F(X,Y \otimes Z)
+    \]
+    given by the composite
+    \[
+    F(X,Y) \otimes Z \cong F(X,Y) \otimes F(\mathbf{1},Z) \to F(X,Y \otimes Z)
+    \]
+    is an equivalence. 
+\end{proposition}
+\begin{example}
+    Let $R$ be a commutative ring, and take $\mathcal{C} = (\Mod_R,\otimes_R,R)$. We can define the (weak) dual of any object to be $\Hom_R(-,R)$. Then, $\epsilon_M \colon \Hom_R(M,R) \otimes M \to R$ is the usual evaluation map $f \otimes m \mapsto f(m)$. The coevalution map sends $1 \in R$ to a finite sum $\sum_{i \in I} m_i \otimes f_i$. The triangle identities above then give
+    \[
+    \sum_{i \in I}m_if_i(p) = p, \quad  p \in M
+    \]
+    and
+    \[
+    \sum_{i \in I}r(m_i)f_i = r, \quad r \in \Hom_R(M,R). 
+    \]
+ Now consider the map that sends $\alpha \colon R^I \to M$ that sends $(r_i)_{i \in I}$ to $\sum_{i \in I}$, and the map $\beta \colon M \to R^I$ that sends $p \in M$ to $(f_i(p))_{i \in I}$. The triangle identities then imply that $M$ is finitely generated and a retract of $R^I$ ($\alpha\beta = \text{id}_{M}$), i.e., $M$ is a finitely generated projective module. In other words: $M$ is strongly dualizable in $\Mod_R$ if and only if it is finitely generated and projective. 
 
+ This example extends to chain complexes: a chain complex $M \in \Ch(R)$ is dualizable if and only if of $M_q$ is finitely generated for all $q$ and $M_q \ne 0$ for only finitely many $q$, and $M_q$ is projective for all $q$. 
+\end{example}
+What about the category of spectra? A non-trivial result is the following:
+\begin{theorem}
+    Finite CW-spectra and their wedge summands are dualizable in the stable homotopy category. 
+\end{theorem}
+From \Cref{prop:dualizable-property} (with $Y = \mathbb{S}$) we deduce the following:
+\begin{proposition}\label{prop:dualizable-iso}
+    Let $X$ be a dualizable spectrum, then for all spectra $E$ we have 
+    \[
+    \mathbf{D}X \otimes E \to F(X,E)
+    \]
+    is an equivalence, and hence there is an isomorphism
+    \[
+    E_*(\mathbf{D}X) \coloneqq \pi_*(\mathbf{D}X \wedge E) \xrightarrow{\cong} \pi_*F(X,E) \coloneqq E^*(X). 
+    \]
+\end{proposition}
+\begin{definition}
+    Let $S^q$ be a sphere of dimension $q$. Let $\eta \colon S^q \to X \wedge Y$ and $\epsilon \colon Y \wedge X \to S^q$, then we say that $X$ and $Y$ are $q$-dual if following diagrams commute up to homotopy: 
+    % https://q.uiver.app/#q=WzAsMyxbMCwwLCJTXnEgXFx3ZWRnZSBBIl0sWzIsMCwiQSBcXHdlZGdlIFNecSJdLFsxLDEsIkEgXFx3ZWRnZSBCIFxcd2VkZ2UgQSJdLFswLDEsIlxcdGF1Il0sWzAsMiwiXFxldGEgXFx3ZWRnZSBcXHRleHR7aWR9X0EiLDJdLFsyLDEsIlxcdGV4dHtpZH1fQSBcXHdlZGdlIFxcZXBzaWxvbiIsMl1d
+\[\begin{tikzcd}
+	{S^q \wedge A} && {A \wedge S^q} \\
+	& {A \wedge B \wedge A}
+	\arrow["\tau", from=1-1, to=1-3]
+	\arrow["{\eta \wedge \text{id}_A}"', from=1-1, to=2-2]
+	\arrow["{\text{id}_A \wedge \epsilon}"', from=2-2, to=1-3]
+\end{tikzcd}\]
+and
+% https://q.uiver.app/#q=WzAsMyxbMiwwLCJTXnEgXFx3ZWRnZSBCIl0sWzEsMSwiQiBcXHdlZGdlIEEgXFx3ZWRnZSBCIl0sWzAsMCwiQiBcXHdlZGdlIFNecSJdLFsxLDAsIlxcZXBzaWxvbiBcXG90aW1lcyBcXHRleHR7aWR9X0IiLDJdLFsyLDAsIigtMSlebiBcXHRhdSJdLFsyLDEsIlxcdGV4dHtpZH1fQiBcXHdlZGdlIFxcZXRhICIsMl1d
+\[\begin{tikzcd}
+	{B \wedge S^q} && {S^q \wedge B} \\
+	& {B \wedge A \wedge B}
+	\arrow["{\epsilon \otimes \text{id}_B}"', from=2-2, to=1-3]
+	\arrow["{(-1)^n \tau}", from=1-1, to=1-3]
+	\arrow["{\text{id}_B \wedge \eta }"', from=1-1, to=2-2]
+\end{tikzcd}\]
+Here $\tau$ denotes the interchange map. 
+\end{definition}
+\begin{remark}
+    Let $X$ and $Y$ be $q$-dual spaces. Then, $\mathbf{D}(\Sigma^{\infty}X) \simeq \Sigma^{-q}\Sigma^{\infty}Y$. 
+\end{remark}
+\begin{definition}
+    Let $\xi \colon V \to M$ be a vector bundle, then the Thom space of $\xi$ is defined to be $T\xi \coloneqq D(V)/S(V)$ where $D(V)$ and $S(V)$ are the unit disc and sphere bundles associated to $\xi$.\footnote{Let $\xi \colon V \to M$ be a vector bundle, and choose a metric on $V$; then, the disc bundle $D(V)$ is the subset of vectors with $\norm{x} \le 1$, and the sphere
+bundle $S(V)$ is the subset of vectors with $\norm{x} = 1$. These are fiber bundles with fiber $D^n$ and $S^{n-1}$, respectively.}
+\end{definition}
+Finally, we can state the duality theorem we are interested in.
+\begin{theorem}[Atiyah duality]
+   Let $M$ be a compact smooth $n$-dimensional manifold without boundary embedded in $\mathbb{R}^q$, and let $T\nu$ be the Thom space of its normal bundle $\nu$. Then $M_+$ and $T{\nu}$ are $q$-dual.
+\end{theorem}
+\begin{remark}
+    In other words, $\mathbf{D}(\Sigma^{\infty}M_+) \simeq \Sigma^{-q}\Sigma^{\infty}T\nu$. 
+\end{remark}
+Let us explain how this gives a version of Poincar\'e duality. We need one final definition and theorem. 
+\begin{definition}
+    Let $E$ and $\widetilde{E}$ be a generalized cohomology theory and the corresponding reduced theory respectively. For a bundle $\xi: V \to M$ and the associated Thom space $T \xi$, let $i_x: S^n_x \to T \xi$ be the canonical map where $S^n_x$ is the one-point compactification of the fiber $\xi^{-1}(x)$ for each $x \in M$. An $E$-orientation of $\xi$ is an element of degree $n$ in $\widetilde{E}^n(T \xi)$ such that $i_x^*(\mu) \in \widetilde{E}^n(S^n_x)$ is a generator.
+\end{definition}
+
+\begin{theorem}[Thom isomorphism ]
+    Let $\xi: V \to M$ be an $n$-dimensional bundle with an $E$-orientation $\mu \in \widetilde{E}^n(T \xi)$, then $\Phi$ given by
+\[
+- \cup \mu \colon  E^*(M) \to \widetilde{E}^{n+*}(T \xi)
+\]
+is an isomorphism.
+\end{theorem} 
+We now prove Poincar\'e duality. 
+\begin{theorem}[Poincar\'e Duality]
+Let $M$ be an $E$-orientable $n$-dimensional manifold without boundary, then there is an isomorphism
+\[
+E^*(M) \xrightarrow{\cong} E_{n-*}(M).
+\]
+\end{theorem}
+
+\begin{proof}
+Let $M$ be embedded in $\mathbb{R}^q$. The Poincar\'e duality map is given by the
+composite of the Thom isomorphism and the duality isomorphism induced by the
+$q$-dual pair $(M_+, T\nu)$:
+\[
+E^*(M) \rightarrow \widetilde{E}^{q-n+*}(T\nu) \rightarrow E_{n-*}(M).
+\]
+Since the normal bundle $\nu$ of the embedding $M \rightarrow \mathbb{R}^q$ has dimension $q - n$, the first
+map is indeed given by the Thom isomorphism. Since $(M^+, T\nu)$ is a $q$-dual pair,
+$(\Sigma^\infty M^+, \Sigma^{-q}\Sigma^\infty T\nu)$ is a dual pair of spectra, so
+\[
+\widetilde{E}^{q-n+*}(T\nu) \cong \widetilde{E}^{-n+*}(\Sigma^{-q}\Sigma^\infty T\nu) \rightarrow \widetilde{E}_{n-*}(\Sigma^\infty M_+) \cong E_{n-*}(M)
+\]
+is an isomorphism by \Cref{prop:dualizable-iso}.
+\end{proof}
+\begin{remark}
+   A key point in the proof is that any manifold embeds into $\mathbb{R}^n$. Suppose now that we work with $G$-manifolds (that is manifolds with a $G$-action by smooth maps). There is an equivariant version of Whitney's theorem, due to Mostow and Palais:
+   \begin{theorem}
+       Let $M$ be a compact $G$-manifold, then there is a $G$-equivariant embedding $M \hookrightarrow V$, where $V$ is some finite dimensional real representation of $G$. 
+   \end{theorem}
+   We can then try and repeat all the above arguments, and you will see that representations spheres naturally enter the picture. In other words, if we want an equivariant version of Poincar\'e duality, we are forced to space with representations spheres that $G$-manifolds embed in. Thus, unless we are interested in manifolds with trivial $G$-action, we need to smash with representation spheres! 
+\end{remark}
+
+\begin{remark}
+    Now we note that $G/H$ is always a smooth manifold, and in particular, the suspension spectrum $\Sigma^{\infty}G/H_+$ is dualizable in the category of spectra. Let us write $\Sp_{G}^{n}$ for the category of naive $G$-spectra. One can show that
+    \[
+    F_{\Sp_G^n}(\Sigma^{\infty}G/H_+,\mathbf{1}) \simeq \mathbf{1},
+    \]
+    and in particular, $\Sigma^{\infty}G/H_+$ cannot be dualizable unless $H = G$. 
+\end{remark}
+\begin{remark}
+    Here is one final reason that representations naturally appear: the equivariant version of the Freudenthal suspension theorem. To see this up, let $X$ be a based $G$-space and define
+    \[
+    \Sigma^VX \coloneqq S^V \wedge X \quad \text{ and } \quad \Omega^VX \coloneqq [S^V,X]
+    \]
+    These are adjoint, i.e., 
+    \[
+    [\Sigma^VX,Y] \simeq [X,\Omega^VY]
+    \]
+    and we can construct the following diagram
+    % https://q.uiver.app/#q=WzAsMyxbMCwwLCJbWCxZXSJdLFsxLDAsIltcXFNpZ21hXlZYLFxcU2lnbWFeVlldIl0sWzEsMSwiW1gsXFxPbWVnYV5WXFxTaWdtYV5WWF0iXSxbMCwxLCJcXFNpZ21hXlYiXSxbMSwyLCJcXGNvbmciXSxbMCwyLCJcXGV0YV8qIiwyXV0=
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{[X,Y]} \& {[\Sigma^VX,\Sigma^VY]} \\
+	\& {[X,\Omega^V\Sigma^VX]}
+	\arrow["{\Sigma^V}", from=1-1, to=1-2]
+	\arrow["\cong", from=1-2, to=2-2]
+	\arrow["{\eta_*}"', from=1-1, to=2-2]
+\end{tikzcd}\]
+where $\eta$ is the unit of the adjunction. Let $c(X)$ denote the connectivity of a space, where $c(X) = -1$ if $X$ is not path connected. Let $\nu$ be a
+function from conjugacy classes of subgroups of $G$ to $\mathbb{N} \cup \{ \infty \}$.
+\begin{theorem}[Freudenthal Suspension]
+The map $\eta \colon Y \rightarrow \Omega^V \Sigma^V Y$ is a $\nu$-equivalence if $\nu$ satisfies the following two conditions:
+\begin{enumerate}
+  \item $\nu(H) \leq 2c(Y^H) + 1$ for all subgroups $H$ with $\dim V^H > 0$.
+  \item $\nu(H) \leq c(Y^K)$ for all pairs of subgroups $K \subset H$ with $\dim V^K > \dim V^H$.
+\end{enumerate}
+Therefore,\footnote{via Whitehead's theorem} the suspension map
+\[
+\Sigma^V \colon [X,Y] \to [\Sigma^VX,\Sigma^VY]
+\]
+is surjective if $\dim(X^H ) \le \nu(H)$ for all $H$, and bijective if $\dim(X^H) \le \nu(H) -1$.
+\end{theorem}
+So once again, representations spheres appear quite naturally. 
+\end{remark}
 	% End the document without loading the bibliography
 	% or the index, or the list of notation.
 \end{document}
