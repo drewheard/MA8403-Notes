@@ -10,39 +10,6 @@
 \usepackage{tikz-cd}
 \usepackage{sseq}
 
-\newcommand{\convexpath}[2]{
-[   
-    create hullnodes/.code={
-        \global\edef\namelist{#1}
-        \foreach [count=\counter] \nodename in \namelist {
-            \global\edef\numberofnodes{\counter}
-            \node at (\nodename) [draw=none,name=hullnode\counter] {};
-        }
-        \node at (hullnode\numberofnodes) [name=hullnode0,draw=none] {};
-        \pgfmathtruncatemacro\lastnumber{\numberofnodes+1}
-        \node at (hullnode1) [name=hullnode\lastnumber,draw=none] {};
-    },
-    create hullnodes
-]
-($(hullnode1)!#2!-90:(hullnode0)$)
-\foreach [
-    evaluate=\currentnode as \previousnode using \currentnode-1,
-    evaluate=\currentnode as \nextnode using \currentnode+1
-    ] \currentnode in {1,...,\numberofnodes} {
-  let
-    \p1 = ($(hullnode\currentnode)!#2!-90:(hullnode\previousnode)$),
-    \p2 = ($(hullnode\currentnode)!#2!90:(hullnode\nextnode)$),
-    \p3 = ($(\p1) - (hullnode\currentnode)$),
-    \n1 = {atan2(\y3,\x3)},
-    \p4 = ($(\p2) - (hullnode\currentnode)$),
-    \n2 = {atan2(\y4,\x4)},
-    \n{delta} = {-Mod(\n1-\n2,360)}
-  in 
-    {-- (\p1) arc[start angle=\n1, delta angle=\n{delta}, radius=#2] -- (\p2)}
-}
--- cycle
-}
-
 
 \newcommand{\nc}{\newcommand}
 \nc{\ul}{\underline}
@@ -1465,7 +1432,7 @@ For such spaces the projection map $EG \times X \to X$ is a $G$-equivariant weak
     \begin{proof}
 We claim that we can easily reduce to the case $G = \bbZ/p$. Indeed, if $H \subseteq G$ is a normal subgroup, then $X^G \cong (X^H)^{(G/H)}$, and so we can induct on the order of the group using the Sylow theorems. We have already seen that there exist coefficient systems $M$ and $N$ such that 
 \[
-H_G^*(X;M) \cong H^*(X;\bbF_p) \quad \text{ and } \quad H_G^*(X;M) \cong H^*(X^G;\mathbb{F}_p). 
+H_G^*(X;M) \cong H^*(X;\bbF_p) \quad \text{ and } \quad H_G^*(X;N) \cong H^*(X^G;\mathbb{F}_p). 
 \]
 namely $M = \Ind_e^{G}(\bbF_p)$ and $N = \Inf_e^G(\bbF_p)$. We claim that there also exists a coefficient system $L$ such that $H_{C_p}^*(X;L) \cong \widetilde H^*((X/X^{C_p})/C_p;\mathbb{F}_p)$. Indeed, we leave it as an exercise to show that $L \coloneqq \ker(\underline{\bbF}_p \to \Inf_e^{C_p}(\bbF_p))$ works.
 
@@ -1475,9 +1442,9 @@ We now fix $p = 2$ for simplicity. We have a short exact sequence
 \]
 which extends to a short exact sequence of coefficient systems 
 \[
-0 \to L \to M \to I \oplus L \to 0
+0 \to L \to M \to N \oplus L \to 0.
 \]
-where $I$ is the inflation from $e$ to $C_2$ of $\bbF_2$. This induces a long exact sequence in cohomology, which we can rewrite (using the definitions of the coefficient systems) as 
+ This induces a long exact sequence in cohomology, which we can rewrite (using the definitions of the coefficient systems) as 
 \[
 \begin{split}
 \cdots \to \widetilde H^n((X/X^{C_2})/C_2;\mathbb{F}_2) &\to H^n(X;\bbF_2) \to \widetilde H^n((X/X^{C_2})/C_2;\mathbb{F}_2) \oplus H^n(X^{C_2};\bbF_2) \\ &\to \widetilde H^{n+1}((X/X^{C_2})/C_2;\mathbb{F}_2) \to \cdots
@@ -1511,7 +1478,7 @@ Let $G$ be a finite group, and let $X$ have the homotopy type of a finite dimens
 \]
  \end{theorem}
  \begin{remark}
- The finiteness assumption is neccessary. Note that the free $G$-space $EG$ is contractible, but $EG/G = BG$ has non trivial cohomology unless $G = e$. 
+ The finiteness assumption is necessary. Note that the free $G$-space $EG$ is contractible, but $EG/G = BG$ has non trivial cohomology unless $G = e$. 
  \end{remark}
 
  \begin{proof}
@@ -1529,7 +1496,7 @@ This is only possible if $\widetilde H^*(X^{C_2};\bbF_2) = 0$. Likewise, summing
 \[
 a_q+c_q \le b_q + a_{q+1}
 \]
-we deduce that $a_q = 0$ for all $q$ (this uses that $b_0 = a_0 = 1$ and $b_q = a_q = 0$ for $q>0$), so that $\widetilde H^*((X/X^{C_p})/C_p;\mathbb{F}_p) = 0$ as well. This is enough to show that $\widetilde H^*(X/C_p;\mathbb{F}_p) = 0$ as well, by using the long exact sequence of the following:
+we deduce that $a_q = 0$ for all $q >0$ (this uses that $b_0 = a_0 = 1$ and $b_q = a_q = 0$ for $q>0$), so that $\widetilde H^*((X/X^{C_p})/C_p;\mathbb{F}_p) = 0$ as well. This is enough to show that $\widetilde H^*(X/C_p;\mathbb{F}_p) = 0$ as well, by using the long exact sequence of the following:
 \[
 X^{C_p} \hookrightarrow X/X^{C_p} \to (X/X^{C_p})/C_p
 \]
@@ -1562,7 +1529,7 @@ We know that (co)homology can be characterized on CW complexes by the Eilenberg-
     For cohomology theories, reverse the directions of the arrows. 
 \end{definition}
 \begin{theorem}
-    Bredon (co)homology is an equivariant (co)cohomology theory, where we set $\underline C_*(X,A) = \widetilde{\underline C}_*(X/A)$. 
+    Bredon (co)homology is an equivariant (co)homology theory, where we set $\underline C_*(X,A) = \widetilde{\underline C}_*(X/A)$. 
 \end{theorem}
 \begin{proof}
     Homotopy invariant, excision and additivity and excision are relatively straightforward. Let us discuss the dimension axiom and the long exact sequence. Recall that $\underline{C}_*(X)$ is a coefficient system whose value at $(G/K)$ is the free abelian group $C_*^{cell}(X^K)$. We can do homological algebra in the category of coefficient systems, and we claim that $\underline{C}_*(X)$ is a projective object here. We will not prove this, but it is a consequence of a more general result:
@@ -1594,7 +1561,14 @@ We know that (co)homology can be characterized on CW complexes by the Eilenberg-
     where $h_q(X)(G/H) = H_q(X^H)$. 
 \end{remark}
 \begin{remark}[$RO(G)$-grading]
-So far we have indexed our cohomology theories on the integers $\bbZ$. However, we have already seen that we have more notions of a sphere in equivariant homotopy. So, can we (and should be) grade on the group $RO(G)$? There are some subtle issues here.\footnote{For amusement, see \cite[Section 6]{MR764596}.} The point is that $RO(G)$ consists of \emph{equivalence} classes, and we really want to the remember the isomorphisms between isomorphic representations. The usual fix is to rather fix an choice of preferred representatives. For example, this is easy to do when we talk about $G = \bbZ/2$ when the representation is simple. We will tend to ignore this remark from now, but please be aware of it. 
+So far we have indexed our cohomology theories on the integers $\bbZ$. However, we have already seen that we have more notions of a sphere in equivariant homotopy. So, can we (and should be) grade on the group $RO(G)$? There are some subtle issues here.\footnote{For amusement, see \cite[Section 6]{MR764596}.} The point is that $RO(G)$ consists of \emph{equivalence} classes, and we really want to the remember the isomorphisms between isomorphic representations. The usual fix is to rather fix an choice of preferred representatives. For example, this is easy to do when we talk about $G = \bbZ/2$ when the representation theory is simple. We will tend to ignore this remark from now, but please be aware of it. 
+\end{remark}
+\begin{remark}
+    With how we have defined it, Bredon cohomology is only stable in the following sense: we have
+    \[
+    \widetilde H^n_G(X;M) \cong \widetilde H^{n+q}_G(\Sigma^qX;M)
+    \]
+    for any based $G$-space $X$. 
 \end{remark}
 In any case, we end up with suspension and loop functors for a representation $V$, and the following axiom:
 \begin{axiom}[Equivariant suspension axiom]
@@ -1605,51 +1579,23 @@ For each $\alpha \in RO(G)$ and actual representation $V$, there is a natural is
 \end{axiom}
 In general, even determining $\widetilde H_G^{\alpha}(G/K_+)$ for $\alpha \not \in \bbZ$ is very complicated. 
 \begin{remark}
-    One might wonder if Bredon cohomology with coefficients in $M$ extends to an $RO(G)$-graded cohomology theory in general. This turns out to not be true. In fact, it is a theorem of Lewis, May, and McClure that it does so if and only $M$ is the underlying coefficient system of a Mackey functor. 
-\end{remark}
+    One might wonder if Bredon cohomology with coefficients in $M$ extends to an $RO(G)$-graded cohomology theory in general. This turns out to not be true. In fact, it is a theorem of Lewis, May, and McClure that it does so if and only $M$ is the underlying coefficient system of a Mackey functor.
+    \end{remark}
 We will do one single computation, that of the Bredon cohomology of a point with $G = \bbZ/2$ and coefficients in the constant coefficient system $\underline{\mathbb{F}_2}$. We recall that $RO(C_2) \cong \bbZ\{ \mathbf{1} \} \oplus \bbZ\{\sigma\}$, so our groups will be bigraded. The result is best described pictorially:
 \begin{theorem}
-The bigraded groups $H_{C_2}^{n+k\sigma}(\ast,\ul{\mathbb{F}_2})$ are as follows, where each dot represents a copy of $\bbF_2$:
+The bigraded groups $H_{C_2}^{n+k\sigma}(\ast,\ul{\mathbb{F}_2})$ are as follows:
+\[
+H_{C_2}^{n+k\sigma}(\ast,\ul{\mathbb{F}_2}) \cong \begin{cases}
+\bbF_2 & n+k \le 0, n \ge 2, k \le -2 \\
+\bbF_2 & n+k \ge 0, n \le 0, k \ge 0 \\
+& \text{ else}. 
+\end{cases}
+\]
+See \Cref{fig:eq-coh-point}.
 
 \begin{figure}[h!]
-\begin{tikzpicture}[scale=0.4]
-\draw[->] (-5,0)--(5,0);
-\draw[->] (0,-5)--(0,5);
-\draw[help lines, thin, lgray] (-5,-5) grid (5,5);
-\node[right] at (5,0) {$n$};
-\foreach \x in {-5,...,5}{
-   \node[left] at (-5.5,\x) {$\x$}; 
-}
-\foreach \x in {-5,...,5}{
-   \node[below] at (\x,-5.5) {$\x$}; 
-}
-\node[above] at (0,5.3) {$k$};
-\foreach \x in {2,3,4,5}{
-    \foreach \y in {-2,-3,-4,-5}{
-        \ifnum\x<\numexpr-\y+1
-            \node[circle,fill,scale=0.5] at (\x,\y){};
-        \fi
-    }
-}
-\foreach \x in {0,...,-5}{
-    \foreach \y in {0,...,5}{
-        \ifnum\x>\numexpr-\y-1
-            \node[circle,fill,scale=0.5] at (\x,\y){};
-        \fi
-    }
-}
-\node[circle,fill,scale=0.5] (a) at (2,-2){};
-\node[circle,fill,scale=0.5] (b) at (2,-5){};
-\node[circle,fill,scale=0.5] (c) at (5,-5){};
-\node[circle,fill,scale=0.5] (d) at (0,0){};
-\node[circle,fill,scale=0.5] (e) at (-5,5){};
-\node[circle,fill,scale=0.5] (f) at (0,5){};
-\begin{pgfonlayer}{background}
-    % the requested case
-\fill[blue,opacity=0.3] \convexpath{a,c,b}{8pt};
-\fill[red,opacity=0.3] \convexpath{d,e,f}{8pt};
-\end{pgfonlayer}
-\end{tikzpicture}
+  \includegraphics{sseq.pdf}
+     \caption{The equivariant cohomology of a point.  Each dot represents a copy of $\bbF_2$:}\label{fig:eq-coh-point}
 \end{figure}
 \end{theorem}
 \begin{proof}
@@ -1657,7 +1603,43 @@ The bigraded groups $H_{C_2}^{n+k\sigma}(\ast,\ul{\mathbb{F}_2})$ are as follows
     \[
     H_{C_2}^{n-k\sigma}(\ast,\ul{\bbF_2}) \cong \widetilde H_{C_2}^{n-k\sigma}(S^0,\ul{\bbF_2}) \cong \widetilde H_{C_2}^n(S^{k\sigma},\ul{\bbF_2}) \cong \widetilde H^n(S^{k\sigma}/C_2,\bbF_2)
     \]
-    by the $\bbF_2$-analog of \Cref{lem:bredon-constant}. It is an exercise on the worksheet to show that $S^{k\sigma}/C_2 \simeq \Sigma \bbR \mathbb{P}^{k-1}$. These groups are determined by
+    by the $\bbF_2$-analog of \Cref{lem:bredon-constant}. Let us think a little about the space $S^{k\sigma}/C_2$. When $k = 1$, this was demonstrated in Example~\eqref{ex:rep-spheres} - it is the $S^1$ with $C_2$-action given by reflection across the equator. Therefore, two points are in the same orbit if and only if they are `opposite' each other. In the orbit space, these two points get identified, and the orbit space is contractible. To consider the general case, it is useful to introduce a bit more notation. 
+    \begin{definition}
+        For an orthogonal representation\footnote{i.e., one that lands in $O(n)$, and $V$ is an inner product space} $V$, let 
+    
+        \begin{enumerate}
+            \item $D(V) = \{ \mathbf{v} \in V \mid \norm{v} \le 1\}$ \\
+            \item $S(V) = \{ \mathbf{v} \in V \mid \norm{v} = 1 \}$.
+        \end{enumerate}
+These are both unbased $G$-spaces, simply by restricting the action on $V$. 
+        
+Observe then that $D(V)/S(V) \cong S^V$ the one point compactification of $V$. Explicitly, this is induced by the map 
+\[
+D(V) \to S^V, \quad v \mapsto \begin{cases}v/(1-\norm{v}) &\text{ if } \norm{v} <1 \\
+\infty &\text{ if } \norm{v} = 1.\end{cases}
+\]
+If the representation is trivial, this is just the usual homeomorphism $S^n \cong D^n/S^{n-1}$. Finally, if $X_+$ denotes an unbased space $X$ with a disjoint basepoint, then there is a cofibration sequence of \emph{based} $G$-spaces
+\[
+S(V)_+ \to D(V)_+ \to S^V
+\]
+    \end{definition}
+   \begin{example}
+       Let $G = C_2$ and $V = \sigma$, the sign representation, then $S(V) = S^0 = \bbZ/2$ with the $C_2$-action that swaps the 2-points (the 2 points correspond to 1 and -1), and there is a cofibration sequence of based $C_2$-spaces
+       \[
+       \bbZ/2_+ \to S^0 \to S^{\sigma}
+       \]
+       In general, we see that $S(k\sigma)$ is $S^{k-1}_a$, the $(k-1)$-sphere with the antipodal $C_2$-action. Passing to orbit spaces, we that that there is a sequence
+       \[
+       \mathbb{RP}^{k-1} \to \ast \to S^{k\sigma}/C_2
+       \]
+       or in other words $S^{k\sigma}/C_2 \simeq \Sigma \mathbb{RP}^{k-1}$. 
+   \end{example} 
+
+    Returning to the computation, we then see that 
+    \[
+    \widetilde H^n(S^{k\sigma}/C_2,\bbF_2) \cong \widetilde H^n(\Sigma \mathbb{RP}^{k-1};\mathbb{F}_2)
+    \]
+   These groups are given by
     \[
     \widetilde H^n(\Sigma \bbR \mathbb{P}^{k-1};\bbF_2) \cong \begin{cases} \bbF_2, & n = 2,3,\ldots,k \\ 0 & \text{else}. \end{cases}
     \]
@@ -1665,35 +1647,94 @@ The bigraded groups $H_{C_2}^{n+k\sigma}(\ast,\ul{\mathbb{F}_2})$ are as follows
     \[
     H^{n-k\sigma}(\ast;\ul{\bbF}_2) \cong \begin{cases}  \bbF_2 & 2 \le n \le k \\ 0 &\text{else}\end{cases}
     \]
-    These determines the blue region of the diagram (this is often referred to as the `negative' cone). 
+    These determines the blue region of the diagram (this is often referred to as the `negative' cone). Pictorially, we are looking at a copy of $\Sigma \mathbb{R}P^{k-1}$ along a horizontal line (namely, $-k$). 
 
     Now we turn to the harder part, which is the computation of $ H_{C_2}^{n+k\sigma}(\ast;\ul{\bbF}_2)$ for $k\ge 0$. Here we have
     \[
     H_{C_2}^{n+k\sigma}(\ast;\ul{\bbF}_2) \cong \widetilde H_{C_2}^{n+k\sigma}(S^0;\ul{\bbF_2}) \cong \widetilde H^{C_2}_{-n-k\sigma}(S^0;\ul{\bbF}_2)
     \]
-    where the last equivalence uses an equivariant version of Poincar\'{e} duality. This is in fact the motivation for $RO(G)$-grading - if we want to have Poincar\'{e} duality, we are forced into grading over representations. Taking this on faith, we must therefore compute the groups $\widetilde H^{C_2}_{-n}(S^{k\sigma},\ul{\bbF_2})$
-    Since we work with homology, the $\mathcal{O}_G$-module $\ul{\bbF}_2$ here refers to the $\mathcal{O}_G$-module whose transfer maps are all 0. This $\mathcal{O}_G$-module splits as $\Inf_e^{C_2}\bbF_2 = N$ and $L$, the $\mathcal{O}_G$-module that is $\bbF_2$ at the bottom, and $0$ at the top. So
+    where the last equivalence uses an equivariant version of Poincar\'{e} duality. This is in fact the motivation for $RO(G)$-grading - if we want to have Poincar\'{e} duality, we are forced into grading over representations. Taking this on faith, we must therefore compute the groups $\widetilde H^{C_2}_{-n}(S^{k\sigma},\ul{\bbF_2})$.
+    Since we work with homology, the $\mathcal{O}_G$-module $\ul{\bbF}_2$ here refers to the $\mathcal{O}_G$-module whose transfer maps are all $0$. This $\mathcal{O}_G$-module splits as $\Inf_e^{C_2}\bbF_2 = N$ and $L$, the $\mathcal{O}_G$-module that is $\bbF_2$ at the bottom, and $0$ at the top. So
     \[
  \widetilde H^{C_2}_{-n}(S^{k\sigma};\ul{\bbF_2}) \cong \widetilde H^{C_2}_{-n}(S^{k\sigma};N \oplus L) 
 \cong \widetilde H^{C_2}_{-n}(S^{k\sigma};N) \oplus \widetilde H^{C_2}_{-n}(S^{k\sigma};L)
     \]
-    By \Cref{lem:bredon-homology} and the homology analog of the argument given in the proof of Smith theory, we have 
+    By \Cref{lem:bredon-homology} (using that $(S^{k\sigma})^{C_2} \simeq S^0$) and the homology analog of the argument given in the proof of Smith theory, we have 
     \[
      \widetilde H^{C_2}_{-n}(S^{k\sigma};\ul{\bbF_2})  \cong \widetilde H_{-n}(S^0;\bbF_2) \oplus \widetilde H_{-n}(((S^{k\sigma})/S^0)/C_2;\bbF_2)
     \]
-    The first term gives us an $\bbF_2$ when $n = 0$, and gives the dots on the positive $y$-axis in the figure.  In order to compute this, we note that there is a cofiber sequence 
-\[S(k\sigma)_+ \to  D(k\sigma)_+ \to  S^{k\sigma},\]
-where $S(V)$ and $D(V)$ denote the unit sphere and unit disk, respectively, inside an orthogonal
-representation. Now $S(k\sigma)$ is actually $S^{k-1}_a$, the antipodal sphere of dimension $k-1$. Using the $D(k\sigma)$ is equivariantly contractible, passing to quotients gives us the sequence
-\[
-\bbR \mathbb{P}^{k-1}_+ \to S^0 \to S^{k\sigma}/C_2 \to \Sigma \bbR \mathbb{P}^{k-1}_+
-\]
-In the end, we deduce that
+    The first term gives us an $\bbF_2$ when $n = 0$, and gives the dots on the positive $y$-axis in the figure.  The hard part is in working out $\widetilde H_{-n}(((S^{k\sigma})/S^0)/C_2;\bbF_2)$.
+
+    We recall that there is a cofibration
+    \[
+    \mathbb{RP}^{k-1}_+ \to S^0 \to {S^{k\sigma}/C^2} \to  \Sigma\mathbb{RP}^{k-1}_+
+    \]
+We therefore deduce that
     \[
      \widetilde H^{C_2}_{-n}(S^{k\sigma};\ul{\bbF_2})  \cong \widetilde H_{-n}(S^0;\bbF_2) \oplus \widetilde H_{-n}(\Sigma \bbR\mathbb{P}^{k-1}_+;\bbF_2)
     \]
-    The first term contributes an $\bbF_2$ when $n = 0$, while the second does so whenever $n \in [1,k]$. This gives the red region in the diagram. 
+    The first term contributes an $\bbF_2$ when $n = 0$, while the second does so whenever $n -1 \in [0, k - 1]$ or equivalently, $n \in [1,k]$. This gives the red region in the diagram. 
 \end{proof}
+\begin{remark}
+    There are many ways to do this calculation. Let us recall that we had a cofibration of $C_2$-spaces
+    \[
+    C_2\to \ast \to S^{\sigma}
+    \]
+    which gives rise to a long exact sequence in cohomology, which we denote as follows (maps are labelled by degrees):
+    % https://q.uiver.app/#q=WzAsMyxbMCwwLCJIX3tDXzJ9XntcXGFzdCtcXGFzdFxcc2lnbWF9KFNee1xcc2lnbWF9KSJdLFsyLDAsIkhfe0NfMn1ee1xcYXN0K1xcYXN0XFxzaWdtYX0oXFxhc3QpIl0sWzEsMSwiSF97Q18yfV57XFxhc3QrXFxhc3RcXHNpZ21hfShDXzIpIl0sWzAsMSwiKDAsMCkiXSxbMSwyLCIoMCwwKSJdLFsyLDAsIigxLDApIl1d
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{H_{C_2}^{\ast+\ast\sigma}(S^{\sigma})} \&\& {H_{C_2}^{\ast+\ast\sigma}(\ast)} \\
+	\& {H_{C_2}^{\ast+\ast\sigma}(C_2)}
+	\arrow["{(0,0)}", from=1-1, to=1-3]
+	\arrow["{(0,0)}", from=1-3, to=2-2]
+	\arrow["{(1,0)}", from=2-2, to=1-1]
+\end{tikzcd}\]
+So what is the cohomology of $C_2$?
+\begin{lemma}\label{lem:c2-cohomology}
+    The Bredon cohomology $H_{C_2}^{*+*\ast}(C_2)$ is a graded commutative polynomial algebra on a generator $t \in H^{-1+\sigma}_{C_2}({C_2})$.
+\end{lemma} 
+\begin{proof}
+    Note that, for every $G$-space $X$, we have a $G$-homeomorphism $G_+ \wedge X \simeq G_+ \wedge X_e$, where $X_e$ is $X$ with trivial $G$-action. From this, we get the chain of isomorphisms:
+\[
+\begin{split}
+H^{a+b\sigma}_{C_2}(C_2) \xrightarrow[\cong]{\text{suspension}} \widetilde{H}^{(a+(b+n)\sigma}_G(\Sigma^{n\sigma}({C_2}_+))\xrightarrow{\cong} \\
+\widetilde{H}^{a+(b+n)\sigma}_{C_2}(\Sigma^n(C_2)_+) \xleftarrow[\cong]{\text{suspension}} H^{a-n+(b+n)\sigma}_{C_2}(C_2). \end{split}
+\]
+This is an isomorphism of graded $H^{*+*\sigma}_{C_2}(C_2)$-modules, so it is given by multiplication by an invertible element $t_n \in H^{-n+n\sigma}_{C_2}$. In other words, the cohomology groups associated with representations of the same dimension are all isomorphic.
+By the cohomology axioms, we have $H^{0+0\sigma} = \mathbb{F}_2$ and $H^{a+0\sigma}_{C_2} = 0$ if $a \ne 0$. So:
+\[
+\begin{cases}
+ H_{C_2}^{a+b\sigma} = \mathbb{F}_2 &\text{ if } a = -b \\
+ 0 & \text{ else.}
+\end{cases}
+\qedhere
+\]
+\end{proof}
+Returning back to the triangle above, we can use the suspension isomorphism $H_{C_2}^{\ast+\ast\sigma}(S^{\sigma}) \simeq H_{C_2}^{\ast+(\ast-1)\sigma}(\ast)$ to replace the top left corner with the cohomology of a point: 
+% https://q.uiver.app/#q=WzAsMyxbMCwwLCJIX3tDXzJ9XntcXGFzdCtcXGFzdFxcc2lnbWF9KFxcYXN0KSJdLFsyLDAsIkhfe0NfMn1ee1xcYXN0K1xcYXN0XFxzaWdtYX0oXFxhc3QpIl0sWzEsMSwiSF97Q18yfV57XFxhc3QrXFxhc3RcXHNpZ21hfShDXzIpIl0sWzAsMSwiKDAsMSkiXSxbMSwyLCIoMCwwKSJdLFsyLDAsIigxLC0xKSJdXQ==
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{H_{C_2}^{\ast+\ast\sigma}(\ast)} \&\& {H_{C_2}^{\ast+\ast\sigma}(\ast)} \\
+	\& {H_{C_2}^{\ast+\ast\sigma}(C_2)}
+	\arrow["{(0,1)}", from=1-1, to=1-3]
+	\arrow["{(0,0)}", from=1-3, to=2-2]
+	\arrow["{(1,-1)}", from=2-2, to=1-1]
+\end{tikzcd}\]
+The top row is given by multiplication by an element $\tau \in H_{C_2}^{\sigma}(\ast)$. Using \Cref{lem:c2-cohomology} one can see that $\tau$ is an isomorphism of groups
+\[
+H^{a+b\sigma}(\ast) \to H^{a+(b+1)\sigma}(\ast)
+\]
+except when except when $H^{a+(b+1)\sigma}(C_2)$ or $H_{C_2}^{a-1+(b+1)\sigma}(C_2)$ are non-zero. We know that $H^{0}(\ast) \cong \mathbb{F}_2$ and $H^{a}(\ast) \ne 0$ for $a \ne 0$. This gives us nearly all the zero entries that we saw in the computation before. It also tells us a little about the multiplicative structure. 
+
+One can continue in this manner. For example, there is an exact sequence
+\[
+0 \to H_{C_2}^{-1+\sigma}(\ast) \to H_{C_2}^{-1+\sigma}(C_2) \to H^{0,0}(\ast) \xrightarrow{\tau} H_{C_2}^{\sigma}(\ast) \to 0
+\]
+This gives
+\[
+0 \to H_{C_2}^{-1+\sigma}(\ast) \to \bbF_2 \to \bbF_2 \to H_{C_2}^{\sigma}(\ast) \to 0
+\]
+One can compute that the middle map is $0$ (it is the transfer map in the Mackey functor $\mathbb{F}_2$), and so $H_{C_2}^{-1+\sigma}(\ast) \cong \mathbb{F}_2$ and $H_{C_2}^{\sigma}(\ast) \cong \mathbb{F}_2$, as we saw before. One now proceeds methodically, and gets the same answer as before. 
+\end{remark}
 \chapter{From $G$-spaces to $G$-spectra}
 \section{From spaces to spectra}
 We begin with some motivation for the category of spectra. 

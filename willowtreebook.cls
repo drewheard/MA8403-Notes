@@ -39,7 +39,7 @@
 \fi
 \RequirePackage[T1]{fontenc}
 \RequirePackage{lmodern}
-\RequirePackage{isomath}
+%\RequirePackage{isomath}
 \RequirePackage[tt=lining]{cfr-lm}
 \RequirePackage[mathscr]{eucal}
 %\RequirePackage{mathrsfs}
