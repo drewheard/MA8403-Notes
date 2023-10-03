@@ -1737,25 +1737,32 @@ One can compute that the middle map is $0$ (it is the transfer map in the Mackey
 \end{remark}
 \chapter{From $G$-spaces to $G$-spectra}
 \section{From spaces to spectra}
+\subsection*{Introduction to spectra}
 We begin with some motivation for the category of spectra. 
 \begin{remark}
     We recall that for a space $X$ the Freudenthal suspension theorem says that the maps
     \[
-    \pi_n(X) \to \pi_{n+1}(\Sigma X) \to \pi_{n+2}(\Sigma^2X) 
+    \pi_n(X) \xrightarrow{\Sigma} \pi_{n+1}(\Sigma X) \xrightarrow{\Sigma}  \pi_{n+2}(\Sigma^2X) \xrightarrow{\Sigma}  \cdots
     \]
-    eventually stabilize (after finitely many steps). We call these the \emph{stable} homotopy groups of $X$. One can wonder: is there an object whose $n$-th homotopy group is the $n$-th stable homotopy groups of $X$. This is what spectra are designed to do. 
+    eventually stabilize (after finitely many steps). For example, $\pi_{n+1}(S^n) \cong \mathbb{Z}/2$ for $n>2$. We call these the \emph{stable} homotopy groups of $X$. Note that these are in fact always \emph{abelian} groups. One can wonder: is there an object whose $n$-th homotopy group is the $n$-th stable homotopy groups of $X$. This is what spectra are designed to do. 
 \end{remark}
 \begin{definition}
-    A spectrum $E$ is a sequence of spaces $E = \{ E_n \}$  and maps $\sigma_n \colon \Sigma E_n \to E_{n+1}$. The $r$-th homotopy group of $E$ is defined to be
+    A spectrum $E$ is a sequence of based spaces $E = \{ E_n \}$ (usually graded on the natural numbers, but the story does not change if we use the integers) and structure maps $\sigma_n \colon \Sigma E_n \to E_{n+1}$. The $r$-th homotopy group of $E$ is defined to be
     \[
-    \pi_r(E) \coloneqq \lim_{n \to \infty} \pi_{n+r}(E_n),
+    \pi_r(E) \coloneqq \varinjlim_{n \to \infty} \pi_{n+r}(E_n),
     \]
     where the colimit is taken over the diagram where the maps are 
     \[
-    \pi_{n+r}(E_n) \xrightarrow{\Sigma_n} \pi_{n+r+1}(\Sigma E_n) \to \pi_{n+r+1}(E_{n+1}).
+    \pi_{n+r}(E_n) \xrightarrow{\Sigma} \pi_{n+r+1}(\Sigma E_n) \xrightarrow{\sigma_{n,\ast}} \pi_{n+r+1}(E_{n+1}).
     \]
     A CW-spectrum additionally has the property that each $E_n$ is a CW-complex, and the maps $\Sigma E_n \to E_{n+1}$ exhibit $\Sigma E_n$ as a subcomplex of $E_{n+1}$. 
 \end{definition}
+\begin{remark}
+    The homotopy groups are equivalently given by the colimit over the maps
+    \[
+    \pi_{n+r}(E_n) \xrightarrow{\overline{\sigma_n}_*} \pi_{n+r}(\Omega E_{n+1}) \cong \pi_{n+r+1}(E_{n+1})
+    \]
+\end{remark}
 \begin{remark}
     We note that stable homotopy groups are in general defined for all $r \in \mathbb{Z}$, where we must start the colimit for $n+r \ge 0$. For example, $\pi_{-1}(E)$ is the colimit of 
     \[
@@ -1763,14 +1770,52 @@ We begin with some motivation for the category of spectra.
     \]
 \end{remark}
 \begin{example}
-    For a based space $X$, the suspension spectrum $\Sigma^{\infty}X$ is the spectrum consisting of spaces $\{ \Sigma^n X\}$ with maps $\sigma_n \colon \Sigma^{n+1}X \to \Sigma^{n+1}X$ the identity map. For example, $\Sigma^{\infty}S^0$ is what people refer to as the \emph{sphere spectrum} and is often denoted by $\mathbb{S}$. The $n$-th homotopy group of $\Sigma^{\infty}X$ is exactly the $n$-th stable homotopy group of $X$. 
+    For a based space $X$, the suspension spectrum $\Sigma^{\infty}X$ is the spectrum consisting of spaces $\{ \Sigma^n X\}$ with maps $\sigma_n \colon \Sigma^{n+1}X \to \Sigma^{n+1}X$ the identity map. For example, $\Sigma^{\infty}S^0$ is what people refer to as the \emph{sphere spectrum} and is often denoted by $\mathbb{S}$. We leave it as an exercise to show that
+    \[
+    \pi_n(\Sigma^{\infty}X) \cong \begin{cases}\pi_n^{\text{stable}}(X) & n \ge 0 \\ 0 & n<0 \end{cases}\]
+    Note that by replacing $X$ with $\Sigma^dX$ we can product a suspended version of $\Sigma^{\infty}X$. But using spectra, we can also give an inverse to this construction: 
+\end{example}
+\begin{example}
+    For any integer $d \ge 0$, we can created a `desuspended' suspension spectrum. Indeed, set $X_n$ to be $\ast$ when $n < d$ and $\Sigma^{n-d}X$ when $n \ge d$. The structure maps are as above. We denote this by $\Sigma^{-d}X$ or $\Sigma^{\infty-d}X$. Its homotopy groups are the same as $\Sigma^{\infty}X$ but shifted down by $d$ (i.e., $\pi_r(\Sigma^{\infty-d}(X)) \cong \pi_{r+d}(\Sigma^{\infty}X)$. For example, this allows us to define the negative dimensional sphere spectrum $\mathbb{S}^{-d} \coloneqq \Sigma^{\infty-d}(S^0)$. This is an object whose $d$-th suspension is the sphere spectrum $\mathbb{S}$. This is philosophically similar to how the integers $\mathbb{Z}$ are defined from the natural numbers $\mathbb{Z}$: an integer is an object that, if you add a large enough natural number to it, becomes a natural number. 
 \end{example}
 Another reason to care about these is that they represent cohomology theories. 
 \begin{theorem} (Adams’ Brown representability theorem). Every cohomology (resp.~homology) theory on CW-complexes is represented (resp.~corepresented) by a spectrum.
 \end{theorem}
-
-What is a morphism of spectra? There is an obvious guess:
+What does this mean? Let $h^*$ be a generalized cohomology theory. Then there exist connected CW-complexes $K_n$ such that 
+\[
+h^n(X) = [X,K_n]
+\]
+Moreover, we have the following sequence of natural equivalences:
+\[
+[X,K_n] \cong h^n(X) \cong h^{n+1}(\Sigma X) \cong [\Sigma X,h_{n+1}] \cong [X,\Omega K_{n+1}]
+\]
+which is necessarily induced by a a weak equivalence $K_n \simeq \Omega K_{n+1}$. The adjoint to this is a map $\Sigma K_n \to K_{n+1}$, and so defines a spectrum. In fact, this is a particular type of spectrum whose adjoint is a weak equivalence. These are known as $\Omega$-spectra:
 \begin{definition}
+    An $\Omega$-spectrum is a spectrum $E$ such that the adjoint $ E_n \to  \Omega E_{n+1}$ to the structure map is an equivalence for each $n$. 
+\end{definition}
+\begin{example}
+    Let $h^n(X) = H^n(X;A)$. The corresponding spectrum is the Eilenberg--MacLane spectrum associated to $A$, denoted $HA$. It is the spectrum whose $n$-th space is a $K(A,n)$. The structure maps are the adjoint to the weak equivalences $\Omega K(A,n) \simeq K(A,n-1)$.  We have
+    \[
+    \pi_r(HA) \cong \lim_{n \to \infty} \pi_{n+r}(K(A,n)) \cong \begin{cases} A & r = 0 \\ 0 & \text{else} \end{cases}
+    \]
+\end{example}
+\begin{remark}\label{rem:omega-spectra}
+    For an $ \Omega$-spectrum the colimit $\lim_{n \to \infty}\pi_{n+r}(E_n)$ is always obtained at a finite stage. In fact, for an $\Omega$-spectrum we have
+    \[
+    \pi_{n+r}(E_n) \cong \pi_{n+r}(\Omega E_{n+1}) \cong \pi_{n+r+1}(E_{n+1})
+    \]
+    and this composite agrees with the map in the colimit, so in fact it suffices to compute any of the $\pi_{r+n}(E_n)$, as we saw above. In other words,
+    \[
+    \pi_r(E) \cong \pi_{n+r}(E_n) \quad \text{ for } n+r \ge 1. 
+    \]
+    
+    In general, there is no reason that the colimit is reached at a finite stage. We leave it as an exercise to find an example. 
+\end{remark}
+\begin{example}
+    Let $MO(n)$ denote the Thom space of the universal $n$-plane bundle $\xi_n$ over $BO(n)$.  Then the Whitney sum $\xi_n \oplus 1$ admits a bundle map to $\xi_{n+1}$ (by universality). The Thom space of $\xi_n \oplus 1$ is $MO(n) \wedge S^1$ and the Thom space of $\xi_{n+1}$ is $MO(n+1)$, and so we get a map $\Sigma MO(n) \to MO(n+1)$. The Thom spectrum $MO$ is the spectrum whose $n$-th space is $MO(n)$, and whose maps are as just indicated. 
+\end{example}
+What is a morphism of spectra? There is an obvious guess:
+\begin{definition}\label{def:strict-morphism}
     A \emph{strict morphism} of spectra $f \colon E \to F$ of degree $r$ is a sequence of maps $f_n \colon E_n \to F_{n-r}$ such that the diagram
 \[\begin{tikzcd}
 	{\Sigma E_n} & {\Sigma F_{n-r}} \\
@@ -1782,31 +1827,201 @@ What is a morphism of spectra? There is an obvious guess:
 \end{tikzcd}\]
 strictly commutes. 
 \end{definition}
-This turns out to not be the correct thing. For example, we would like the Hopf map $\eta \colon S^3 \to S^2$ to give a morphism $\mathbb{S} \to \mathbb{S}$ of degree 1, but this map does not desuspend to a map $S^2 \to S^1$ or a map $S^1 \to S^0$. There is a fix for this. 
-\begin{definition}
-    Let $E$ be a CW spectrum. A subspectrum of $E$ is a sequence of subcomplexes $F_n \subseteq E_n$ so that $\Sigma F_n$ is a subcomplex of $F_{n+1}$. We
-say that $F$ is cofinal if every cell of $E$ contains an element which is a cell of some $F_n$. This is equivalent to the following: for each $n$ and each finite subcomplex $K \subseteq E_n$ there is a $d$ such that $\Sigma^d K \subseteq F_{n+d}$. 
+For now, let us let $\Sp$ denote the category whose objects are the spectra, and whose maps are strict morphisms of degree $0$. Then, taking homotopy groups defines a functor $\Sp \to \Ab$. 
+\begin{definition} We say that:
+\begin{enumerate}[label=(\roman*)]
+    \item     A stable equivalence is a map $f \colon X \to Y$ inducing an isomorphism on $\pi_k$ for all $k \in \mathbb{Z}$. 
+    \item A level equivalence is a map $f \colon X \to Y$ such that each $X_k \to Y_k$ is a weak homotopy equivalence. 
+    \item A homotopy equivalence is a map of spectra $f \colon X \to Y$ such that there exists $g \colon Y \to X$ such that $g \circ f \simeq \text{id}_X$ and $f \circ g \simeq \text{id}_Y$. Here homotopy is a sequence of based homotopies for each $k$ that agree with the structure maps. 
+    \item Spectra $X$ and $Y$ are stably equivalent if they are connected by a zig-zag of stable equivalences. Level equivalent and homotopy equivalent spectra are defined similarly.
+\end{enumerate}
 \end{definition}
-\begin{definition}
-    A morphism between CW spectra $f \colon X \to Y$ is defined to be a strict map $X' \to Y$ for some cofinal subspectrum $X'$ of $X$. Two maps $X \to Y$ between CW-spectra are considered to be the same if if they take the same values on a common cofinal subspectrum. Since the intersection of two cofinal subspectra is a cofinal subspectrum, this amounts to saying that replacing the cofinal subspectrum on which a spectrum map is defined by a smaller cofinal subspectrum is regarded as giving the same map. We need to check this is well defined, and that we can compose maps, but this can be done. 
-\end{definition}
-One can then go on to define a notion of homotopy by defining $X \times I$ to be the spectrum with $(X \times I)_n \simeq X_n \times I$ (the reduced product, i.e., the basepoint cross $I$ is collapsed to a point). This leads to the stable homotopy category $\Ho(\Sp)$. Here are two useful facts about this category. 
-\begin{theorem}[Whitehead theorem]
-    A morphism $f \colon X \to Y$ between CW-complexes that induces an isomorphism on homotopy groups is a homotopy equivalence. 
-\end{theorem}
-\begin{theorem}
-    The map $[X,Y] \to [\Sigma X,\Sigma Y]$ is a bijection, and $\Sigma$ is an auto-equivalence of our category. 
-\end{theorem}
+\begin{remark}
+    We have homotopy equivalence $\implies$ level equivalence $\implies$ stable equivalence. 
+\end{remark}
 \begin{example}
-    Let $X_n = K(G,n)$ for an abelian group $G$. Then we can define a spectrum $HG$ with $(HG)_n \simeq K(G,n)$ and the map $\sigma_n \colon \Sigma K(G,n) \to K(G,n+1)$ the adjoint to the equivalence $K(G,n) \xrightarrow{\simeq} \Omega K(G,n+1)$. We know that
+    Let $X$ be a spectrum, $d \ge 0$ an integer, and define $X'$ to be the spectrum with
     \[
-    H^n(X;G) \cong [X,K(G,n)]
+    X'_n = \begin{cases} \ast & \text{if } n < d \\ X_n & \text{if } n \ge d \end{cases}.
     \]
-    and 
+    The the inclusion $X' \to X$ is a stable equivalence. 
+\end{example}
+\begin{lemma}
+    If $X$ is an $\Omega$-spectrum, then every stable equivalence is a level equivalence. 
+\end{lemma}
+\begin{proof}
+    As we saw in \Cref{rem:omega-spectra} any $\Omega$-spectrum has the property that it's stable homotopy groups agree with the homotopy groups at any finite stage. In particular, $f_{n+1} \colon X_{n+1} \to Y_{n+1}$ is a weak homotopy equivalence for each $n \ge 0$ at the basepoint. Taking loops, $\Omega f_{n+1} \colon \Omega X_{n+1} \to \Omega Y_{n+1}$ is a weak equivalence all $n \ge 0$. Since $X$ is an $\Omega$-spectrum $X_n \to Y_{n}$ is a weak equivalence for all $n \ge 0$, and we are done. 
+\end{proof}
+We claim that in fact any spectrum is stably equivalent to an $\Omega$-spectrum (this is fibrant replacement in a suitable model category). 
+\begin{example}
+    Let $QS^0$ be the spectrum with $(QS^0)_n = \Omega^{\infty}\Sigma^{\infty}S^n$, the colimit of 
     \[
-    H^n(X;G) \cong [\Sigma^{\infty}X,HG]_{-n} 
+    S^n \xrightarrow{\xi_n} \Omega S^{n+1} \xrightarrow{\Omega \xi_{n+1}} \Omega^2 S^{n+2} \to \cdots
+    \]
+    where $\xi_n \colon S^n \to \Omega S^{n+1}$ is the adjoint of the identity $S^{n+1} \to S^{n+1}$. 
+
+    One can show that taking loops commutes with the colimit, i.e., $QS^0$ is also defined by the colimit in the following:
+    % https://q.uiver.app/#q=WzAsOSxbMCwwLCJTXm4iXSxbMSwwLCJcXE9tZWdhIFNee24rMX0iXSxbMiwwLCJcXE9tZWdhXjIgU157bisyfSJdLFszLDAsIlxcY2RvdHMiXSxbMCwxLCJcXE9tZWdhIFNee24rMX0iXSxbMSwxLCJcXE9tZWdhXjIgU157bisyfSJdLFsyLDEsIlxcT21lZ2FeMyBTXntuKzN9Il0sWzMsMSwiXFxjZG90cyJdLFs0LDBdLFswLDEsIlxceGlfbiJdLFsxLDIsIlxcT21lZ2EgXFx4aV97bisxfSJdLFsyLDNdLFsxLDQsIlxcdGV4dHtpZH0iXSxbMCw0LCJcXHhpX24iLDJdLFs0LDUsIlxcT21lZ2EgXFx4aV97bisxfSIsMl0sWzIsNSwiXFx0ZXh0e2lkfSIsMl0sWzUsNl0sWzYsN10sWzMsNiwiXFx0ZXh0e2lkfSIsMl1d
+\[\begin{tikzcd}
+	{S^n} & {\Omega S^{n+1}} & {\Omega^2 S^{n+2}} & \cdots & {} \\
+	{\Omega S^{n+1}} & {\Omega^2 S^{n+2}} & {\Omega^3 S^{n+3}} & \cdots
+	\arrow["{\xi_n}", from=1-1, to=1-2]
+	\arrow["{\Omega \xi_{n+1}}", from=1-2, to=1-3]
+	\arrow[from=1-3, to=1-4]
+	\arrow["{\text{id}}", from=1-2, to=2-1]
+	\arrow["{\xi_n}"', from=1-1, to=2-1]
+	\arrow["{\Omega \xi_{n+1}}"', from=2-1, to=2-2]
+	\arrow["{\text{id}}"', from=1-3, to=2-2]
+	\arrow[from=2-2, to=2-3]
+	\arrow[from=2-3, to=2-4]
+	\arrow["{\text{id}}"', from=1-4, to=2-3]
+\end{tikzcd}\]
+    and then defines for us the structure maps, and that moreover $QS^0$ and $\mathbb{S}$ are stably equivalent. 
+\end{example}
+\begin{proposition}
+    To each spectrum $X$, we can assign an $\Omega$-spectrum $RX$ and a stable equivalence $X \to R X$ in a natural way.
+\end{proposition}
+\subsection{Some operations on spectra}
+Many operations for spaces extend to spectra in a natural way. For example, we have the following:
+\begin{definition}
+    Let $X$ and $Y$ be spectra. The wedge sum $X \vee Y$ is the spectrum with $(X \vee Y)_n = X_n \vee Y_n$ and structure maps
+    \[
+    \Sigma (X_n \vee Y_n) \xleftarrow{\cong} \Sigma X_n \vee \Sigma Y_n \xrightarrow{\sigma^X_n \vee \sigma^Y_n} X_{n+1} \vee  Y_{n+1}
+    \]
+    The product of $X$ and $Y$ is the spectrum $X \times Y$ with $(X \times Y)_n = X_n \times Y_n$ and structure maps the adjoint of
+    \[
+     X_n \times Y_n \xrightarrow{\overline{\sigma}_n^X \times \overline{\sigma}_n^Y} \Omega X_n \times \Omega Y_n \xleftarrow{\simeq} \Omega (X_n \times Y_n). 
+    \]
+\end{definition}
+\begin{example}
+    The wedge sum of a suspension spectrum is a suspension spectrum:
+    \[
+    \Sigma^{\infty}(X \vee Y) \simeq \Sigma^{\infty} X \vee \Sigma^{\infty}Y
+    \]
+    The product of Eilenberg--MacLane spectra is an Eilenberg--MacLane spectrum:
+    \[
+    H(G_1 \times G_2) \simeq HG_1 \times HG_2. 
     \]
 \end{example}
+\begin{definition}
+    For an integer $d \in \mathbb{Z}$ and spectrum $X$, we can define a spectrum $sh^d(X)$ with $(sh^d(X))_n = X_{d+n}$. If $n+d \le 0$ we define $sh^d(X)_n$ to be $\ast$. Note that we have
+    \[
+    \pi_k(sh^dX) = \pi_{k-d}(X). 
+    \]
+    \end{definition}
+    \begin{definition}
+        The category of spectra is tensored and cotensored over based spaces: given a spectrum $X$ and a based space $X$ we can define a spectrum $A \wedge X$ with $(A \wedge X)_n = A \wedge X_n$ and whose structure maps are induced from $X$. Then we can define $\Sigma X \coloneqq S^1 \wedge X$. Similarly, we can define a function spectrum $F(A,X)$ with $F(A,X)_n = \Map_*(A,X_n)$. Then, one can define $\Omega X \coloneqq F(S^1,X)$. One can see that $A - $ and $F(A,-)$ are adjoint: in particular, suspension and loops are adjoint on the category of spectra. 
+    \end{definition}
+    \begin{example}
+        The suspension spectrum of a space is $\Sigma^{\infty}X \simeq X \wedge \mathbb{S}$. 
+    \end{example}
+    \begin{proposition}
+             For any spectrum $X$ there are natural isomorphisms
+     \[
+     \pi_{k +1}(\Sigma X) \cong \pi_k(X) \cong  \pi_{k-1}(\Omega X)
+     \]
+    \end{proposition}
+    We leave this as an exercise: a hint for those is to find a nice cofinal system in the colimit definition of the homotopy groups. 
+    \begin{remark}
+    One can use this to show that $sh(x) \simeq \Sigma X$. Similarly, $sh^{-1}(X) \simeq \Omega X$. One can suggestively therefore write $\Omega X$ as $\Sigma^{-1}X$. 
+\end{remark}
+\begin{corollary}
+    For a map $f \colon X \to Y$ the following are equivalent:
+    \begin{enumerate}[label=(\alph*)]
+        \item $f \colon X \to Y$ is a stable equivalence. 
+        \item $\Sigma f \colon \Sigma X \to \Sigma Y$ is a stable equivalence. 
+        \item $\Omega f \colon \Omega X \to \Omega Y$ is a stable equivalence. 
+    \end{enumerate}
+\end{corollary}
+\begin{proof}
+    Consider the diagram: 
+    % https://q.uiver.app/#q=WzAsNixbMCwwLCJcXHBpX3tuKzF9KFxcU2lnbWEgWCkiXSxbMSwwLCJcXHBpX24oWCkiXSxbMiwwLCJcXHBpX3tuLTF9KFxcT21lZ2EgWCkiXSxbMCwxLCJcXHBpX3tuKzF9KFxcU2lnbWEgWCkiXSxbMSwxLCJcXHBpX24oWCkiXSxbMiwxLCJcXHBpX3tuLTF9KFxcT21lZ2EgWCkiXSxbMSwwLCJcXGNvbmciLDJdLFsyLDEsIlxcY29uZyIsMl0sWzUsNF0sWzQsM10sWzEsNCwiZl8qIl0sWzIsNSwiKFxcT21lZ2EgZilfKiJdLFswLDMsIihcXFNpZ21hIGYpXyoiLDJdXQ==
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{\pi_{n+1}(\Sigma X)} \& {\pi_n(X)} \& {\pi_{n-1}(\Omega X)} \\
+	{\pi_{n+1}(\Sigma X)} \& {\pi_n(X)} \& {\pi_{n-1}(\Omega X)}
+	\arrow["\cong"', from=1-2, to=1-1]
+	\arrow["\cong"', from=1-3, to=1-2]
+	\arrow[from=2-3, to=2-2]
+	\arrow[from=2-2, to=2-1]
+	\arrow["{f_*}", from=1-2, to=2-2]
+	\arrow["{(\Omega f)_*}", from=1-3, to=2-3]
+	\arrow["{(\Sigma f)_*}"', from=1-1, to=2-1]
+\end{tikzcd}\]
+This shows that $f_*$ is a stable equivalence iff $(\Sigma f)_*$ is a stable equivalence iff $(\Omega f)_*$ is a stable equivalence. 
+\end{proof}
+\begin{corollary}
+    There are natural stable equivalences $X \to \Omega \Sigma X$ and  $\Sigma \Omega X \to X$, given by the unit and counit map.
+\end{corollary}
+\begin{proof}
+   There are diagrams
+   % https://q.uiver.app/#q=WzAsNCxbMCwwLCJcXHBpX3trK259KFhfbikiXSxbMCwxLCJcXHBpX3sxK2srbn0oU14xIFxcd2VkZ2UgWF9uKSJdLFsxLDEsIlxccGlfe2srbn0oXFxPbWVnYShTXjEgXFx3ZWRnZSBYX24pKSJdLFsxLDAsIlxccGlfe2srbn0oXFxPbWVnYSBcXFNpZ21hIFhfbikiXSxbMCwxXSxbMSwyLCJcXGNvbmciLDJdLFszLDIsIlxcY29uZyJdLFswLDMsIlxcZXRhXyoiXV0=
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{\pi_{k+n}(X_n)} \& {\pi_{k+n}(\Omega \Sigma X_n)} \\
+	{\pi_{1+k+n}(S^1 \wedge X_n)} \& {\pi_{k+n}(\Omega(S^1 \wedge X_n))}
+	\arrow[from=1-1, to=2-1]
+	\arrow["\cong"', from=2-1, to=2-2]
+	\arrow["\cong", from=1-2, to=2-2]
+	\arrow["{\eta_*}", from=1-1, to=1-2]
+\end{tikzcd}\]
+and
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJcXHBpX3trK259KFxcT21lZ2EgWF9uKSJdLFswLDEsIlxccGlfezEraytufShTXjEgXFx3ZWRnZSBcXE9tZWdhIFhfbikiXSxbMSwxLCJcXHBpX3trK259KFxcT21lZ2EoU14xIFxcd2VkZ2UgXFxPbWVnYSBYX24pKSJdLFsxLDAsIlxccGlfezEraytufShcXFNpZ21hIFhfbikiXSxbMCwxXSxbMSwyLCJcXGNvbmciLDJdLFswLDMsIlxcY29uZyJdLFsyLDMsIlxcZXBzaWxvbl8qIiwyXV0=
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{\pi_{k+n}(\Omega X_n)} \& {\pi_{1+k+n}(\Sigma X_n)} \\
+	{\pi_{1+k+n}(S^1 \wedge \Omega X_n)} \& {\pi_{k+n}(\Omega(S^1 \wedge \Omega X_n))}
+	\arrow[from=1-1, to=2-1]
+	\arrow["\cong"', from=2-1, to=2-2]
+	\arrow["\cong", from=1-1, to=1-2]
+	\arrow["{\epsilon_*}"', from=2-2, to=1-2]
+\end{tikzcd}\]
+These are compatible for various $n$ an induce maps
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJcXHBpX3trfShYKSJdLFswLDEsIlxccGlfezEra30oU14xIFxcd2VkZ2UgWCkiXSxbMSwxLCJcXHBpX3trfShcXE9tZWdhKFNeMSBcXHdlZGdlIFgpKSJdLFsxLDAsIlxccGlfe2t9KFxcT21lZ2EgXFxTaWdtYSBYKSJdLFswLDFdLFsxLDIsIlxcY29uZyIsMl0sWzMsMiwiXFxjb25nIl0sWzAsMywiXFxldGFfKiJdXQ==
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{\pi_{k}(X)} \& {\pi_{k}(\Omega \Sigma X)} \\
+	{\pi_{1+k}(S^1 \wedge X)} \& {\pi_{k}(\Omega(S^1 \wedge X))}
+	\arrow[from=1-1, to=2-1]
+	\arrow["\cong"', from=2-1, to=2-2]
+	\arrow["\cong", from=1-2, to=2-2]
+	\arrow["{\eta_*}", from=1-1, to=1-2]
+\end{tikzcd}\]
+and
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJcXHBpX3trfShcXE9tZWdhIFgpIl0sWzAsMSwiXFxwaV97MStrfShTXjEgXFx3ZWRnZSBcXE9tZWdhIFgpIl0sWzEsMSwiXFxwaV97aytufShcXE9tZWdhKFNeMSBcXHdlZGdlIFxcT21lZ2EgWCkpIl0sWzEsMCwiXFxwaV97MStrK259KFxcU2lnbWEgWCkiXSxbMCwxXSxbMSwyLCJcXGNvbmciLDJdLFswLDMsIlxcY29uZyJdLFsyLDMsIlxcZXBzaWxvbl8qIiwyXV0=
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{\pi_{k}(\Omega X)} \& {\pi_{1+k+n}(\Sigma X)} \\
+	{\pi_{1+k}(S^1 \wedge \Omega X)} \& {\pi_{k+n}(\Omega(S^1 \wedge \Omega X))}
+	\arrow[from=1-1, to=2-1]
+	\arrow["\cong"', from=2-1, to=2-2]
+	\arrow["\cong", from=1-1, to=1-2]
+	\arrow["{\epsilon_*}"', from=2-2, to=1-2]
+\end{tikzcd}\]
+in the colimit. Since smashing with $S^1$ is an equivalence, so must $\eta_*$ and $\eta_*$ be. 
+\end{proof}
+In other words, $\Sigma$ is invertible up to stable equivalence, and its inverse is $\Omega$. 
+\section{The stable homotopy category}
+We would like to now construct the stable homotopy category. There are several (at least) three different ways to do this, but all present the same homotopy category. We will present the construction given in Adams' blue book \cite[Part 3]{Adams1974Stable}.\footnote{Also available online: \url{https://people.math.rochester.edu/faculty/doug/otherpapers/Adams-SHGH-latex.pdf}}
+
+\Cref{def:strict-morphism} turns out to not be the correct thing. For example, we would like the Hopf map $\eta \colon S^3 \to S^2$ to give a morphism $\mathbb{S} \to \mathbb{S}$ of degree $1$, but this map does not desuspend to a map $S^2 \to S^1$ or a map $S^1 \to S^0$. There is a fix for this. 
+\begin{definition}
+    Let $E$ be a CW spectrum.
+    \begin{enumerate}[label=(\alph*)]
+        \item A stable $k$-cell in $E$ is a non-basepoint $(k+n)$-cell in $E_n$ for any $n \ge 0$. This is identified with with the corresponding cell of dimension $(k+n+1)$ in $\Sigma E_n \subseteq E_{n+1}$.\footnote{As an example, the $d$-sphere $\mathbb{S}^d$ has a single stable $d$-cell.}
+        \item     A subspectrum of $E$ is a sequence of subcomplexes $F_n \subseteq E_n$ so that $\Sigma F_n$ is a subcomplex of $F_{n+1}$.
+        \item $F$ is moreover said to be cofinal if every stable cell of $E$ has a representative in $F$. 
+    \end{enumerate}
+    \begin{example}
+        The sphere spectrum $\mathbb{S}$ has the shift desuspension $\Sigma^{\infty-d}X$ as a cofinal
+subspectrum, for each $d \ge 0$. 
+    \end{example}
+
+\end{definition}
+\begin{definition}
+    A morphism between CW spectra $f \colon X \to Y$ is defined to be a degree 0 map $X' \to Y$ for some cofinal subspectrum $X'$ of $X$. Two maps $X \to Y$ between CW-spectra are considered to be the same if if they take the same values on a common cofinal subspectrum. Since the intersection of two cofinal subspectra is a cofinal subspectrum, this amounts to saying that replacing the cofinal subspectrum on which a spectrum map is defined by a smaller cofinal subspectrum is regarded as giving the same map. We need to check this is well defined, and that we can compose maps, but this can be done. 
+\end{definition}
+\begin{remark}
+    Adams famously described this approach as ``cells now, maps later.''
+\end{remark}\begin{comment}
+\begin{definition}
+    Given two morphisms $f \colon X \to Y$ and $g \colon X' \to Y$ between CW-spectra as above, a homotopy is a cofinal subspectrum  $X'' \subseteq X \cap X''$ and a homotopy between $f$ and $g$ on $X''$. 
+\end{definition}
 One could like to get read of the `homotopy' part of $\Ho(\Sp)$ and build a stable model category, or $\infty$-category, whose homotopy category is the homotopy category considered above. It took a long time to find the right technical tools to do this, but there are now several different approaches. Note that what we have really done is inverted the suspension functor, and made its inverse the loops functor. With a bit of machinery, one can even make this into a definition:
 \[
 \Sp \coloneqq \varprojlim(\Top_* \xrightarrow{\Omega} \Top_* \xrightarrow{\Omega} \cdots )
@@ -2028,4 +2243,5 @@ So once again, representations spheres appear quite naturally.
 \end{remark}
 	% End the document without loading the bibliography
 	% or the index, or the list of notation.
+ \end{comment}
 \end{document}
