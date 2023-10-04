@@ -46,6 +46,7 @@
 \dmo{\Coind}{Coind}
 \dmo{\Grp}{Grp}
 \dmo{\Sp}{Sp}
+\dmo{\SSp}{SeqSp}
 \dmo{\Aut}{Aut}
 \dmo{\Iso}{Iso}
 \dmo{\Map}{Map}
@@ -1770,7 +1771,7 @@ We begin with some motivation for the category of spectra.
     \]
 \end{remark}
 \begin{example}
-    For a based space $X$, the suspension spectrum $\Sigma^{\infty}X$ is the spectrum consisting of spaces $\{ \Sigma^n X\}$ with maps $\sigma_n \colon \Sigma^{n+1}X \to \Sigma^{n+1}X$ the identity map. For example, $\Sigma^{\infty}S^0$ is what people refer to as the \emph{sphere spectrum} and is often denoted by $\mathbb{S}$. We leave it as an exercise to show that
+    For a based space $X$, the suspension spectrum $\Sigma^{\infty}X$ is the spectrum consisting of spaces $\{ \Sigma^n X\}$ with maps $\sigma_n \colon \Sigma^{n+1}X \to \Sigma^{n+1}X$ the identity map. If $X$ is a CW-space, then $\Sigma^{\infty}X$ is a CW-spectrum. For example, $\Sigma^{\infty}S^0$ is what people refer to as the \emph{sphere spectrum} and is often denoted by $\mathbb{S}$. We leave it as an exercise to show that
     \[
     \pi_n(\Sigma^{\infty}X) \cong \begin{cases}\pi_n^{\text{stable}}(X) & n \ge 0 \\ 0 & n<0 \end{cases}\]
     Note that by replacing $X$ with $\Sigma^dX$ we can product a suspended version of $\Sigma^{\infty}X$. But using spectra, we can also give an inverse to this construction: 
@@ -1827,7 +1828,7 @@ What is a morphism of spectra? There is an obvious guess:
 \end{tikzcd}\]
 strictly commutes. 
 \end{definition}
-For now, let us let $\Sp$ denote the category whose objects are the spectra, and whose maps are strict morphisms of degree $0$. Then, taking homotopy groups defines a functor $\Sp \to \Ab$. 
+For now, let us let $\SSp$ (standing for sequential spectra) denote the category whose objects are the spectra, and whose maps are strict morphisms of degree $0$. Then, taking homotopy groups defines a functor $\SSp \to \Ab$. 
 \begin{definition} We say that:
 \begin{enumerate}[label=(\roman*)]
     \item     A stable equivalence is a map $f \colon X \to Y$ inducing an isomorphism on $\pi_k$ for all $k \in \mathbb{Z}$. 
@@ -2005,20 +2006,80 @@ We would like to now construct the stable homotopy category. There are several (
     \begin{enumerate}[label=(\alph*)]
         \item A stable $k$-cell in $E$ is a non-basepoint $(k+n)$-cell in $E_n$ for any $n \ge 0$. This is identified with with the corresponding cell of dimension $(k+n+1)$ in $\Sigma E_n \subseteq E_{n+1}$.\footnote{As an example, the $d$-sphere $\mathbb{S}^d$ has a single stable $d$-cell.}
         \item     A subspectrum of $E$ is a sequence of subcomplexes $F_n \subseteq E_n$ so that $\Sigma F_n$ is a subcomplex of $F_{n+1}$.
-        \item $F$ is moreover said to be cofinal if every stable cell of $E$ has a representative in $F$. 
+        \item $F$ is moreover said to be cofinal if every stable cell of $E$ has a representative in $F$.  In other words, for each cell $e_n \subseteq E_n$, there exists an $m$ for which $\Sigma^m e_n \subseteq F_{n+m}$. 
     \end{enumerate}
     \begin{example}
-        The sphere spectrum $\mathbb{S}$ has the shift desuspension $\Sigma^{\infty-d}X$ as a cofinal
+        The sphere spectrum $\mathbb{S}$ has the shift desuspension $\Sigma^{\infty-d}\mathbb{S}$ as a cofinal
 subspectrum, for each $d \ge 0$. 
     \end{example}
 
 \end{definition}
 \begin{definition}
-    A morphism between CW spectra $f \colon X \to Y$ is defined to be a degree 0 map $X' \to Y$ for some cofinal subspectrum $X'$ of $X$. Two maps $X \to Y$ between CW-spectra are considered to be the same if if they take the same values on a common cofinal subspectrum. Since the intersection of two cofinal subspectra is a cofinal subspectrum, this amounts to saying that replacing the cofinal subspectrum on which a spectrum map is defined by a smaller cofinal subspectrum is regarded as giving the same map. We need to check this is well defined, and that we can compose maps, but this can be done. 
+    A morphism between CW spectra $f \colon X \to Y$ is defined to be a strict degree $0$ map $X' \to Y$ for some cofinal subspectrum $X'$ of $X$. Two maps $X \to Y$ between CW-spectra are considered to be the same if if they take the same values on a common cofinal subspectrum. Since the intersection of two cofinal subspectra is a cofinal subspectrum, this amounts to saying that replacing the cofinal subspectrum on which a spectrum map is defined by a smaller cofinal subspectrum is regarded as giving the same map. We need to check this is well defined, and that we can compose maps, but this can be done. Similarly, we have a notion of a degree $r$ map between $CW$-spectra. 
 \end{definition}
 \begin{remark}
     Adams famously described this approach as ``cells now, maps later.''
-\end{remark}\begin{comment}
+\end{remark}
+\begin{remark}
+    Let us see how that fixes the example of the Hopf map from before. Let $K$ denote the subspectrum of $\mathbb{S}$ with $K_n = \ast$ for $n \le 2$ and $K_n = S^n$ for $n >2$. Then, $K$ is a cofinal subspectrum of $\mathbb{S}$. Moreover, there is an obvious spectrum map from $K \to \mathbb{S}$ of degree 1 (i.e., a sequence of maps $K_{n+1} \to (\mathbb{S}_n) = S^n$: this is either the unique map from a point, or a suitable suspension of $\eta$. 
+\end{remark}
+\begin{remark}
+    A homotopy between is defined as one might expect: if $f,g \colon X \to Y$ are maps between CW-spectra, a homotopy is a map $H \colon X \times I \to Y$, such that $f = H \circ i_0$ and $g = H \circ i_1$.  We write $[X,Y]$ for the set of homotopy classes of maps from $X$ to $Y$, or occasionally $[X,Y]_r$ for homotopy classes of degree $r$ maps. 
+\end{remark}
+\begin{definition}
+    The stable homotopy category $\Ho(\Sp)$ is the category whose objects are spectra, and whose morphisms are homotopy classes of morphisms as described above. 
+\end{definition}
+\begin{theorem}
+    Suspension is an equivalence $[X,Y] \cong [\Sigma X,\Sigma Y]$ of abelian groups. 
+\end{theorem}
+\begin{remark}
+    We note that
+    \[
+    [X,Y]_r = [X,\Sigma^{-r}Y] \cong [\Sigma^rX,Y]
+    \]
+\end{remark}
+The following result will show that the abstract theory we have developed is reasonable. 
+\begin{proposition}
+    Let $X$ be a based finite CW-complex,  and $F$ any spectrum, then 
+    \[
+    [\Sigma^{\infty}X,F]_r \cong \varinjlim_{n \to \infty} [\Sigma^{n+r}X,F_n]
+    \]
+    In particular, 
+    \[
+    [\mathbb{S},F]_r \cong \pi_r(E). 
+    \]
+\end{proposition}
+\begin{proof}
+    Suppose we are given a map of spaces $f \colon \Sigma^{n+r}X \to F_n$. We can define a map of spectra of degree $r$ by
+    \[
+    \overline f \colon \Sigma^{\infty}X \to F
+    \]
+    where $\overline{f}_{n+r} \colon \Sigma^{n+r}X \to F_n$ is taken to be $f$ and for $m>0$ we must define
+    \[
+    \Sigma^{n+r+m}X \xrightarrow{\Sigma^mf} F_{n+m}
+    \]
+    This defines for us a strict map on the cofinal subspectrum $X' \subseteq \Sigma^{\infty}X$ defined by
+    \[
+    (X')_i = \begin{cases} \Sigma^iX, &\text{if } i \ge n+r \\ 0, &\text{if } i \le n+r  \end{cases}
+    \]
+    Suppose that $f \colon \Sigma^{n+r}X \to F_n$ and $g \colon \Sigma^{m+r}X \to F_m$ are two maps which are equivalent in the direct limit. This means that for some $p$ there exists a homotopy between the maps
+    \[
+    \Sigma^{p+r}X \xrightarrow{\Sigma^{p-n}f} \Sigma^{p-n}F_n \to F_p
+    \]
+and
+    \[
+    \Sigma^{p+r}X \xrightarrow{\Sigma^{p-m}F_m} \Sigma^{p-n}F_m \to F_p
+    \]
+    This homotopy induces a homotopy between the maps corresponding to $f$ and $g$ and so we have a map
+    \[
+    \alpha \colon \varinjlim_{n \to \infty} [\Sigma^{n+r}X,F_n] \to     [\Sigma^{\infty}X,F]_r 
+    \]
+    A map of CW-spectra $\Sigma^{\infty}X \to  F$ of degree $r$ is a homotopy class of strict maps
+defined on a cofinal subspectrum of $\Sigma^{\infty}X$. Any of these strict maps is equivalent to one defined on a subspectrum which has the form of $X'$ defined above
+and so $\alpha$ is surjective. Moreover, if two maps of CW-spectra are homotopic, the homotopy is induced by a homotopy of maps of spaces, therefore $\alpha$ is
+injective. Therefore $\alpha$ is a bijection.
+\end{proof}
+\begin{comment}
 \begin{definition}
     Given two morphisms $f \colon X \to Y$ and $g \colon X' \to Y$ between CW-spectra as above, a homotopy is a cofinal subspectrum  $X'' \subseteq X \cap X''$ and a homotopy between $f$ and $g$ on $X''$. 
 \end{definition}
