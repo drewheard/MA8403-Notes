@@ -1910,21 +1910,39 @@ Many operations for spaces extend to spectra in a natural way. For example, we h
     \pi_k(sh^dX) = \pi_{k-d}(X). 
     \]
     \end{definition}
+    \begin{remark}
+        Note that $sh^m \circ sh^n \simeq sh^{n+m}$ for all $n,m \ge 0$ or $n,m \le 0$. Note also that $sh \circ sh^{-1} = \text{id}$ but $sh^{-1} \circ sh$ is not the identity, as we have `forgotten' the value of $X_0$.  
+    \end{remark}
     \begin{definition}
-        The category of spectra is tensored and cotensored over based spaces: given a spectrum $X$ and a based space $X$ we can define a spectrum $A \wedge X$ with $(A \wedge X)_n = A \wedge X_n$ and whose structure maps are induced from $X$. Then we can define $\Sigma X \coloneqq S^1 \wedge X$. Similarly, we can define a function spectrum $F(A,X)$ with $F(A,X)_n = \Map_*(A,X_n)$. Then, one can define $\Omega X \coloneqq F(S^1,X)$. One can see that $A - $ and $F(A,-)$ are adjoint: in particular, suspension and loops are adjoint on the category of spectra. 
+        The category of spectra is tensored and cotensored over based spaces: given a spectrum $X$ and a based space $A$ we can define a spectrum $X \wedge A$ with $(X \wedge A)_n = X_n \wedge A$ and whose structure maps are induced from $X$. Similarly, we can define a function spectrum $F(A,X)$ with $F(A,X)_n = \Map_*(A,X_n)$. The structure map $S^1 \wedge \Map_*(A,X_n) \to \Map_*(A,X_{n+1})$ is the map adjoint to the map $S^1 \wedge \Map_*(A,X_n) \wedge A \to X_{n+1}$ given by $\text{id} \wedge \text{ev}$ and then $\sigma_n$. One can see that $- \wedge A$ and $F(A,-)$ are adjoint.
     \end{definition}
     \begin{example}
-        The suspension spectrum of a space is $\Sigma^{\infty}X \simeq X \wedge \mathbb{S}$. 
+        The suspension spectrum of a space is $\Sigma^{\infty}X \simeq \mathbb{S} \wedge X$. 
     \end{example}
+    \begin{remark}
+        Both $sh(X)$ and $X \wedge S^1$ appear to act like a suspension functor. Are they the same? Well they are not isomorphic - in fact, there is not even a natural (strict) map between them. Indeed, in degree $n$ we would need a map $S^1 \wedge X_n \to X_n \wedge S^1$ and the only natural option is the twist morphism, but then the required diagram does not commute.  But never fear - in a homotopical sense, they will be equivalent. 
+
+        Finally, to make life even more confusing, here is a third possibility for a suspension functor: 
+    \end{remark}
+    \begin{definition}
+        If $X$ is a spectrum, define its suspension $\Sigma X$ as the spectrum with $(\Sigma X)_n = S^1 \wedge X_n$ in degree $n$, and structure maps
+        \[
+        S^1 \wedge S^1  \wedge X_n \xrightarrow{\text{id} \wedge \sigma_n} S^1 \wedge X_{n+1}
+        \]
+        The loop space is $\Omega X$ with $(\Omega X)_n = \Map_*(S^1,X_n)$ with (adjoint) structure map
+        \[
+        \Map_*(S^1,X_n) \xrightarrow{(\overline \sigma_n)_*} \Map_*(S^1,\Omega X_{n+1}) = \Omega \Map_*(S^1,X_{n+1})
+        \]
+    \end{definition}  
+  One can show that these are adjoint functors. 
     \begin{proposition}
              For any spectrum $X$ there are natural isomorphisms
      \[
      \pi_{k +1}(\Sigma X) \cong \pi_k(X) \cong  \pi_{k-1}(\Omega X)
      \]
     \end{proposition}
-    We leave this as an exercise: a hint for those is to find a nice cofinal system in the colimit definition of the homotopy groups. 
     \begin{remark}
-    One can use this to show that $sh(x) \simeq \Sigma X$. Similarly, $sh^{-1}(X) \simeq \Omega X$. One can suggestively therefore write $\Omega X$ as $\Sigma^{-1}X$. 
+Fortunately, we will see that $\Sigma X$ is also equivalent, in a homotopical sense, to $X \wedge S^1$ and $sh(X)$. 
 \end{remark}
 \begin{corollary}
     For a map $f \colon X \to Y$ the following are equivalent:
@@ -1998,9 +2016,9 @@ in the colimit. Since smashing with $S^1$ is an equivalence, so must $\eta_*$ an
 \end{proof}
 In other words, $\Sigma$ is invertible up to stable equivalence, and its inverse is $\Omega$. 
 \section{The stable homotopy category}
-We would like to now construct the stable homotopy category. There are several (at least) three different ways to do this, but all present the same homotopy category. We will present the construction given in Adams' blue book \cite[Part 3]{Adams1974Stable}.\footnote{Also available online: \url{https://people.math.rochester.edu/faculty/doug/otherpapers/Adams-SHGH-latex.pdf}}
+We would like to now construct the stable homotopy category. There are several (at least three) different ways to do this, but all present the same homotopy category. We will present the construction given in Adams' blue book \cite[Part 3]{Adams1974Stable}.\footnote{Also available online: \url{https://people.math.rochester.edu/faculty/doug/otherpapers/Adams-SHGH-latex.pdf}}
 
-\Cref{def:strict-morphism} turns out to not be the correct thing. For example, we would like the Hopf map $\eta \colon S^3 \to S^2$ to give a morphism $\mathbb{S} \to \mathbb{S}$ of degree $1$, but this map does not desuspend to a map $S^2 \to S^1$ or a map $S^1 \to S^0$. There is a fix for this. 
+The first observation is that \Cref{def:strict-morphism} turns out to not be the correct thing. For example, we would like the Hopf map $\eta \colon S^3 \to S^2$ to give a morphism $\mathbb{S} \to \mathbb{S}$ of degree $1$, but this map does not desuspend to a map $S^2 \to S^1$ or a map $S^1 \to S^0$. There is a fix for this. 
 \begin{definition}
     Let $E$ be a CW spectrum.
     \begin{enumerate}[label=(\alph*)]
@@ -2029,6 +2047,10 @@ subspectrum, for each $d \ge 0$.
 \begin{definition}
     The stable homotopy category $\Ho(\Sp)$ is the category whose objects are spectra, and whose morphisms are homotopy classes of morphisms as described above. 
 \end{definition}
+We state two results without proof. 
+\begin{proposition}
+    The functor $- \wedge S^1$ passes to the homotopy category and is naturally equivalent to $\Sigma$ there. Simiarly, both are naturally equivalent to $sh$. 
+\end{proposition}
 \begin{theorem}
     Suspension is an equivalence $[X,Y] \cong [\Sigma X,\Sigma Y]$ of abelian groups. 
 \end{theorem}
@@ -2038,65 +2060,142 @@ subspectrum, for each $d \ge 0$.
     [X,Y]_r = [X,\Sigma^{-r}Y] \cong [\Sigma^rX,Y]
     \]
 \end{remark}
-The following result will show that the abstract theory we have developed is reasonable. 
+
+In order to validate our category we give one small result. Let $K$ be a finite CW-complex, and let $E$ be its suspension spectrum, so that $E_n=\Sigma^nK$ for $n\geq 0$. Let $F$ be any spectrum.
+
 \begin{proposition}
-    Let $X$ be a based finite CW-complex,  and $F$ any spectrum, then 
-    \[
-    [\Sigma^{\infty}X,F]_r \cong \varinjlim_{n \to \infty} [\Sigma^{n+r}X,F_n]
-    \]
-    In particular, 
-    \[
-    [\mathbb{S},F]_r \cong \pi_r(E). 
-    \]
+We have
+\[
+[E,F]_r = \varinjlim_{n\to\infty} [\Sigma^{n+r}K,F_n].
+\]
+In particular,
+\[
+[\mathbb{S},F]_r = \pi_r(F).
+\]
 \end{proposition}
 \begin{proof}
-    Suppose we are given a map of spaces $f \colon \Sigma^{n+r}X \to F_n$. We can define a map of spectra of degree $r$ by
-    \[
-    \overline f \colon \Sigma^{\infty}X \to F
-    \]
-    where $\overline{f}_{n+r} \colon \Sigma^{n+r}X \to F_n$ is taken to be $f$ and for $m>0$ we must define
-    \[
-    \Sigma^{n+r+m}X \xrightarrow{\Sigma^mf} F_{n+m}
-    \]
-    This defines for us a strict map on the cofinal subspectrum $X' \subseteq \Sigma^{\infty}X$ defined by
-    \[
-    (X')_i = \begin{cases} \Sigma^iX, &\text{if } i \ge n+r \\ 0, &\text{if } i \le n+r  \end{cases}
-    \]
-    Suppose that $f \colon \Sigma^{n+r}X \to F_n$ and $g \colon \Sigma^{m+r}X \to F_m$ are two maps which are equivalent in the direct limit. This means that for some $p$ there exists a homotopy between the maps
-    \[
-    \Sigma^{p+r}X \xrightarrow{\Sigma^{p-n}f} \Sigma^{p-n}F_n \to F_p
-    \]
-and
-    \[
-    \Sigma^{p+r}X \xrightarrow{\Sigma^{p-m}F_m} \Sigma^{p-n}F_m \to F_p
-    \]
-    This homotopy induces a homotopy between the maps corresponding to $f$ and $g$ and so we have a map
-    \[
-    \alpha \colon \varinjlim_{n \to \infty} [\Sigma^{n+r}X,F_n] \to     [\Sigma^{\infty}X,F]_r 
-    \]
-    A map of CW-spectra $\Sigma^{\infty}X \to  F$ of degree $r$ is a homotopy class of strict maps
-defined on a cofinal subspectrum of $\Sigma^{\infty}X$. Any of these strict maps is equivalent to one defined on a subspectrum which has the form of $X'$ defined above
-and so $\alpha$ is surjective. Moreover, if two maps of CW-spectra are homotopic, the homotopy is induced by a homotopy of maps of spaces, therefore $\alpha$ is
-injective. Therefore $\alpha$ is a bijection.
+For any map $f \colon \Sigma^{n+r}K\to F_n$ we can define a corresponding map between spectra by taking its component on $E_{n+r}$ to be $f \colon \Sigma^{n+r}K\to F_n$; the higher components are then forced. In fact, they are
+\[
+\Sigma^{m+n+r}K
+\xrightarrow{\Sigma^mf}
+\Sigma^mF_n \to F_{m+n}.
+\]
+Suppose two maps $f \colon \Sigma^{n+r}K\to F_n$, $g\colon\Sigma^{m+r}K \to F_m$ give the same element of the direct limit. Then for some $p$, the maps
+    \begin{gather*}
+    \Sigma^{p+r}K
+    \xrightarrow{\Sigma  ^{p-n}f}
+    \Sigma^{p-n}F_n
+    \xrightarrow{}
+    F_p
+    \\
+    \Sigma^{p+r}K
+    \xrightarrow{\Sigma^{p-m}g}
+    \Sigma^{p-m}F_m
+    \xrightarrow{}
+    F_p
+    \end{gather*}
+are homotopic. This homotopy yields a homotopy between the corresponding maps of spectra. This shows we have a function
+\[
+\varinjlim_{n\to\infty} [\Sigma^{n+r}K,F_n]
+\xrightarrow{\theta}
+[E,F]_r.
+\]
+Now every map from $E$ to $F$ arises in the way we have mentioned: this shows $\theta$ is onto. Also every homotopy arises in the way we have mentioned: this shows that $\theta$ is a 1-1 correspondence.
 \end{proof}
-\begin{comment}
 \begin{definition}
-    Given two morphisms $f \colon X \to Y$ and $g \colon X' \to Y$ between CW-spectra as above, a homotopy is a cofinal subspectrum  $X'' \subseteq X \cap X''$ and a homotopy between $f$ and $g$ on $X''$. 
+    Let $\pi_r(-) \coloneqq [\mathbb{S},-]_r \simeq [\mathbb{S}^r,-]$. 
 \end{definition}
-One could like to get read of the `homotopy' part of $\Ho(\Sp)$ and build a stable model category, or $\infty$-category, whose homotopy category is the homotopy category considered above. It took a long time to find the right technical tools to do this, but there are now several different approaches. Note that what we have really done is inverted the suspension functor, and made its inverse the loops functor. With a bit of machinery, one can even make this into a definition:
-\[
-\Sp \coloneqq \varprojlim(\Top_* \xrightarrow{\Omega} \Top_* \xrightarrow{\Omega} \cdots )
-\]
-Here we take the colimit in the category of categories. Equivalently, this is the colimit in the category of presentable categories
-\[
-\Sp \coloneqq \Top_*[S^{-1}] \simeq \varinjlim(\Top_* \xrightarrow{ - \wedge S^1} \Top_* \xrightarrow{\wedge S^1} \cdots )
-\]
-\begin{remark}
-    It is useful to recall by analogy that in commutative algebra we have
-    \[
-    R[x^{-1}] \cong \varinjlim(R \xrightarrow{\cdot x} R \xrightarrow{\cdot x} R \cdots )
-    \]
+\begin{remark}[Symmetric monoidal structures]
+    I don't want to talk too much about constructing a symmetric monoidal structure on $\Ho(\Sp)$, as it is delicate, and takes some work, and is not really worth the effort. I will simply point out the following: 
+    \begin{proposition}
+    There exists a functor $-\wedge- \colon \Ho(\Sp) \times \Ho(\Sp)  \rightarrow \Ho(\Sp) $ called the smash product such that:
+    \begin{enumerate}
+        \item $\Ho(\Sp)$ is a symmetric monoidal category, with monoidal product $-\wedge-$ and unit $\mathbb{S}$.
+        \item It is closed, i.e., $X\wedge-$ has a certain right adjoint $F(X, -)$, the internal function spectrum.
+        \item This structure is compatible with the operations over $\mathrm{Top}_*$: if $A$ is a CW complex and $X$ is a spectrum, then $X\wedge A \simeq X\wedge \Sigma^{\infty} A$ and $F(A, X) \simeq F(\Sigma^{\infty} A, X)$.
+        \item $\Sigma^{\infty}(A\wedge B) \simeq \Sigma^{\infty} A \wedge \Sigma^{\infty} B$ for CW-complexes $A$ and $B$.
+        \item $\Sigma(X\wedge Y) \simeq \Sigma X \wedge Y \simeq X\wedge \Sigma Y$.
+        \item The functor $H \colon \mathrm{Ab} \rightarrow \mathrm{Ho}(\mathrm{Sp})$ is symmetric monoidal, so $H(A \otimes B) \simeq HA \wedge HB$.
+    \end{enumerate}
+\end{proposition}
 \end{remark}
+With this, we can extend the definition of homology and cohomology to be defined on \emph{all} spectra. 
+\begin{definition}
+    Let $E$ and $X$  be spectra, then for $n \in \mathbb{Z}$ we define $E_n(X) \coloneqq \pi_n(E \wedge X)$ and $E^n(X) \coloneqq \pi_{-n}F(X,E)$. Thus, if $X$ is a CW-complex, then $E_n(X) = E_n(\Sigma^{\infty}X)$, by definition. 
+\end{definition}
+\begin{remark}
+    Note that with this definition, the $E$-homology of $X$ is the same as the $X$-homology of $E$!
+\end{remark}
+
+\section{Getting rid of the homotopy category}
+Our next goal is to try and construct a category of spectra (e.g., as a Quillen model category or stable $\infty$-category) whose homotopy category recovers the stable homotopy category as above, along with its monoidal structure. Peter May writes this as follows:
+\begin{quote}
+    ''The ideal category of spectra should be a complete and cocomplete Quillen
+model category, tensored and cotensored over the category of based spaces (or
+simplicial sets), and closed symmetric monoidal under the smash product. Its
+homotopy category (obtained by inverting the weak equivalences) should be
+equivalent to Mike [Boardman]’s original stable homotopy category.''
+\end{quote}
+
+For a long time, it was thought that this was impossible. Let me quote from Lewis' paper:
+\begin{quote}
+    ``The construction of the smash product of two spectra is one of the most unsatisfactory aspects
+of every available treatment of the stable category. Increased interest in enriched ring and
+module spectra has made the misbehavior of smash products a source of growing frustration.
+This paper conveys the unhappy message that this frustration is unavoidable. Five simple,
+obviously desirable axioms for a good category of spectra with a well-behaved smash product
+are listed. Then it is shown that no category can satisfy all five of these minimal axioms.''
+\end{quote}
+Lewis' theorem is as follows:
+\begin{theorem}[Lewis]
+    There is no category $\Sp$ satisfying the following desiderata
+    \begin{enumerate}[label=(\roman*)]
+        \item There is a symmetric monoidal smash product $\wedge$;
+        \item The sphere spectrum $\mathbb{S}$ is the monoidal unit for $\wedge$;
+        \item There is an adjunction $\Sigma^\infty\colon\mathrm{Top}_* \rightleftarrows \Sp \colon \Omega^\infty$;
+        \item There is either a natural transformation
+\[
+(\Omega^\infty E)\wedge(\Omega^\infty F)\Rightarrow\Omega^\infty(E\wedge F)
+\]
+or a natural transformation
+\[
+\Sigma^\infty(E\wedge F)\Rightarrow(\Sigma^\infty E)\wedge(\Sigma^\infty F).
+\]
+Furthermore, these natural transformations are required to commute with the unity, commutativity, and associativity isomorphisms of $\Top_*$ and $\Sp$;
+\item There is a natural weak equivalence $\Omega^\infty\Sigma^\infty X\xrightarrow{\cong}\varinjlim(\Omega^n\Sigma^nX)$.
+    \end{enumerate}
+\end{theorem}
+Lewis theorem is very slick: the proof shows that if there was such a category, then $QS^0 = \varinjlim \Omega^nS^n$ would have to be a product of Eilenberg--MacLane spaces, but one can show that it is not. 
+\begin{comment}
+Nonetheless, in the 1990s the problem was simultaneously solved by two sets of authors. Here is is property (5) that fails. I want to try and say a little bit about Lurie's approach to this problem. Here we work with $\infty$-categories, although I don't want to go into them too much. 
+\begin{definition}
+    A functor $L \colon \cat C \to \cat D$ between $\infty$-categories is a reflexive localization if it has a fully-faithful right adjoint $\iota$. We will let $\eta \colon \text{id}_{\cat C} \to \iota L$ denote the unit of the adjunction.  
+\end{definition}
+There is a particularly nice class of reflexive localizations, namely those that are \emph{smashing}. We need one more definition. 
+\begin{definition}
+    Let $\mathcal{C}$ be a monoidal $\infty$-category with unit object $\mathbf{1}$. We will say that a map
+$e \colon \mathbf{1} \to  E$ is an idempotent object of $\mathbf{1}$ if the induced maps
+\[
+E \simeq E \otimes \mathbf{1} \xrightarrow{\text{id} \otimes E} E \otimes E \quad \text{ and } E \simeq \mathbf{1} \otimes E \xrightarrow{E \otimes \text{id}} E \otimes E
+\]
+are equivalences in $\cat C$.
+
+We will usually just say $E$ is an idempotent object of $\cat C$, and leave the map implicit. 
+\end{definition}
+\begin{proposition}
+      Let $(\cat C, \otimes, \mathbf{1})$ be a symmetric monoidal $\infty$-category, and $e \colon \mathbf{1} \to E$.
+Then
+\[
+L \coloneqq E \otimes (-) \colon \cat C \to \cat C
+\]
+is a localization onto its essential image $L\cat C$ if and only if $E$ is idempotent. In this situation, $L\mathcal{C}$ can be endowed with a symmetric monoidal structure $(L\cat C, \otimes, L1 \cong E)$ such
+that $L \colon \cat C \to L\cat CC$ is symmetric monoidal, its right adjoint $i$ is lax symmetric monoidal, and it satisfies
+that $\iota(d) \otimes \iota(d') \cong \iota(d \otimes d')$.  
+\end{proposition}
+\begin{definition}
+    In this case, we say that $L$ is a \emph{smashing} localization. 
+\end{definition}
+
 \section{$G$-spaces and $G$-spectra - first attempt}
 We have seen that we have $G$-spaces, and so we can try and stabilize and talk about $G$-spectra. Our first guess might be to directly take the definition of spectra and put a $G$-everywhere. 
 \begin{definition}
@@ -2303,6 +2402,5 @@ is surjective if $\dim(X^H ) \le \nu(H)$ for all $H$, and bijective if $\dim(X^H
 So once again, representations spheres appear quite naturally. 
 \end{remark}
 	% End the document without loading the bibliography
-	% or the index, or the list of notation.
- \end{comment}
+\end{comment}
 \end{document}
