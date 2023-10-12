@@ -2402,8 +2402,8 @@ and
 Here are some properties, which will be left as an exercise. 
 \begin{lemma} Let $B$ be a strong dual of $A$. 
     \begin{enumerate}
-        \item $B$ is a strong dual of $A$ if and only if $A$ is a stong dual of $B$. 
-        \item If $B$ is a stong dual of $A$, then there is an adjunction $ - \otimes A \dashv - \otimes B$. Deduce that the strong dual of $A$, if it exists, is unique up to isomorphism (we typically denote it by $\mathbf{D}A$). 
+        \item $B$ is a strong dual of $A$ if and only if $A$ is a strong dual of $B$. 
+        \item If $B$ is a strong dual of $A$, then there is an adjunction $ - \otimes A \dashv - \otimes B$. Deduce that the strong dual of $A$, if it exists, is unique up to isomorphism (we typically denote it by $\mathbf{D}A$). 
         \item If $\mathcal{C}$ is closed with internal hom $F(-,-)$, then the strong dual of an object $A$, if it exists, is $F(A,\mathbf{1})$. 
     \end{enumerate}
 \end{lemma}
@@ -2420,7 +2420,9 @@ We often just say that $A$ is strongly dualizable if there exists a strong dual 
     is an equivalence. 
 \end{proposition}
 \begin{example}
-    Let $R$ be a commutative ring, and take $\mathcal{C} = (\Mod_R,\otimes_R,R)$. We can define the (weak) dual of any object to be $\Hom_R(-,R)$. Then, $\epsilon_M \colon \Hom_R(M,R) \otimes M \to R$ is the usual evaluation map $f \otimes m \mapsto f(m)$. The coevalution map sends $1 \in R$ to a finite sum $\sum_{i \in I} m_i \otimes f_i$. The triangle identities above then give
+    Let $R$ be a commutative ring, and take $\mathcal{C} = (\Mod_R,\otimes_R,R)$. We first note that the unit of a symmetric monoidal category is always dualizable: in particular, $R$ is dualizable as an $R$-module. Moreover, dualizable objects are closed under retracts and direct sums, and hence any finitely-generated projective module is dualizable (as a retract of $R^n$). 
+
+    We can define the (weak) dual of any object to be $\Hom_R(-,R)$. Then, $\epsilon_M \colon \Hom_R(M,R) \otimes M \to R$ is the usual evaluation map $f \otimes m \mapsto f(m)$. The coevalution map sends $1 \in R$ to a finite sum $\sum_{i \in I} m_i \otimes f_i$. The triangle identities above then give
     \[
     \sum_{i \in I}m_if_i(p) = p, \quad  p \in M
     \]
@@ -2428,9 +2430,9 @@ We often just say that $A$ is strongly dualizable if there exists a strong dual 
     \[
     \sum_{i \in I}r(m_i)f_i = r, \quad r \in \Hom_R(M,R). 
     \]
- Now consider the map that sends $\alpha \colon R^I \to M$ that sends $(r_i)_{i \in I}$ to $\sum_{i \in I}$, and the map $\beta \colon M \to R^I$ that sends $p \in M$ to $(f_i(p))_{i \in I}$. The triangle identities then imply that $M$ is finitely generated and a retract of $R^I$ ($\alpha\beta = \text{id}_{M}$), i.e., $M$ is a finitely generated projective module. In other words: $M$ is strongly dualizable in $\Mod_R$ if and only if it is finitely generated and projective. 
+ Now consider the map that sends $\alpha \colon R^I \to M$ that sends $(r_i)_{i \in I}$ to $\sum_{i \in I}m_ir_i$, and the map $\beta \colon M \to R^I$ that sends $p \in M$ to $(f_i(p))_{i \in I}$. The triangle identities then imply that $M$ is finitely generated and a retract of $R^I$ ($\alpha\beta = \text{id}_{M}$), i.e., $M$ is a finitely generated projective module. In other words: $M$ is strongly dualizable in $\Mod_R$ if and only if it is finitely generated and projective. 
 
- This example extends to chain complexes: a chain complex $M \in \Ch(R)$ is dualizable if and only if of $M_q$ is finitely generated for all $q$ and $M_q \ne 0$ for only finitely many $q$, and $M_q$ is projective for all $q$. 
+ This example extends to chain complexes: a chain complex $M \in \Ch(R)$ is dualizable if and only if $M_q$ is finitely generated for all $q$ and $M_q \ne 0$ for only finitely many $q$, and $M_q$ is projective for all $q$. 
 \end{example}
 What about the category of spectra? A non-trivial result is the following:
 \begin{theorem}
