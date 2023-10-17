@@ -15,6 +15,8 @@
 \nc{\ul}{\underline}
 \nc{\dmo}{\DeclareMathOperator}
 \dmo{\Sub}{Sub}
+\dmo{\co}{co}
+\dmo{\hocolim}{hocolim}
 \dmo{\Ch}{Ch}
 \dmo{\fib}{fib}
 \dmo{\cofib}{cofib}
@@ -37,6 +39,7 @@
 \dmo{\End}{End}
 \dmo{\Ext}{Ext}
 \dmo{\sSet}{sSet}
+\dmo{\Stab}{Stab}
 \dmo{\Kan}{Kan}
 \dmo{\Quillen}{Quillen}
 \dmo{\Top}{Top}
@@ -2568,6 +2571,413 @@ is surjective if $\dim(X^H ) \le \nu(H)$ for all $H$, and bijective if $\dim(X^H
 \end{theorem}
 So once again, representations spheres appear quite naturally. 
 \end{remark}
+\section{The category of genuine $G$-spectra}
+Last time we convinced ourselves that a good theory of $G$-spectra will involve  inverting \emph{all} representation spheres, and not just that associated with the trivial representation. Since any representation sits inside a direct sum of copies of the regular representation it will suffice to invert that. We can do this in the following way:
+\begin{definition}
+    The $\infty$-category of (genuine) $G$-spectra $\Sp_G$ is the limit of the diagram
+    \[
+    \Sp_G \coloneqq \lim \left( \cdots \to G\Top_* \xrightarrow{\Omega^{\rho}} G\Top_* \xrightarrow{\Omega^{\rho}} G\Top_* \right)
+    \]
+\end{definition}
+
+\begin{remark}
+This type of construction has been studied by Robalo. Namely, given an $\infty$-category $\cat C$ and a functor $G \colon \cat C \to \cat C$ a functor with right adjoint $U$, one can define the stabilization as the limit
+\[
+\Stab_{(G,U)}(\cat C) \simeq \varprojlim \left( \cdots \to \cat C \xrightarrow{U} \cat C \xrightarrow{U} \cat C \right)
+\]
+If $\cat C$ is presentable, this is the colimit in $\Pr_L$ of 
+\[
+ \varinjlim \left( \cdots \to \cat C \xrightarrow{G}\cat C \xrightarrow{G} \cat C \right)
+\]
+\end{remark}
+\begin{remark}
+    There is an adjoint pair
+    \[
+    \Sigma^{\infty}_G \colon G\Top_* \leftrightarrows \Sp_G \colon \Omega^{\infty}_G
+    \]
+    It has also been checked that the definition of $G$-spectra agrees with the underlying $\infty$-category of the model category of orthogonal $G$-spectra. Finally, this also implies that every object can be written as 
+    \begin{equation}\label{eq:g-presentation}
+ X \simeq \varinjlim \mathbb{S}^{-n\rho} \wedge \Sigma_G^{\infty}\Omega_G^{\infty}(\mathbb{S}^{n\rho} \wedge X).
+    \end{equation}
+    \end{remark}
+One advantage of (genuine) $G$-spectra is that they naturally represent $RO(G)$-graded cohomology theories. 
+\begin{proposition}
+   Let $V$ be a $G$-representation and $X$ a pointed $G$-CW complex. For any $G$-spectrum $E$, the assignment
+    \[
+    (V,X) \mapsto [\Sigma^{\infty}X,S^V \wedge E]_G
+    \]
+    together with the natural suspension isomorphism
+    \[
+    [\Sigma^{\infty}X,S^V \wedge E]_G \xrightarrow{\cong}  [\Sigma^{\infty}\Sigma^{W}X,S^{V \oplus W} \wedge E]_G 
+    \]
+    given an $RO(G)$-graded cohomology theory. 
+
+    Conversely, if $E^*(-)$ represents an $RO(G)$-graded cohomology theory, then there is a $G$-specturm which represents it in the homotopy category. 
+\end{proposition}
+\begin{example}
+    As discussed previously, suppose that $\ul{M}$ is a coefficient system which arises as the restriction of a Mackey functor, then Bredon cohomology $H_G^*(-,\ul{M})$ extends to an $RO(G)$-graded cohomology theory. The associated $G$-spectrum is the Eilenberg--MacLane spectrum $H\ul{M}$.
+\end{example}
+\begin{theorem}[Robalo, Gepner--Meier]\label{thm:robalo}
+    Let $G$ be a finite group and let $\rho_G$ denote the regular representation of $G$. Given a presentably symmetric monoidal
+$\infty$-category $\cat D$ and a symmetric monoidal left adjoint $ F \colon G\Top_* \to \cat D$ with the property
+that $F(S^{\rho_G})$ is invertible, there exists an essentially unique symmetric monoidal left
+adjoint $\overline F \colon \Sp_G \to \cat D$ such that $\overline{F} \circ \Sigma^{\infty}_G \simeq F$ as symmetric monoidal functors:
+% https://q.uiver.app/#q=WzAsMyxbMCwwLCJHXFxUb3BfKiJdLFsxLDEsIlxcY2F0IEQiXSxbMCwxLCJcXFNwIl0sWzAsMSwiRiJdLFswLDIsIlxcU2lnbWFee1xcaW5mdHl9X0ciLDJdLFsyLDEsIlxcb3ZlcmxpbmV7Rn0iLDIseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XV0=
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{G\Top_*} \\
+	\Sp \& {\cat D}
+	\arrow["F", from=1-1, to=2-2]
+	\arrow["{\Sigma^{\infty}_G}"', from=1-1, to=2-1]
+	\arrow["{\overline{F}}"', dashed, from=2-1, to=2-2]
+\end{tikzcd}\]
+\end{theorem}
+\begin{proposition}
+    Let $i \colon G \to G'$ be a morphism of groups. Then there is a symmetric monoidal left adjoint functor $i^* \colon \Sp_{G'} \to \Sp_G$. 
+\end{proposition}
+Since any group homomorphism $G \to G'$ factors as
+\[
+G \twoheadrightarrow G/\ker(i) \hookrightarrow G'
+\]
+ it suffices to treat the case of quotienting by a normal subgroup, and inclusions separately. 
+  \begin{proposition}
+     Let $G$ be a group and $H$ a subgroup, then there is a symmetric monoidal left adjoint functor
+     \[
+     \Res^G_H \colon \Sp_{G} \to \Sp_H
+     \]
+ \end{proposition}
+ \begin{proof}
+     We first prove that this exists on the level of spaces. We will use Elmendorf's theorem to identify
+     \[
+     G\Top_* \simeq \Fun(\mathcal{O}_{G}^{op},\Top_*)
+     \]
+     and similar for $H\Top_*$. We note that under this equivalence the regular representation sphere $S^{\rho_G}$ corresponds to the functor that assigns to $G/K$ the sphere $S^{|G/K|}$. 
+     
+     The functor $\Res^G_H \colon G\Top_* \to H\Top_*$ corresponds to the functor induced by $G \times_H - \colon \mathcal{O}_H \to \mathcal{O}_G$. 
+        We now want to apply \Cref{thm:robalo} to the diagram:
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJHXFxUb3BfKiJdLFsxLDEsIlxcU3BfSCJdLFswLDEsIlxcU3BfRyJdLFsxLDAsIkhcXFRvcF8qIl0sWzAsMiwiXFxTaWdtYV57XFxpbmZ0eX1fe0h9IiwyXSxbMiwxLCJcXFJlc15HX0giLDIseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XSxbMCwzLCJcXFJlc15HX0giXSxbMywxLCJcXFNpZ21hXntcXGluZnR5fV9HIl1d
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{G\Top_*} \& {H\Top_*} \\
+	{\Sp_G} \& {\Sp_H}
+	\arrow["{\Sigma^{\infty}_{G}}"', from=1-1, to=2-1]
+	\arrow["{\Res^G_H}"', dashed, from=2-1, to=2-2]
+	\arrow["{\Res^G_H}", from=1-1, to=1-2]
+	\arrow["{\Sigma^{\infty}_H}", from=1-2, to=2-2]
+\end{tikzcd}\]
+where we are taking $F$ as the composite $\Sigma_H^{\infty} \circ \Res_{H}^G$. Since $\Sigma^{\infty}_H$ inverts $S^{\rho_H}$ by construction, it suffices to show that $\Res^G_H \colon G\Top_* \to H\Top_*$ carries $S^{\rho_{G}}$ to an invertible object in $\Sp_H$. But in fact it carries $S^{\rho_G}$ to $S^{\Res^{C_4}_{C_2}{\rho_G}}$, which is invertible (as it is a representation sphere). 
+ \end{proof}
+ \begin{remark}
+     The right adjoint to restriction is called coinduction. Perhaps surprisingly, coinduction is also \emph{left} adjoint to restriction, where it goes by the name induction. This theorem is called the Wirthm{\"u}ller isomorphism. 
+ \end{remark}
+ \begin{example}
+     We have that 
+     \[
+     \Coind_H^G(\mathbb{S}_H) \simeq \Ind_H^G(\mathbb{S}_H) \simeq \Sigma^{\infty}_G G/H_+
+     \]
+     Indeed, one can show that there is a commutative diagram
+     % https://q.uiver.app/#q=WzAsNCxbMCwwLCJIXFxUb3BfKiJdLFsxLDEsIlxcU3BfRyJdLFswLDEsIlxcU3BfSCJdLFsxLDAsIkdcXFRvcF8qIl0sWzAsMiwiXFxTaWdtYV57XFxpbmZ0eX1fe0h9IiwyXSxbMiwxLCJcXEluZF5HX0giLDJdLFswLDMsIlxcSW5kXkdfSCJdLFszLDEsIlxcU2lnbWFee1xcaW5mdHl9X0ciXV0=
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{H\Top_*} \& {G\Top_*} \\
+	{\Sp_H} \& {\Sp_G}
+	\arrow["{\Sigma^{\infty}_{H}}"', from=1-1, to=2-1]
+	\arrow["{\Ind^G_H}"', from=2-1, to=2-2]
+	\arrow["{\Ind^G_H}", from=1-1, to=1-2]
+	\arrow["{\Sigma^{\infty}_G}", from=1-2, to=2-2]
+\end{tikzcd}\]
+to reduce the a computation in $H$-spaces, where it is straightforward. 
+ \end{example}
+ \begin{proposition}
+     Let $G$ be a group and $N$ a normal subgroup, then there is a symmetric-monoidal left adjoint functor
+     \[
+     \Inf_{G/N}^G \colon \Sp_{G/N} \to \Sp_G
+     \]
+
+ \end{proposition}
+ \begin{proof}
+Once again, this boils down to a statement about spaces, namely that there is a functor $(G/N)\Top_* \to G\Top_*$  induced by the functor
+$\mathcal{O}(G) \to \mathcal{O}(G/N)$ sending $(G/H)$ to $(G/N)/((NH)/N)$. 
+ \end{proof}
+ \begin{remark}
+     The right adjoint is known as the fixed points functor $(-)^N \colon \Sp_{G} \to \Sp_{G/N}$
+ \end{remark}
+ \begin{definition}
+   For an arbitrary subgroup $H \le G$ the $H$-fixed point functor is the composite
+   \[
+   \Sp_G \xrightarrow{\Res^G_H} \Sp_H \xrightarrow{(-)^H} \Sp
+   \]
+ \end{definition}
+ \begin{proposition}
+     The fixed point functor $(-)^H$ is corepresented by $\Sigma_G^{\infty}G/H_+$. \textbf{}
+ \end{proposition}
+ \begin{proof}
+     This is more or less formal from what we have so far: for $M \in \Sp_G$ we have
+     \[
+     \begin{split}
+     M^H \simeq \Hom_{\Sp}(\mathbb{S},M^H) & \simeq \Hom_{\Sp}(\mathbb{S},(\Res^G_HM)^H) \\ & \simeq \Hom_{\Sp_H}(\Inf_{e}^H\mathbb{S},\Res^G_HM) \\& \simeq \Hom_{\Sp_H}(\mathbb{S}_H,\Res^G_HM) \\
+     & \simeq \Hom_{\Sp_G}(\Coind_H^G \mathbb{S}_H,M) \\
+     & \simeq \Hom_{\Sp_G}(\Sigma^{\infty}_GG/H_+,M) \qedhere
+     \end{split}
+     \]
+ \end{proof}
+ \begin{remark}
+     The category $\Sp_G$ is closed: there is an internal hom $G$-spectrum $F(X,Y)$. The fixed points of this are computed by
+     \[
+     F(X,Y)^G \simeq \Hom_{\Sp_G}(\Sigma^{\infty}G/G_+,F(X,Y)) \simeq \Hom_{\Sp_G}(X,Y)
+     \]
+     In particular,
+     \[
+     F(\Sigma^{\infty}G/H_+,Y)^G \simeq Y^H. 
+     \]
+ \end{remark}
+  \begin{definition}
+     For $H \le G$ and $G$-spectrum $M$ we define
+     \[
+     \pi_n^H(M) \coloneqq \pi_n(M^H).
+     \]
+ \end{definition}
+ \begin{remark}
+     We would like our theory to have $\pi_*^H(M) = 0$ if and only if $M = 0$. Indeed, if we used the theory of model categories, this would have held essentially by definition. By the above, this is the same as saying that 
+     \[
+     M \simeq 0 \iff \pi_*\Hom_{\Sp_G}(\Sigma^{\infty}_GG/H_+,M) \simeq 0 \text{ for all } H \le G
+     \]
+     By general machinery, this is the same as saying that the smallest \emph{localizing subcategory} (a stable subcategory that is closed under retracts, extensions and colimits) containing $\Sigma_G^{\infty}G/H_+$ is all of $\Sp_G$. Here is a proof from our perspective. 
+ \end{remark}
+ \begin{proposition}
+     The smallest localizing subcategory of $\Sp_G$ containing $\{\Sigma_G^{\infty}G/H_+\}_{H \le G}$ is $\Sp_G$. 
+ \end{proposition}
+ \begin{proof}
+    Let $\cat C$ denote the localizing subcategory in question.  The analogous statement is true for pointed spaces, and since $\Sigma^{\infty}$ a left adjoint, all suspension spectra are in $\cat C$. We claim that if $X,Y \in \cat C$, then so is $X \wedge Y$. Indeed, one can reduce this to show that $\Sigma^{\infty}_G G/H_+ \wedge \Sigma^{\infty}_H G/K_+$ is in $\cat C$. But this follows from the double coset formula:
+    \[
+    \Sigma^{\infty}_G G/H_+ \wedge \Sigma^{\infty}_G G/K_+ \simeq \bigvee_{[g] \in H\backslash G/H} \Sigma^{\infty}_G G/(H^g \cap K)_+
+    \]
+    Moreover, orbits are self-dual, and so $\mathbb{D}(\Sigma^{\infty}_GX)$ is also in $\cat C$, for all finite pointed $G$-CW complexes $X$. In particular, $\mathbb{S}^{-n\rho} \in \cat C$. But then, the result follows from \eqref{eq:g-presentation}:
+    \[
+ X \simeq \varinjlim \mathbb{S}^{-n\rho} \wedge \Sigma_G^{\infty}\Omega_G^{\infty}(\mathbb{S}^{n\rho} \wedge X).\qedhere
+    \]
+ \end{proof}
+ \begin{theorem}
+     The groups $\{\pi_n^H(X)\}_{H \le G}$ assemble into a Mackey functor, denoted $\underline{\pi}_n(X)$. 
+ \end{theorem}
+ \begin{proof}
+     We must construct the relevant transfer, restriction, and conjugation maps. The key observation is that by the Wirthm{\"u}ller isomorphis we have equivalences
+     \[
+[S^n,\Sigma^{\infty}G/H_+ \wedge X]_G \cong [S^n,\Coind^G_H\Res^G_HX]_G \cong    [\Sigma^{\infty}G/H_+ \wedge S^n,X]_G
+     \]
+     We then can define
+     \[
+     \begin{split}
+     \Res^H_K &\colon  [\Sigma^{\infty}G/H_+ \wedge S^n,X]_G \to  [\Sigma^{\infty}G/K_+ \wedge S^n,X]_G  \\
+     \Tr^H_K &\colon  [ S^n,\Sigma^{\infty}G/K_+ \wedge X]_G \to  [ S^n,\Sigma^{\infty}G/H_+ \wedge X]_G  \\
+     \end{split}
+     \]
+     to be the maps induced by $G/K \to G/H$, while the conjugation map
+     \[
+     c_g \colon [\Sigma^{\infty}G/H_+ \wedge S^n,X]_G \to [\Sigma^{\infty}G/gHg^{-1}_+ \wedge S^n,X]_G
+     \]
+     is the obvious map induced by conjugation.  The verification that this form a Mackey functor almost follows because everything is done at the level of $G$-sets - the hardest thing to show is the double coset formula.
+ \end{proof}
+ \begin{remark}
+     This is a nice feature of genuine stable equivariant homotopy that is not true on the level of spaces, or for naive $G$-spectra. We will give an example on the exercise sheet next week. 
+ \end{remark}
+ \begin{example}
+     Let $\ul{M}$ be a Mackey functor, then the Eilenberg--MacLane spectrum $H\ul{M}$ mentioned previously is characterized by the property that
+     \[
+     \underline{\pi}_i(H\ul{M}) \cong \begin{cases}\ul{M} & i = 0 \\ 0 & \text{else.} \end{cases}
+     \]
+ \end{example}
+ \chapter{Fixed point functors}
+ \section{Isotropy separation and geometric fixed points}
+ One of the main techniques for proving statements about $G$-spectra is via the method of isotropy separation, which we now explain. 
+ \begin{definition}
+     A \emph{family} $\mathcal F$ of subgroups of $G$ is a set of subgroups of $G$ which are closed under taking subgroups and conjugation. 
+ \end{definition}
+ \begin{example}
+     Typically families include: the family of all subgroups, the family consisting of only the trivial subgroup, and the family of \emph{proper} subgroups. 
+ \end{example}
+ \begin{lemma}
+     There exists a $G$-space $E\mathcal{F}$ determined up to equivalence by the conditions that
+     \[
+     E\mathcal{F}^K \simeq \begin{cases} \ast &\text{if } K \in \mathcal{F} \\
+     \varnothing &\text{otherwise}.\end{cases}
+     \]
+ \end{lemma}
+ \begin{proof}
+     This is a consequence of Elmendorf's theorem, although a direct construction exists: if we let $i \colon \mathcal{O}_{\mathcal F}(G) \to \mathcal{S}_G$ denote the inclusion of the full subcategory of $G$-spaces spanned by the transitive $G$-sets with isotropy in $\mathcal{F}$, then 
+     \[
+     E\mathcal{F} \simeq \hocolim_{\mathcal{O}_{\mathcal{F}}}i.\qedhere
+     \]
+ \end{proof}
+ \begin{example}
+     If $\mathcal{F}$ is the family consisting of the trivial subgroup, then $E\mathcal{F} \simeq EG$ the universal cover of $BG$. If $\mathcal{F}$ is the family of all subgroups, then a point is model for $E\mathcal{F}$. If $\mathcal{F}$ is the family of proper subgroups, this is usually denoted by $E\mathcal{P}$. The does have an explicit model: it is
+     \[
+     E\mathcal{P} \simeq \hocolim_n S(n\overline{\rho}_G),
+     \]
+     where $\overline{\rho}_G$ is the reduced regular representation, the quotient of the regular representation by the trivial representation. 
+ \end{example}
+ \begin{definition}
+     If $\mathcal{F}$ is a family, then let $E\mathcal{F}_+ \to S^0$
+be the pointed map which sends $E\mathcal{F}$ to the non-basepoint. Let $E\mathcal{F}$ denote the cofiber.
+ \end{definition}
+ The next two results are left for the exercise sheet. 
+ \begin{lemma}
+     We have
+     \[
+     \tilde E\mathcal{F}^K \simeq \begin{cases} S^0 &\text{if } K \not \in \mathcal{F} \\
+     \ast &\text{otherwise}.\end{cases}
+     \]
+ \end{lemma}
+ \begin{lemma}
+     Let $\mathcal{F}_1$ and $\mathcal{F}_2$ be families of subgroups of $G$. Then:
+     \begin{enumerate}
+         \item $\mathcal{F}_1 \cap \mathcal{F}_2$ is a family, and $E(\mathcal{F}_1 \cap \mathcal{F}_2) \simeq E\mathcal{F}_1 \times E\mathcal{F}_2$. 
+         \item $\mathcal{F}_1 \cup \mathcal{F}_2$ is a family and $\tilde E(\mathcal{F}_1 \cup \mathcal{F}_2) \simeq \tilde E\mathcal{F}_1 \times \tilde E\mathcal{F}_2$. 
+     \end{enumerate}
+ \end{lemma}
+ \begin{definition}
+     For any pointed $G$-space $X$ and family $\mathcal{F}$ the isotropy separation sequence is the cofiber sequence of spaces
+     $E\mathcal{F}_+ \to S^0 \to \tilde E\mathcal{F}$.
+ \end{definition}
+ The following follows directly by applying fixed points. 
+ \begin{proposition}
+     Let $X$ be a pointed $G$-space and $\mathcal{F}$ a family of subgroups of $G$. 
+     \begin{enumerate}[label=(\alph*)]
+         \item For any $H \in \mathcal{F}$, the map
+         \[
+         \Res^G_H(E\mathcal{F}_+ \wedge X) \to \Res^G_H(X)
+         \]
+         is an equivalence on $H$-fixed points and $\Res^G_H(\tilde E\mathcal{F} \wedge X)$ is contractible. 
+         \item For any $K \not \in \mathcal{F}$, the map
+         \[
+         \Res^G_K (X) \to \Res^G_K(\tilde E\mathcal{F} \wedge X)
+         \]
+         is a $K$-equivalence and $\Res^G_K( E\mathcal{F}_+ \wedge X)$ is contractible. 
+     \end{enumerate}
+     In other words: We can break our $G$-space $X$ up into two conceptually simpler pieces:
+     \begin{enumerate}[label=(\alph*)]
+     \item A space $E\mathcal{F}_+ \wedge X$ whose isotropy is contained in $\mathcal{F}$.
+     \item A space $\tilde E \mathcal{F} \wedge X$ which is contractible when restricted to any subgroup in $\mathcal{F}$. 
+     \end{enumerate}
+ \end{proposition}
+ This leads to the important geometric fixed points functor.
+ \begin{definition}
+     Let $X \in \Sp_G$, then the geometric fixed points functor $\Phi^G$ is defined as
+     \[
+     \Phi^G(X) \coloneqq (\Sigma^{\infty} \tilde E\mathcal{P} \wedge X)
+     \]
+     where $\mathcal{P}$ is the family of proper subgroups of $G$. More generally, let $N$ be a normal subgroup, and let $\mathcal{F}[N] \coloneqq \SET{H \le G}{N \not \subseteq H}$, then we can define
+     \[
+     \Phi^N(X) \coloneqq (\Sigma^{\infty} \tilde E\mathcal{F}[N] \wedge X)^N. 
+     \]
+ \end{definition}
+ \begin{remark}
+     Note that there is a natural map $X^N \to \Phi^N(X)$ by construction. 
+ \end{remark}
+ This is a nice definition, but it is a little hard to extract some of the essential properties. So let us think about it another way:
+ \begin{definition}
+     We say that a morphism of $G$-spectra $f \colon X \to Y$ is an $\mathcal{P}'$-equivalence if $\Sigma^{\infty} \tilde E\mathcal{P}\otimes f$ is an equivalence.  
+ \end{definition}
+ \begin{proposition}
+     The localization $L$ of $\Sp_G$ at the $\mathcal{P}'$-equivalences is a smashing localization given by tensoring with $\Sigma^{\infty} \tilde E\mathcal{P}$. 
+ \end{proposition}
+ We won't prove this, but it somehow follows from the fact the $\tilde E\mathcal{P}$ is  tensor idempotent in $G$-spaces: we have $\tilde E\mathcal{P} \wedge \tilde E\mathcal{P} \simeq \tilde E\mathcal{P}$, as one can see by computing fixed points. 
+ \begin{proposition}
+There is an equivalence 
+\[
+L\Sp_G \subseteq \Sp_G \xrightarrow{(-)^G} \Sp
+\]
+ \end{proposition}
+\section{Tom--Dieck Splitting}
+One can wonder if the fixed point functor for spaces and spectra commute: that is, do we have
+\[
+\Sigma^{\infty}(X^H) \simeq (\Sigma^{\infty}X)^H.
+\]
+However, we can easily see that this doesn't hold: we have
+\[
+(\Sigma^{\infty}G_+)^G \simeq (\Coind_e^G \mathbb{S})^G \simeq \Hom_{\Sp_G}(\Sigma^{\infty}G/G_+,\Coind_e^G\mathbb{S}) \simeq \mathbb{S}
+\]
+while
+\[
+\Sigma^{\infty}(G_+^G) \simeq \ast.
+\]
+This is part of a general result, known as tom-Dieck splitting. 
+\begin{notation}
+    Let us fix some notation. We will write $\Map_{\cat C}(X,Y)$ for the \emph{space} of morphisms between two objects $X$ and $Y$ in $\cat C$, and $\Hom_{\cat C}(X,Y)$ for the \emph{spectrum} of such maps if $\cat C$ is stable. Note that they are related by
+    \[
+    \Omega^{\infty}\Hom_{\cat C}(X,Y) \simeq \Map_{\cat C}(X,Y). 
+    \]
+    For $X,Y \in G\Top_*$ we write $X\wedge_G Y$ for the quotient of the reduced smash product $X \wedge Y$ by the relation $(g\cdot x,y) \sim (x,g \cdot y)$. 
+
+    We also note that for a $G$-space $X$, the fixed points $X^H \simeq \Hom_{G\Top_*}(G/H,X)$ have a `leftover' action of the Weyl group $W_GH$, and likewise for $X \in \Sp_G$. 
+
+Finally, the \emph{homotopy orbits} of a $G$-space $X$ are
+\[
+X_{hG} \coloneqq EG_+ \wedge_G X
+\]
+while for a $G$-spectrum they are
+\[
+X_{hG} \coloneqq \Sigma^{\infty} EG_+ \wedge_G X. 
+\]
+Note that this is a colimit, and so $(\Sigma^{\infty} X)_{hG} \simeq \Sigma^{\infty}(X_{hG})$. 
+\end{notation}
+\begin{remark}
+    In order to describe the statement of tom Dieck splitting, note that there is a natural map
+    \[
+    \Sigma^{\infty}(X^H) \simeq \Sigma^{\infty}\Map_{G\Top_*}(G/H_+,X) \to \Hom_{\Sp_G}(\Sigma^{\infty}G/H_+,\Sigma^{\infty}X) \simeq (\Sigma^{\infty}X)^H
+    \]
+    which is adjoint to 
+    \[
+    \Map_{G\Top_*}(G/H_+,X) \to \Map_{\Sp_G}(\Sigma^{\infty}(G/H_+,\Sigma^{\infty}X) \cong \Omega^{\infty}\Hom_{\Sp_G}(\Sigma^{\infty}(G/H_+,\Sigma^{\infty}X)
+    \]
+    But
+    \[
+    (\Sigma^{\infty}X)^H \simeq F(\Sigma^{\infty}G/H_+,\Sigma^{\infty}X)^G \simeq (\Sigma^{\infty}G/H_+ \wedge \Sigma^{\infty} X)^G
+    \]
+    and so
+    \[
+    [(\Sigma^{\infty}X)^H]_{hW_GH}  \simeq  [(\Sigma^{\infty}G/H_+ \wedge \Sigma^{\infty}X)^G]_{hW_GH}
+    \simeq [(\Sigma^{\infty}(G/H_+)_{hW_GH} \wedge \Sigma^{\infty}X]^G
+    \]
+    Let $D_H = \Sigma^{\infty}(G/H)_+$, then there is a natural map $D_H \to \ast$ which induces a map
+    \[
+      [(\Sigma^{\infty}X)^H]_{hW_GH} \to (\Sigma^{\infty}X)^G
+    \]
+\end{remark}
+\begin{theorem}[tom-Dieck splitting]
+    The natural transformation
+    \[
+    \zeta_X \colon \bigvee_{(H)}\Sigma^{\infty}[(X^H)_{hW_GH}] \to   \bigvee_{(H)}[(\Sigma^{\infty}X)^H]_{hW_GH} \to (\Sigma^{\infty}X)^G
+    \]
+    is an equivalence of spectra. 
+\end{theorem}
+\begin{remark}
+    In the extreme cases of $H = e$ and $H = G$ we have summands corresponding to $X_{hG}$ and $X^G$. In particular, for $G = C_p$, the splitting takes the form
+    \[
+    (\Sigma^{\infty}X)^{C_p} \simeq \Sigma^{\infty}(X^{C_p}) \vee \Sigma^{\infty}(X_{hG})
+    \]
+    Now suppose that $X = {C_p}_+$. The first term is contractible, and the second is the sphere spectrum, and we see how this fixes the example from before. 
+\end{remark}
+\begin{remark}
+    I've been told tom Dieck splitting is actually a special case of a formula for the left adjoint to the forgetful functor from genuine $G$-spectra to naive $G$-spectra. But I'm not aware of a written down statement along these lines; the closest is in work of McCandless.
+\end{remark}
+It will be useful to make the following definition in order to prove tom-Dieck splitting. 
+\begin{definition}
+       An $X \in G\Top_*$ is concentrated at a conjugacy class $H$ if for all $K$ not in the conjugacy class of
+$H$ in $G$, the fixed points $X^K$ are contractible. 
+\end{definition}
+\begin{lemma}
+    Let $X$ be a pointed $G$-space, then tom-Dieck splitting holds if $X$ is concentrated at $G$. 
+\end{lemma}
+\begin{proof}
+    This is the claim that if $X$ is concentrated at $G$, then the natural map
+    \[
+    \Sigma^{\infty}(X^G) \to (\Sigma^{\infty}X)^G 
+    \]
+    is an equivalence. We won't prove this completely. It follows from the following claim about spaces: if $X$ is concentrated at $G$, then the map
+    \[
+    \Hom_{G\Top_*}(B,X) \to \Hom_{\Top_*}(B^G,X^G)
+    \]
+which sends $f$ to $f^G$ is an equivalence for any $G$-space $B$. Indeed, it suffices to prove this for $B = G/H_+$. If $H = G$, then this is the claim that the identity map $X^G \to X^G$ is an equivalence. If $H \ne G$, then the left hand side is $X^H$, which is contractible by assumption, while the right hand side is contractible because $(G/H)^G = \emptyset$. 
+    
+\end{proof}
 	% End the document without loading the bibliography
 
 \end{document}
