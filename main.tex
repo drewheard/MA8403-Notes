@@ -2693,9 +2693,8 @@ to reduce the a computation in $H$-spaces, where it is straightforward.
 
  \end{proposition}
  \begin{proof}
-Once again, this boils down to a statement about spaces, namely that there is a functor $(G/N)\Top_* \to G\Top_*$  induced by the functor
-$\mathcal{O}(G) \to \mathcal{O}(G/N)$ sending $(G/H)$ to $(G/N)/((NH)/N)$. 
- \end{proof}
+Once again, this boils down to a statement about spaces, namely that there is a functor $(G/N)\Top_* \to G\Top_*$, namely the functor that takes a $G/N$-space and considers it as a $G$-space via the quotient map. 
+\end{proof}
  \begin{remark}
      The right adjoint is known as the fixed points functor $(-)^N \colon \Sp_{G} \to \Sp_{G/N}$
  \end{remark}
@@ -2859,32 +2858,97 @@ be the pointed map which sends $E\mathcal{F}$ to the non-basepoint. Let $E\mathc
  \end{proposition}
  This leads to the important geometric fixed points functor.
  \begin{definition}
-     Let $X \in \Sp_G$, then the geometric fixed points functor $\Phi^G$ is defined as
+     Let $X \in \Sp_G$, then the  geometric fixed points functor $
+     \Phi^G$ is defined as
      \[
      \Phi^G(X) \coloneqq (\Sigma^{\infty} \tilde E\mathcal{P} \wedge X)
      \]
-     where $\mathcal{P}$ is the family of proper subgroups of $G$. More generally, let $N$ be a normal subgroup, and let $\mathcal{F}[N] \coloneqq \SET{H \le G}{N \not \subseteq H}$, then we can define
+     where $\mathcal{P}$ is the family of proper subgroups of $G$. More generally, let $N$ be a normal subgroup, and let $\mathcal{F}[N] \coloneqq \SET{H \le G}{N \not \subseteq H}$, then we can define the partial geometric fixed points as
      \[
-     \Phi^N(X) \coloneqq (\Sigma^{\infty} \tilde E\mathcal{F}[N] \wedge X)^N. 
+     \tilde\Phi^N(X) \coloneqq (\Sigma^{\infty} \tilde E\mathcal{F}[N] \wedge X)^N. 
+     \]
+ \end{definition}
+ \begin{definition}
+     For an arbitrary subgroup $H \le G$ we define $\Phi^G \colon \Sp_G \to \Sp$ to be the composite
+     \[
+     \Sp_G \xrightarrow{\Res^G_{H}} \Sp_{H} \xrightarrow{\Phi^H} \Sp
      \]
  \end{definition}
  \begin{remark}
-     Note that there is a natural map $X^N \to \Phi^N(X)$ by construction. 
+     One can show that this is the same as the composite
+     \[
+     \Sp_G \xrightarrow{\Res^G_{N_GK}} \Sp_{N_GK} \xrightarrow{\tilde \Phi^K} \Sp_{W_GK} \xrightarrow{\Res^{W_GK}_e} \Sp
+     \]
+     In fact this map has a splitting 
  \end{remark}
- This is a nice definition, but it is a little hard to extract some of the essential properties. So let us think about it another way:
- \begin{definition}
-     We say that a morphism of $G$-spectra $f \colon X \to Y$ is an $\mathcal{P}'$-equivalence if $\Sigma^{\infty} \tilde E\mathcal{P}\otimes f$ is an equivalence.  
- \end{definition}
- \begin{proposition}
-     The localization $L$ of $\Sp_G$ at the $\mathcal{P}'$-equivalences is a smashing localization given by tensoring with $\Sigma^{\infty} \tilde E\mathcal{P}$. 
- \end{proposition}
- We won't prove this, but it somehow follows from the fact the $\tilde E\mathcal{P}$ is  tensor idempotent in $G$-spaces: we have $\tilde E\mathcal{P} \wedge \tilde E\mathcal{P} \simeq \tilde E\mathcal{P}$, as one can see by computing fixed points. 
- \begin{proposition}
-There is an equivalence 
-\[
-L\Sp_G \subseteq \Sp_G \xrightarrow{(-)^G} \Sp
-\]
- \end{proposition}
+ \begin{remark}
+     Note that there is a natural map $X^G \to \Phi^G(X)$ by construction. 
+ \end{remark}
+We can also construct $\tilde \Phi^N$ by the universal property. 
+\begin{definition}
+    Let $\tilde \Phi^N$ be the functor defined by the universal property
+   % https://q.uiver.app/#q=WzAsNCxbMCwwLCJHXFxUb3BfKiJdLFsxLDAsIihHL04pXFxUb3BfKiJdLFswLDEsIlxcU3BfRyJdLFsxLDEsIlxcU3Bfe0cvTn0iXSxbMCwxLCIoLSleTiJdLFswLDIsIlxcU2lnbWFee1xcaW5mdHl9IiwyXSxbMiwzLCJcXHRpbGRlIFxcUGhpXk4iLDJdLFsxLDMsIlxcU2lnbWFee1xcaW5mdHl9Il1d
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{G\Top_*} \& {(G/N)\Top_*} \\
+	{\Sp_G} \& {\Sp_{G/N}}
+	\arrow["{(-)^N}", from=1-1, to=1-2]
+	\arrow["{\Sigma^{\infty}}"', from=1-1, to=2-1]
+	\arrow["{\tilde \Phi^N}"', from=2-1, to=2-2]
+	\arrow["{\Sigma^{\infty}}", from=1-2, to=2-2]
+\end{tikzcd}\]
+\end{definition}
+Of course, it is not clear that these are the same functor, but one can check it is true (or take the second as the `correct' definition). 
+\begin{proposition}
+    Geometric fixed points $\Phi^G \colon \Sp_G \to \Sp$ satisfy the following properties:
+  \begin{enumerate}[label=(\alph*)]
+    \item They are symmetric monoidal. 
+    \item They preserve colimits. 
+    \item If $X$ is a pointed $G$-space, then
+    \[
+    \Phi^G(\Sigma^{\infty}X) \simeq \Sigma^{\infty}(X^G).
+    \]
+\end{enumerate}
+\end{proposition}
+Geometric fixed points can also be used to detect weak equivalences. 
+\begin{theorem}
+Let $f \colon X \to Y$ be a morphism in $\Sp_G$, then the following are equivalent:
+\begin{enumerate}[label=(\alph*)]
+\item $f$ is an equivalence.
+\item $f^H$ is an equivalence for all $H \le G$.
+\item $\Phi^H(f)$ is an equivalence for all $H \le G$. 
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+    We have already seen that $(a)$ and $(b)$ are equivalent. It is also clear that $(a)$ implies $(c)$. It therefore suffices to show that $(c)$ implies $(b)$. We proceed by induction on $G$, with the base case of $G = e$ being trivially true. By induction, we can assume that the claim is true for all proper subgroups of $G$. In particular, this means that 
+    \[
+    (\Res^G_HX)^H \to (\Res^G_HY)^H
+    \]
+    is an equivalence, or in other words
+    \[
+    f^H \colon X^H \to Y^H
+    \]
+    is an equivalence for all $H \lneq G$. This it remains to show that $f^G$ is an equivalence. Letting $Z$ be the cofiber of $f$, this is equivalence to showing that $Z^G$ is contractible. Now we use isotropy separation, in the form of the cofiber sequence
+    \[
+    (\Sigma^{\infty}E\mathcal{P}_+ \wedge Z)^G \to Z^G \to (\Sigma^{\infty}\tilde E\mathcal{P} \wedge Z)^G
+    \]
+    By the following lemma $Z^G \to (\Sigma^{\infty}\tilde E\mathcal{P} \wedge Z)^G$ is an equivalence, and so $Z^G \simeq \Phi^G(Z) \simeq \ast$, which completes the theorem. 
+\end{proof}
+\begin{lemma}
+    Let $X$ be a $G$-spectrum, and $\mathcal{F}$ a family. Then $X \to \Sigma^{\infty}\tilde E\mathcal{F} \wedge X$ is an equivalence if and only if $X^H \simeq \ast$ for all $H \in \mathcal{F}$. 
+\end{lemma}
+\begin{proof}
+    Suppose that $X \to \Sigma^{\infty}\tilde E\mathcal{F} \wedge X$ is an equivalence and $H \in \mathcal{F}$.  We note that
+    \[
+    \Res^G_H(\Sigma^{\infty}\tilde E\mathcal{F} \wedge X) \simeq \Sigma^{\infty}\Res^G_H(\tilde E\mathcal{F}) \wedge \Res^G_H(X) \simeq \ast
+    \]
+    and so $X^H \simeq \ast$ as well.
+
+    Suppose then that $X^H \simeq \ast$ for all $H \in \mathcal{F}$. It suffices to show that $\Sigma^{\infty}E\mathcal{F}_+ \wedge X \simeq \ast$. By the construction of the classifying space it suffices to show that $\Sigma^{\infty}G/H_+ \wedge X$ for $H \in \mathcal{F}$. We can check this after fixed points where we have 
+    \[
+(\Sigma^{\infty}G/H_+ \wedge X)^K \simeq \Hom_{\Sp_G}(\Sigma^{\infty}(G/H_+ \wedge G/K_+),X) \simeq \bigvee_{G/H' \subseteq G/H \times G/K} X^{H'}
+    \]
+    But all these summands are zero, and the claim follows. See also  \cite[Proposition II.9.2]{LMS} for a slightly different proof. 
+\end{proof}
 \section{Tom--Dieck Splitting}
 One can wonder if the fixed point functor for spaces and spectra commute: that is, do we have
 \[
