@@ -17,6 +17,7 @@
 \dmo{\Sub}{Sub}
 \dmo{\co}{co}
 \dmo{\hocolim}{hocolim}
+\dmo{\colim}{colim}
 \dmo{\Ch}{Ch}
 \dmo{\fib}{fib}
 \dmo{\cofib}{cofib}
@@ -2663,7 +2664,7 @@ G \twoheadrightarrow G/\ker(i) \hookrightarrow G'
 	\arrow["{\Res^G_H}", from=1-1, to=1-2]
 	\arrow["{\Sigma^{\infty}_H}", from=1-2, to=2-2]
 \end{tikzcd}\]
-where we are taking $F$ as the composite $\Sigma_H^{\infty} \circ \Res_{H}^G$. Since $\Sigma^{\infty}_H$ inverts $S^{\rho_H}$ by construction, it suffices to show that $\Res^G_H \colon G\Top_* \to H\Top_*$ carries $S^{\rho_{G}}$ to an invertible object in $\Sp_H$. But in fact it carries $S^{\rho_G}$ to $S^{\Res^{C_4}_{C_2}{\rho_G}}$, which is invertible (as it is a representation sphere). 
+where we are taking $F$ as the composite $\Sigma_H^{\infty} \circ \Res_{H}^G$. Since $\Sigma^{\infty}_H$ inverts $S^{\rho_H}$ by construction, it suffices to show that $\Res^G_H \colon G\Top_* \to H\Top_*$ carries $S^{\rho_{G}}$ to an invertible object in $\Sp_H$. But in fact it carries $S^{\rho_G}$ to $S^{\Res^{G}_{H}{\rho_G}}$, which is invertible (as it is a representation sphere). 
  \end{proof}
  \begin{remark}
      The right adjoint to restriction is called coinduction. Perhaps surprisingly, coinduction is also \emph{left} adjoint to restriction, where it goes by the name induction. This theorem is called the Wirthm{\"u}ller isomorphism. 
@@ -2805,6 +2806,7 @@ Once again, this boils down to a statement about spaces, namely that there is a 
      E\mathcal{F} \simeq \hocolim_{\mathcal{O}_{\mathcal{F}}}i.\qedhere
      \]
  \end{proof}
+ The explicit construction shows that if $\mathcal{F}' \subseteq \mathcal{F}$ is a subfamily, then there is an induced map $E\mathcal{F}' \to E\mathcal{F}$. 
  \begin{example}
      If $\mathcal{F}$ is the family consisting of the trivial subgroup, then $E\mathcal{F} \simeq EG$ the universal cover of $BG$. If $\mathcal{F}$ is the family of all subgroups, then a point is model for $E\mathcal{F}$. If $\mathcal{F}$ is the family of proper subgroups, this is usually denoted by $E\mathcal{P}$. The does have an explicit model: it is
      \[
@@ -2859,17 +2861,17 @@ be the pointed map which sends $E\mathcal{F}$ to the non-basepoint. Let $E\mathc
  This leads to the important geometric fixed points functor.
  \begin{definition}
      Let $X \in \Sp_G$, then the  geometric fixed points functor $
-     \Phi^G$ is defined as
+     \Phi^G \colon \Sp_G \to \Sp$ is defined as
      \[
      \Phi^G(X) \coloneqq (\Sigma^{\infty} \tilde E\mathcal{P} \wedge X)
      \]
-     where $\mathcal{P}$ is the family of proper subgroups of $G$. More generally, let $N$ be a normal subgroup, and let $\mathcal{F}[N] \coloneqq \SET{H \le G}{N \not \subseteq H}$, then we can define the partial geometric fixed points as
+     where $\mathcal{P}$ is the family of proper subgroups of $G$. More generally, let $N$ be a normal subgroup, and let $\mathcal{F}[N] \coloneqq \SET{H \le G}{N \not \subseteq H}$, then we can define the partial geometric fixed points as the functor $\tilde \Phi^N \colon \Sp_G \to \Sp_{G/N}$
      \[
      \tilde\Phi^N(X) \coloneqq (\Sigma^{\infty} \tilde E\mathcal{F}[N] \wedge X)^N. 
      \]
  \end{definition}
  \begin{definition}
-     For an arbitrary subgroup $H \le G$ we define $\Phi^G \colon \Sp_G \to \Sp$ to be the composite
+     For an arbitrary subgroup $H \le G$ we define $\Phi^H \colon \Sp_G \to \Sp$ to be the composite
      \[
      \Sp_G \xrightarrow{\Res^G_{H}} \Sp_{H} \xrightarrow{\Phi^H} \Sp
      \]
@@ -2877,12 +2879,12 @@ be the pointed map which sends $E\mathcal{F}$ to the non-basepoint. Let $E\mathc
  \begin{remark}
      One can show that this is the same as the composite
      \[
-     \Sp_G \xrightarrow{\Res^G_{N_GK}} \Sp_{N_GK} \xrightarrow{\tilde \Phi^K} \Sp_{W_GK} \xrightarrow{\Res^{W_GK}_e} \Sp
+     \Sp_G \xrightarrow{\Res^G_{N_GH}} \Sp_{N_GH} \xrightarrow{\tilde \Phi^H} \Sp_{W_GH} \xrightarrow{\Res^{W_GH}_e} \Sp
      \]
-     In fact this map has a splitting 
+     We will later denote the composite of the first two maps as $(-)^{\phi H}$. 
  \end{remark}
  \begin{remark}
-     Note that there is a natural map $X^G \to \Phi^G(X)$ by construction. 
+     Note that there is a natural map $X^G \to \Phi^G(X)$ coming from the map $S^0 \to \tilde E\mathcal{P}$. 
  \end{remark}
 We can also construct $\tilde \Phi^N$ by the universal property. 
 \begin{definition}
@@ -2898,16 +2900,34 @@ We can also construct $\tilde \Phi^N$ by the universal property.
 \end{tikzcd}\]
 \end{definition}
 Of course, it is not clear that these are the same functor, but one can check it is true (or take the second as the `correct' definition). 
+\begin{remark}
+    This implies that $\tilde \Phi^N$  has a right adjoint $\phi_N^* \colon \Sp_{G/N} \to \Sp_G$. This is sometimes called geometric inflation. We have
+    \[
+    \phi_N^* \simeq \Sigma^{\infty}\tilde E\mathcal{F}[N] \wedge \Inf_{G/N}^G(Y)
+    \]
+\end{remark}
+\begin{lemma}
+    We have $\tilde \Phi^N\Inf_{G/N}^G \simeq \textrm{id}$. 
+\end{lemma}
+\begin{proof}
+    This follows by essential uniqueness and and the corresponding statement on spaces. 
+\end{proof}
 \begin{proposition}
-    Geometric fixed points $\Phi^G \colon \Sp_G \to \Sp$ satisfy the following properties:
+    Geometric fixed points $\Phi^H \colon \Sp_G \to \Sp$ satisfy the following properties:
   \begin{enumerate}[label=(\alph*)]
     \item They are symmetric monoidal. 
     \item They preserve colimits. 
     \item If $X$ is a pointed $G$-space, then
     \[
-    \Phi^G(\Sigma^{\infty}X) \simeq \Sigma^{\infty}(X^G).
+    \Phi^H(\Sigma^{\infty}X) \simeq \Sigma^{\infty}(X^H).
     \]
 \end{enumerate}
+\begin{remark}\label{rem:weyl-group}
+    Less obvious, but still true, is that $H$-geometric fixed points have a residual action by the Weyl group; that is, they refine to a functor
+    \[
+    \Phi^H \colon \Sp_G \to \Fun(BW_GH,\Sp).
+    \]
+\end{remark}
 \end{proposition}
 Geometric fixed points can also be used to detect weak equivalences. 
 \begin{theorem}
@@ -2939,9 +2959,13 @@ Let $f \colon X \to Y$ be a morphism in $\Sp_G$, then the following are equivale
 \begin{proof}
     Suppose that $X \to \Sigma^{\infty}\tilde E\mathcal{F} \wedge X$ is an equivalence and $H \in \mathcal{F}$.  We note that
     \[
-    \Res^G_H(\Sigma^{\infty}\tilde E\mathcal{F} \wedge X) \simeq \Sigma^{\infty}\Res^G_H(\tilde E\mathcal{F}) \wedge \Res^G_H(X) \simeq \ast
+    \Res^G_H(\Sigma^{\infty}\tilde E\mathcal{F} \wedge X) \simeq \Sigma^{\infty}\Res^G_H(\tilde E\mathcal{F}) \wedge \Res^G_H(X)
     \]
-    and so $X^H \simeq \ast$ as well.
+    because restriction is symmetric monoidal and commutes with suspension.  Observe that if $K \le H$ (so that $K \in \mathcal{F}$) 
+    \[
+    (\Res^G_H(\tilde E\mathcal{F}))^K \simeq (\tilde E\mathcal{F})^K \simeq \ast.
+    \]
+    In other words, $\Res^G_H(\tilde E\mathcal{F})$ is contractible and so $X^H$ is as well. 
 
     Suppose then that $X^H \simeq \ast$ for all $H \in \mathcal{F}$. It suffices to show that $\Sigma^{\infty}E\mathcal{F}_+ \wedge X \simeq \ast$. By the construction of the classifying space it suffices to show that $\Sigma^{\infty}G/H_+ \wedge X$ for $H \in \mathcal{F}$. We can check this after fixed points where we have 
     \[
@@ -2950,6 +2974,7 @@ Let $f \colon X \to Y$ be a morphism in $\Sp_G$, then the following are equivale
     But all these summands are zero, and the claim follows. See also  \cite[Proposition II.9.2]{LMS} for a slightly different proof. 
 \end{proof}
 \section{Tom--Dieck Splitting}
+
 One can wonder if the fixed point functor for spaces and spectra commute: that is, do we have
 \[
 \Sigma^{\infty}(X^H) \simeq (\Sigma^{\infty}X)^H.
@@ -2962,7 +2987,268 @@ while
 \[
 \Sigma^{\infty}(G_+^G) \simeq \ast.
 \]
-This is part of a general result, known as tom-Dieck splitting. 
+This is part of a general result, known as tom-Dieck splitting. In fact, we will give an extension of tom-Dieck splitting, due to Lewis.
+We will use a slightly different version of geometric fixed points:
+\begin{definition}
+    For a subgroup $H \le G$ let $X^{\phi H}$ be the image of $X$ under the composite
+    \[
+    \Sp_G \xrightarrow{\Res^G_{N_GH}} \Sp_{N_GH} \xrightarrow{\tilde \Phi^H} \Sp_{W_GH}
+    \]
+    We still have $(\Sigma^{\infty} X)^{\Phi H} \simeq \Sigma^{\infty} X^H$ if we interpret $(-)^H$ now as the composite
+    \[
+    \Sp_G \xrightarrow{\Res^G_{N_GH}} \Sp_{N_GH} \xrightarrow{(-)^H} \Sp_{W_GH}
+    \]
+\end{definition}
+\begin{remark}
+    The previous and new definitions are related: there is an equivalence $\Res^{W_GH}_{e}(X^{\phi H}) \simeq \Phi^H(X)$. 
+\end{remark}
+Our version of tom Dieck splitting will rely on the following definition:
+\begin{definition}
+    Let $X \in \Sp_G$, then a splitting of $X$ at $H$ is a map $f_H$ in $\Sp_{W_GH}$ 
+% https://q.uiver.app/#q=WzAsMixbMCwwLCJYXkgiXSxbMSwwLCJYXntcXHBoaSBIfSJdLFswLDFdLFsxLDAsImZfSCIsMix7ImN1cnZlIjoxfV1d
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{X^H} \& {X^{\phi H}}
+	\arrow[from=1-1, to=1-2]
+	\arrow["{f_H}"', curve={height=6pt}, from=1-2, to=1-1]
+\end{tikzcd}\]
+which splits the canonical map $X^H \to X^{\phi H}$. A $G$-splitting of $X$ is a choice of splitting at each subgroup $H \le G$. 
+\end{definition}
+\begin{example}
+    Any $X \in \Sp_G$ is spit at $e$, since $X^e = X^{\phi e}$ by definition. 
+\end{example}
+\begin{lemma}
+  Suspension spectra are split at any $H \le G$.  
+\end{lemma}
+\begin{proof}
+We construct a map $\Sigma^{\infty}(Y^H) \to (\Sigma^{\infty} Y)^H$ that gives the splitting. Let $\pi \colon N_GH \to W_GH$ denote the quotient map, then the counit of the adjunction ($\Inf_{W_GH}^{N_GH},(-)^H)$ on based $N_GH$-spaces yields a map $\Inf_{N_GH}^{W_GH}(Y^H) \to Y$, and hence a map $\Inf_{N_GH}^{W_GH}(\Sigma^{\infty}(Y^H) \to \Sigma^{\infty}Y$ in spectra, whose adjoint is the desired map
+\[
+\Sigma^{\infty}(Y^H) \to (\Sigma^{\infty}Y)^H \qedhere
+\]
+\end{proof}
+\begin{remark}
+If $X$ and $Y$ are split at $H$, then so is $X \wedge Y$. Indeed, a splitting is given by the composite
+\[
+(X \wedge Y)^{\phi H} \cong X^{\phi H} \wedge Y^{\phi H} \xrightarrow{f_H \wedge g_H} X^H \wedge Y^H \to (X \wedge Y)^H.
+\]
+where the last morphism comes from lax monoidality of fixed points. 
+\end{remark}
+
+\begin{definition}
+Let $X \in \Fun(BG,\Sp)$, then the homotopy orbits are $X_{hG} \coloneqq \colim_{BG}X$. For $X \in \Sp_G$, we define $X_{hG} = (\Res^G_eX)_{hG}$. 
+\end{definition}
+\begin{remark}
+    One can show that there is a natural equivalence $X_{hG} \simeq (\Sigma^{\infty}EG_+ \wedge X)^G$. 
+\end{remark}
+\begin{remark}
+    We will use the following result (the \emph{projection formula}): if $H \le G$, then $(\Ind_H^G,\Res_H^G)$ satisfies the projection formula:
+    \[
+    (\Ind_H^GY) \wedge X \simeq \Ind_H^G(Y \wedge \Res^G_HX)
+    \]
+    for $X \in \Sp_G$ and $Y \in \Sp_H$. Here the map is constructed as the adjoint of the composite
+    \[
+    \Res^G_H((\Coind_H^GY) \wedge X) \simeq   \Res^G_H(\Coind_H^GY) \wedge \Res^G_H(X) \to  Y \wedge \Res^G_H(X)
+    \]
+    Everything in sight preserves colimits, so it suffices to check it is an equivalence when $Y = \Sigma^{\infty}H/K$ and $X = \Sigma^{\infty}G/J$, where it is formal. 
+
+    In fact, a more general statement is true: given an adjoint pair $(f^*,f_*)$, then the projection formula always holds for dualizable objects. 
+    \end{remark}
+    \begin{remark}
+        There is a commutative diagram of groups: 
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{N_GH} \& G \\
+	{W_GH} \& e
+	\arrow[hook, from=1-1, to=1-2]
+	\arrow[two heads, from=1-2, to=2-2]
+	\arrow[two heads, from=1-1, to=2-1]
+	\arrow[two heads, from=2-1, to=2-2]
+\end{tikzcd}\]
+This implies that for any $X \in N_GH$
+\[
+(\Ind_{N_GH}^GX)^G \simeq (X^{H})^{W_GH}
+\]
+Indeed, both are right adjoint to inflation along $N_GH \to e$. 
+
+Combining with the previous remark, we see that if $Y$ is a $G$-spectrum, then 
+\[
+((X \wedge \Res^{G}_{N_GH}Y)^H)^{W_GH} \simeq (\Ind_{N_GH}^G(X \wedge \Res^{G}_{N_GH}Y))^G \simeq (\Ind_{N_GH}^G(X) \wedge \Res^{G}_{N_GH}Y)^G
+\]
+    \end{remark}
+    \begin{remark}
+We construct the map used. To that end, suppose that $X \in \Sp_G$ be $G$-split and consider the following composite\footnote{We think of $X$ occasionally of an $N_GH$ spectrum via restriction, and similarly, $\Sigma^{\infty}(EW_GH)_+$ as an $N_GH$ spectrum via inflation}
+    \[
+    \begin{split}
+        (X^{\phi H})_{hW_GH} &\simeq \left(\Sigma^{\infty} (EW_GH)_+ \wedge X^{\phi H}\right)^{W_GH} \\
+        & \simeq \left((\Sigma^{\infty}(EW_GH)_+ \wedge X)^{\phi H}\right)^{W_GH} \\
+        &\xrightarrow{(f_H)_*}  \left((\Sigma^{\infty}(EW_GH)_+ \wedge X)^{H}\right)^{W_GH}  \\
+        & \simeq \left(\Ind_{N_GH}^G\Sigma^{\infty}(EW_GH)_+ \wedge X\right)^{G} \\
+        & \to X^G,
+    \end{split}
+    \]
+    where the last map is induced by the map $(EW_GH)_+ \to S^0$. Call this map $\Theta_{X,H}$. Together, we define a map
+    \[
+    \Theta_X \colon \bigvee_{(H)} \Sigma^{\infty} (X^{\phi H})_{hW_GH} \to  X^G
+    \]
+    as the sum over the maps $\Theta_{X,H}$. 
+\end{remark}
+The theorem we want to prove is the following. 
+\begin{theorem}\label{thm:tom-dieck-theorem}
+    Let $X \in \Sp_G$ be a $G$-split $G$-spectrum, then the map 
+    \[
+ \Theta_X \colon \bigvee_{(H)} \Sigma^{\infty} (X^{\phi H})_{hW_GH} \to  X^G
+    \]
+    is an equivalence of spectra. 
+\end{theorem}
+\begin{corollary}[Tom-Dieck splitting]
+    Let $X \in G\Top_*$, then 
+    \[
+    (\Sigma^{\infty}X)^G \simeq \bigvee_{(H)} \Sigma^{\infty}(X^H)_{hW_GH}
+    \]
+\end{corollary}
+\begin{remark}
+    Note that the summand corresponding to $H = G$ is exactly $\Sigma^{\infty}(X^G)$. So this measures the failure of $G$-fixed points to commute with suspension spectra. 
+\end{remark}
+\begin{example}
+    Take $X = G_+$ as before. Then all terms vanish except the contribution coming from $H = e$ where the summand contributes a copy of $\mathbb{S}$. 
+\end{example}
+\begin{example}
+    Take $X = S^0 = G/G_+$, we see that
+    \[
+    \pi_0^G(\mathbb{S}^0_G) \cong \bigoplus_{(H)} \pi^{W_GH}_0(EW_GH_+) 
+    \]
+    One can show that each summand contributes a $\mathbb{Z}$, so that 
+    \[
+    \pi_0^G(\mathbb{S}^0_G)  \cong \mathbb{Z}\{ \text{conjugacy classes of subgroups}\}
+    \]
+    In fact, $\pi_0^G \cong A(G)$, the Burnside ring of finite $G$-sets. 
+\end{example}
+We now return to the proof of \Cref{thm:tom-dieck-theorem}. It relies on studying families a little more closely. 
+\begin{definition}
+    We say that two families $\mathcal{F}'\subseteq \mathcal{F}$ are \emph{adjacent} if there is a subgroup $H$ such that 
+    \[
+    \mathcal{F}\setminus \mathcal{F}' = \{ (H) \}.
+    \]
+\end{definition}
+\begin{remark}\label{rem:filtration}
+    There exists a filtration
+    \[
+    \varnothing = \mathcal{F}_{-1} \subseteq \mathcal{F}_0 \subseteq \ldots \subseteq \mathcal{F}_n = \mathcal{F}_{all}
+    \]
+    such that each pair $\mathcal{F}_i \subseteq \mathcal{F}_{i+1}$ is adjacent. Indeed, define $Fil_0^G = \{ e \}$ and inductively 
+    \[
+    Fil_n^G = \{ H \le G \mid \text{ each proper subgroup } K < H \text{ is in } Fil_{n-1} \}
+    \]
+    Since $G$ is finite this process will eventually terminate. These families need not be adjacent, but $Fil_n^G \setminus Fil_{n-1}^G$ is a finite union of conjugacy classes. Let $\{ (H_i) \}$ be these conjugacy classes. Then the families
+    \[
+    \mathcal{F}_{i-1} \subseteq \mathcal{F}_{i-1} \cup \{ (H_1) \} \subseteq \mathcal{F}_{i-1} \cup \{ (H_1),(H_2) \} \subseteq \ldots \subseteq \mathcal{F}_i
+    \]
+    are adjacent. 
+
+    In any case, we can produce a filtration
+    \[
+    \ast \to E{\mathcal{F}_0}_+ \wedge X \to E{\mathcal{F}_1}_+ \wedge X \to \ldots \to E{\mathcal{F}_n}_+ \wedge X \simeq X
+    \]
+    of $X$. 
+\end{remark}
+\begin{definition}
+    Let $\mathcal{F} \subseteq \mathcal{F}'$ be an inclusion of families and define the pointed $G$-space $E(\mathcal{F}',\mathcal{F})$ to be the cofiber
+    \[
+    E\mathcal{F}_+ \to E\mathcal{F}'_+ \to E(\mathcal{F}',\mathcal{F})
+    \]
+\end{definition}
+\begin{remark}
+    Since $E\mathcal{F}_{all} \simeq \ast$ we have a cofiber sequence
+    \[
+    E\mathcal{F}_+ \to S^0 \to E(\mathcal{F}_{all},\mathcal{F})
+    \]
+    In other words, 
+    \[
+    E(\mathcal{F}_{all},\mathcal{F}) = \tilde E\mathcal{F}. 
+    \]
+\end{remark}
+\begin{lemma}
+ Let $\mathcal{F} \subseteq \mathcal{F}'$ be an inclusion of families, then there is a canonical equivalence
+ \[
+E(\mathcal{F}',\mathcal{F}) \simeq \widetilde E\mathcal{F} \wedge E\mathcal{F}'_+
+ \]
+ In particular, $\tilde E\mathcal{F} \wedge E\mathcal{F}_+ \simeq \ast$. 
+\end{lemma}
+\begin{proof}
+    Consider the diagram
+% https://q.uiver.app/#q=WzAsNixbMCwwLCJFXFxtYXRoY2Fse0Z9XysiXSxbMSwwLCJFXFxtYXRoY2Fse0YnfV8rIl0sWzIsMCwiRShcXG1hdGhjYWx7Rn0nLFxcbWF0aGNhbHtGfSkiXSxbMCwxLCIoRVxcbWF0aGNhbHtGfSBcXHRpbWVzIEVcXG1hdGhjYWx7Rn0nKV8rIl0sWzEsMSwiKEVcXG1hdGhjYWx7Rn1fe2FsbH0gXFx0aW1lcyBFXFxtYXRoY2Fse0Z9JylfKyJdLFsyLDEsIlxcd2lkZXRpbGRlIEVcXG1hdGhjYWx7Rn0gXFx3ZWRnZSBFXFxtYXRoY2Fse0Z9XysiXSxbMCwxXSxbMSwyXSxbMCwzXSxbMSw0XSxbMyw0XSxbNCw1XSxbMiw1XV0=
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{E\mathcal{F}_+} \& {E\mathcal{F'}_+} \& {E(\mathcal{F}',\mathcal{F})} \\
+	{(E\mathcal{F} \times E\mathcal{F}')_+} \& {(E\mathcal{F}_{all} \times E\mathcal{F}')_+} \& {\widetilde E\mathcal{F} \wedge E\mathcal{F}'s_+}
+	\arrow[from=1-1, to=1-2]
+	\arrow[from=1-2, to=1-3]
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=1-2, to=2-2]
+	\arrow[from=2-1, to=2-2]
+	\arrow[from=2-2, to=2-3]
+	\arrow[from=1-3, to=2-3]
+\end{tikzcd}\]
+induced by inclusion of families. Note that the left and middle arrows are equivalences, because $\mathcal{F} \cap \mathcal{F}' = \mathcal{F}$ and $\mathcal{F}_{all} \cap \mathcal{F}' = \mathcal{F}'$.
+\end{proof}
+The following is the key input for the proof of \Cref{thm:tom-dieck-theorem}.\begin{comment} Note that we are going to pass through three categories of spaces:
+% https://q.uiver.app/#q=WzAsMyxbMCwwLCJcXHRleHR7U3BhY2VzfSJdLFsxLDAsIldfRyhIKS1cXHRleHR7c3BhY2VzfSJdLFsyLDAsIkctXFx0ZXh0e3NwYWNlc30iXSxbMCwxLCJXX0dIIFxcdGltZXMgLSAiXSxbMSwyLCJHIFxcdGltZXNfe05fR0h9LSJdXQ==
+\[\begin{tikzcd}[ampersand replacement=\&, column sep = 4em]
+	{\text{Spaces}} \& {W_G(H)-\text{spaces}} \& {G-\text{spaces}}
+	\arrow["{W_GH \times - }", from=1-1, to=1-2]
+	\arrow["{G \times_{N_GH}-}", from=1-2, to=1-3]
+\end{tikzcd}\]
+We also let $G\Top_*[H] \subset G\Top_*$ denote the full subcategory of those spaces whose stabilizer is contained in $H$. 
+\begin{proposition}
+    Suppose that $\mathcal{F}'\subseteq \mathcal{F}$ are adjacent, i.e., $\mathcal{F} \setminus \mathcal{F}' = \{ (H) \}$. Then
+    \begin{enumerate}[label=(\alph*)]
+        \item $(G \times_{N_GH}EW_GH)_+ \wedge E(\mathcal{F},\mathcal{F}') \simeq E(\mathcal{F},\mathcal{F}')$ in $G\Top_*$. % or in naive $G$-spectra?
+        \item $E(\mathcal{F},\mathcal{F}')\mid_{N_GH} \simeq \widetilde E\mathcal{F}[H] \wedge E(\mathcal{F},\mathcal{F}')\mid_{N_GH}$ in $N_GH\Top_*$, where
+        \[
+        \mathcal{F}[H] = \SET{K \le N_GH}{H \not \subseteq K}
+        \]
+    \end{enumerate}
+\end{proposition}
+For $(a)$, we apply a technical lemma, which says that it is enough to show that the projection
+\[
+p \colon (G \times_{N_GH}EW_GH)_+ \to S^0
+\]
+induces equivalences $\Map_{G\Top_*}(X,p)$ for any $X \in G\Top_*[H]$. One can show that for such an $X$, the natural map
+\[
+f \colon G \times_{N_GH}X^H \to X
+\]
+is an equivalence. 
+\end{comment}
+\begin{proposition}\label{prop:key-td-prop}
+    Suppose that $\mathcal{F}'\subseteq \mathcal{F}$ are adjacent, i.e., $\mathcal{F} \setminus \mathcal{F}' = \{ (H) \}$. Then for $X \in \Sp_G$ there are natural equivalences
+    \[
+\Sigma^{\infty}((X \wedge E(\mathcal{F',F}))^{\phi H})_{W_GH} \simeq \Sigma^{\infty}(X^{\phi H})_{W_GH} \simeq (\Sigma^{\infty}E(\mathcal{F}',\mathcal{F}) \wedge X)^G  
+    \]
+    where the composite is given by  $\Theta_{X \wedge E(\mathcal{F',F}),H}$.
+\end{proposition}
+\begin{proof}[Proof of \Cref{thm:tom-dieck-theorem} assuming \Cref{prop:key-td-prop}]
+Since $G$ is finite, we can find a finite filtration 
+    \[
+    \varnothing = \mathcal{F}_{-1} \subseteq \mathcal{F}_0 \subseteq \ldots \subseteq \mathcal{F}_n = \mathcal{F}_{all}
+    \]
+    such that each pair $\mathcal{F}_i \subseteq \mathcal{F}_{i+1}$ is adjacent (\Cref{rem:filtration}). This gives rise to a filtration of the functor $\Sigma^{\infty}E\mathcal{F}_{all} \otimes - \simeq \text{id} \colon \Sp_G \to \Sp_G$:
+    \[
+    \ast \simeq \Sigma^{\infty}E\mathcal{F}_{\varnothing+} \otimes - \to \Sigma^{\infty}E\mathcal{F}_{0+} \otimes - \to \cdots \to \Sigma^{\infty}E\mathcal{F}_{n-1+} \otimes - \to \text{id}
+    \]
+    By a filtration argument, it then suffices to show that $\Theta_{X \otimes E(\mathcal{F',F})}$  whenever $\mathcal{F'} \subseteq \mathcal{F}$ are adjacent. But in this case, all the summands of the domain of $\Theta$ vanish except those corresponding to the conjugacy class of $H$, and so the result follows from \Cref{prop:key-td-prop}. 
+\end{proof}
+\begin{comment}
+
+
+\begin{proposition}[The Adams isomorphism]
+The natural map
+\[
+(\Sigma^{\infty} EG_+ \wedge X)^G \to (\Sigma^{\infty} EG_+ \wedge F(\Sigma^{\infty}EG_+,X))^G
+\] 
+is an equivalence. 
+\end{proposition}
+Suppose $X$ is geometrically split. We now construct a map $\Theta_{X,H}$ for each $H \le G$ as the composite:
+\[
+(\Phi^HX)_{hW_GH} \simeq (\Sigma^{\infty}E(W_GH)_+ \wedge F(\Sigma^{\infty}E(W_GH)_+,\Phi^HX))^{W_GH}
+\]
+
 \begin{notation}
     Let us fix some notation. We will write $\Map_{\cat C}(X,Y)$ for the \emph{space} of morphisms between two objects $X$ and $Y$ in $\cat C$, and $\Hom_{\cat C}(X,Y)$ for the \emph{spectrum} of such maps if $\cat C$ is stable. Note that they are related by
     \[
@@ -3042,6 +3328,8 @@ $H$ in $G$, the fixed points $X^K$ are contractible.
 which sends $f$ to $f^G$ is an equivalence for any $G$-space $B$. Indeed, it suffices to prove this for $B = G/H_+$. If $H = G$, then this is the claim that the identity map $X^G \to X^G$ is an equivalence. If $H \ne G$, then the left hand side is $X^H$, which is contractible by assumption, while the right hand side is contractible because $(G/H)^G = \emptyset$. 
     
 \end{proof}
+\end{comment}
+
 	% End the document without loading the bibliography
 
 \end{document}
