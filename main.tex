@@ -2863,7 +2863,7 @@ be the pointed map which sends $E\mathcal{F}$ to the non-basepoint. Let $E\mathc
      Let $X \in \Sp_G$, then the  geometric fixed points functor $
      \Phi^G \colon \Sp_G \to \Sp$ is defined as
      \[
-     \Phi^G(X) \coloneqq (\Sigma^{\infty} \tilde E\mathcal{P} \wedge X)
+     \Phi^G(X) \coloneqq (\Sigma^{\infty} \tilde E\mathcal{P} \wedge X)^G
      \]
      where $\mathcal{P}$ is the family of proper subgroups of $G$. More generally, let $N$ be a normal subgroup, and let $\mathcal{F}[N] \coloneqq \SET{H \le G}{N \not \subseteq H}$, then we can define the partial geometric fixed points as the functor $\tilde \Phi^N \colon \Sp_G \to \Sp_{G/N}$
      \[
@@ -3052,7 +3052,7 @@ Let $X \in \Fun(BG,\Sp)$, then the homotopy orbits are $X_{hG} \coloneqq \colim_
 
     In fact, a more general statement is true: given an adjoint pair $(f^*,f_*)$, then the projection formula always holds for dualizable objects. 
     \end{remark}
-    \begin{remark}
+    \begin{remark}\label{rem:commutative}
         There is a commutative diagram of groups: 
 \[\begin{tikzcd}[ampersand replacement=\&]
 	{N_GH} \& G \\
@@ -3074,7 +3074,9 @@ Combining with the previous remark, we see that if $Y$ is a $G$-spectrum, then
 \]
     \end{remark}
     \begin{remark}
-We construct the map used. To that end, suppose that $X \in \Sp_G$ be $G$-split and consider the following composite\footnote{We think of $X$ occasionally of an $N_GH$ spectrum via restriction, and similarly, $\Sigma^{\infty}(EW_GH)_+$ as an $N_GH$ spectrum via inflation}
+We construct the map used. We let $EW_GH_+$ denote the universal $W_GH$-space; by way of inflation along $N_GH \twoheadrightarrow W_GH$ we can also consider it as an $N_GH$ space. We omit writing this all the time. 
+
+To that end, suppose that $X \in \Sp_G$ be $G$-split and consider the following composite\footnote{We think of $X$ occasionally of an $N_GH$ spectrum via restriction, and similarly, $\Sigma^{\infty}(EW_GH)_+$ as an $N_GH$ spectrum via inflation}
     \[
     \begin{split}
         (X^{\phi H})_{hW_GH} &\simeq \left(\Sigma^{\infty} (EW_GH)_+ \wedge X^{\phi H}\right)^{W_GH} \\
@@ -3165,7 +3167,18 @@ We now return to the proof of \Cref{thm:tom-dieck-theorem}. It relies on studyin
     E(\mathcal{F}_{all},\mathcal{F}) = \tilde E\mathcal{F}. 
     \]
 \end{remark}
-\begin{lemma}
+\begin{remark}\label{rem:restriction-universal-spaces}
+    It is easy to check that if $\mathcal{F}$ is a family of subgroups of $G$, then 
+    \[
+    \Res^G_H(E\mathcal{F}) \simeq E(\mathcal{F}\mid H)
+    \]
+    where $\mathcal{F}\mid H = \SET{K \in \mathcal{F}}{K \le H}$. Similarly,
+    \[
+    \Res^G_H(E\mathcal{F}',\mathcal{F}) \simeq E(\mathcal{F}'\mid H,\mathcal{F} \mid H). 
+    \]
+    
+\end{remark}
+\begin{lemma}\label{lem:family-decompos}
  Let $\mathcal{F} \subseteq \mathcal{F}'$ be an inclusion of families, then there is a canonical equivalence
  \[
 E(\mathcal{F}',\mathcal{F}) \simeq \widetilde E\mathcal{F} \wedge E\mathcal{F}'_+
@@ -3177,7 +3190,7 @@ E(\mathcal{F}',\mathcal{F}) \simeq \widetilde E\mathcal{F} \wedge E\mathcal{F}'_
 % https://q.uiver.app/#q=WzAsNixbMCwwLCJFXFxtYXRoY2Fse0Z9XysiXSxbMSwwLCJFXFxtYXRoY2Fse0YnfV8rIl0sWzIsMCwiRShcXG1hdGhjYWx7Rn0nLFxcbWF0aGNhbHtGfSkiXSxbMCwxLCIoRVxcbWF0aGNhbHtGfSBcXHRpbWVzIEVcXG1hdGhjYWx7Rn0nKV8rIl0sWzEsMSwiKEVcXG1hdGhjYWx7Rn1fe2FsbH0gXFx0aW1lcyBFXFxtYXRoY2Fse0Z9JylfKyJdLFsyLDEsIlxcd2lkZXRpbGRlIEVcXG1hdGhjYWx7Rn0gXFx3ZWRnZSBFXFxtYXRoY2Fse0Z9XysiXSxbMCwxXSxbMSwyXSxbMCwzXSxbMSw0XSxbMyw0XSxbNCw1XSxbMiw1XV0=
 \[\begin{tikzcd}[ampersand replacement=\&]
 	{E\mathcal{F}_+} \& {E\mathcal{F'}_+} \& {E(\mathcal{F}',\mathcal{F})} \\
-	{(E\mathcal{F} \times E\mathcal{F}')_+} \& {(E\mathcal{F}_{all} \times E\mathcal{F}')_+} \& {\widetilde E\mathcal{F} \wedge E\mathcal{F}'s_+}
+	{(E\mathcal{F} \times E\mathcal{F}')_+} \& {(E\mathcal{F}_{all} \times E\mathcal{F}')_+} \& {\widetilde E\mathcal{F} \wedge E\mathcal{F}'_+}
 	\arrow[from=1-1, to=1-2]
 	\arrow[from=1-2, to=1-3]
 	\arrow[from=1-1, to=2-1]
@@ -3188,40 +3201,52 @@ E(\mathcal{F}',\mathcal{F}) \simeq \widetilde E\mathcal{F} \wedge E\mathcal{F}'_
 \end{tikzcd}\]
 induced by inclusion of families. Note that the left and middle arrows are equivalences, because $\mathcal{F} \cap \mathcal{F}' = \mathcal{F}$ and $\mathcal{F}_{all} \cap \mathcal{F}' = \mathcal{F}'$.
 \end{proof}
-The following is the key input for the proof of \Cref{thm:tom-dieck-theorem}.\begin{comment} Note that we are going to pass through three categories of spaces:
-% https://q.uiver.app/#q=WzAsMyxbMCwwLCJcXHRleHR7U3BhY2VzfSJdLFsxLDAsIldfRyhIKS1cXHRleHR7c3BhY2VzfSJdLFsyLDAsIkctXFx0ZXh0e3NwYWNlc30iXSxbMCwxLCJXX0dIIFxcdGltZXMgLSAiXSxbMSwyLCJHIFxcdGltZXNfe05fR0h9LSJdXQ==
-\[\begin{tikzcd}[ampersand replacement=\&, column sep = 4em]
-	{\text{Spaces}} \& {W_G(H)-\text{spaces}} \& {G-\text{spaces}}
-	\arrow["{W_GH \times - }", from=1-1, to=1-2]
-	\arrow["{G \times_{N_GH}-}", from=1-2, to=1-3]
-\end{tikzcd}\]
-We also let $G\Top_*[H] \subset G\Top_*$ denote the full subcategory of those spaces whose stabilizer is contained in $H$. 
-\begin{proposition}
-    Suppose that $\mathcal{F}'\subseteq \mathcal{F}$ are adjacent, i.e., $\mathcal{F} \setminus \mathcal{F}' = \{ (H) \}$. Then
-    \begin{enumerate}[label=(\alph*)]
-        \item $(G \times_{N_GH}EW_GH)_+ \wedge E(\mathcal{F},\mathcal{F}') \simeq E(\mathcal{F},\mathcal{F}')$ in $G\Top_*$. % or in naive $G$-spectra?
-        \item $E(\mathcal{F},\mathcal{F}')\mid_{N_GH} \simeq \widetilde E\mathcal{F}[H] \wedge E(\mathcal{F},\mathcal{F}')\mid_{N_GH}$ in $N_GH\Top_*$, where
-        \[
-        \mathcal{F}[H] = \SET{K \le N_GH}{H \not \subseteq K}
-        \]
-    \end{enumerate}
-\end{proposition}
-For $(a)$, we apply a technical lemma, which says that it is enough to show that the projection
-\[
-p \colon (G \times_{N_GH}EW_GH)_+ \to S^0
-\]
-induces equivalences $\Map_{G\Top_*}(X,p)$ for any $X \in G\Top_*[H]$. One can show that for such an $X$, the natural map
-\[
-f \colon G \times_{N_GH}X^H \to X
-\]
-is an equivalence. 
-\end{comment}
-\begin{proposition}\label{prop:key-td-prop}
-    Suppose that $\mathcal{F}'\subseteq \mathcal{F}$ are adjacent, i.e., $\mathcal{F} \setminus \mathcal{F}' = \{ (H) \}$. Then for $X \in \Sp_G$ there are natural equivalences
+\begin{lemma}
+    Let $\mathcal{F} \subseteq \mathcal{F}'$ be an inclusion of families, then
     \[
-\Sigma^{\infty}((X \wedge E(\mathcal{F',F}))^{\phi H})_{W_GH} \simeq \Sigma^{\infty}(X^{\phi H})_{W_GH} \simeq (\Sigma^{\infty}E(\mathcal{F}',\mathcal{F}) \wedge X)^G  
+    \phi^K(\Sigma^{\infty}E(\mathcal{F}',\mathcal{F})) \simeq \begin{cases}
+        \Sigma^{\infty}S^0 & \text{if } K \in \mathcal{F}'\setminus \mathcal{F} \\
+        \ast &\text{otherwise.}
+    \end{cases}
     \]
-    where the composite is given by  $\Theta_{X \wedge E(\mathcal{F',F}),H}$.
+\end{lemma}
+\begin{proof}
+    This follows from \Cref{lem:family-decompos}. 
+\end{proof}
+\begin{lemma}\label{lem:inclusion-lemma}
+    Suppose that $\mathcal{F} \subseteq \mathcal{F}'$ is an inclusion of families, and $\mathcal{E}$ is a family such that $\mathcal{F} \cap \mathcal{E} = \mathcal{F}' \cap \mathcal{E}$. Then the map $S^0 \to \tilde E\mathcal{E}$ induces an equivalence 
+    \[
+    E(\mathcal{F}',\mathcal{F}) \to E(\mathcal{F}',\mathcal{F}) \wedge  \tilde E\mathcal{E}
+    \]
+\end{lemma}
+\begin{proof}
+    Smashing the defining cofiber sequence for $E(\mathcal{F}',\mathcal{F})$ with $ E\mathcal{E}_+$ gives a cofiber sequence
+    \[
+    E\mathcal{F}_+ \wedge E\mathcal{E}_+ \xrightarrow{f} E\mathcal{F}'_+  \wedge E\mathcal{E}_+ \to E(\mathcal{F}',\mathcal{F}) \wedge E\mathcal{E}_+
+    \]
+    One can see that by checking on fixed points that $f$ is an equivalence. Now smashing the defining cofiber sequence for $\tilde E\mathcal{E}$ with $E(\mathcal{F}',\mathcal{F})$ gives
+    \[
+    E\mathcal{E}_+ \wedge E(\mathcal{F}',\mathcal{F})\to E(\mathcal{F}',\mathcal{F}) \xrightarrow{i} \tilde E\mathcal{E} \wedge E(\mathcal{F}',\mathcal{F})
+    \]
+    The first part implies that $i$ is an equivalence, as required. 
+\end{proof}
+\begin{corollary}\label{cor:3.27(2)}
+    Let $\mathcal{F} \subseteq \mathcal{F}'$ be adjacent at $H$, then 
+    \[
+    \Res^G_{N_GH}E(\mathcal{F}',\mathcal{F}) \xrightarrow{\sim} \tilde E\mathcal{F}[H] \wedge \Res^G_{N_GH}E(\mathcal{F}',\mathcal{F}) 
+    \]
+    where $\mathcal{F}[H]$ is the $N_GH$-family $\SET{K \le N_GH}{H \not \subseteq K}$
+\end{corollary}
+\begin{proof}
+    Note that $\mathcal{F}[H] \cap \mathcal{F}'(G \mid N_GH) = \mathcal{F}[H] \cap \mathcal{F}(G \mid N_GH)$ because $H \not \in \mathcal{F}[H]$. The result then follows from \Cref{rem:restriction-universal-spaces} and \Cref{lem:inclusion-lemma}.
+\end{proof}
+The following is the key input for the proof of \Cref{thm:tom-dieck-theorem}. For brevity, we omit writing $\Sigma^{\infty}$ all the time on the space $E(\mathcal{F}',\mathcal{F})$. 
+\begin{proposition}\label{prop:key-td-prop}
+    Suppose that $\mathcal{F}'\subseteq \mathcal{F}$ are adjacent, i.e., $\mathcal{F} \setminus \mathcal{F}' = \{ (H) \}$. Then for $X \in \Sp_G$ there is a natural equivalence
+    \[
+\Sigma^{\infty}((X \wedge E(\mathcal{F',F}))^{\phi H})_{W_GH} \simeq (E(\mathcal{F}',\mathcal{F}) \wedge X)^G  
+    \]
+ given by  $\Theta_{X \wedge E(\mathcal{F',F}),H}$.
 \end{proposition}
 \begin{proof}[Proof of \Cref{thm:tom-dieck-theorem} assuming \Cref{prop:key-td-prop}]
 Since $G$ is finite, we can find a finite filtration 
@@ -3234,101 +3259,35 @@ Since $G$ is finite, we can find a finite filtration
     \]
     By a filtration argument, it then suffices to show that $\Theta_{X \otimes E(\mathcal{F',F})}$  whenever $\mathcal{F'} \subseteq \mathcal{F}$ are adjacent. But in this case, all the summands of the domain of $\Theta$ vanish except those corresponding to the conjugacy class of $H$, and so the result follows from \Cref{prop:key-td-prop}. 
 \end{proof}
-\begin{comment}
-
-
-\begin{proposition}[The Adams isomorphism]
-The natural map
+Returning to the proof of the proposition, we use the following result. 
+\begin{lemma}\label{lem:3.27(a)}
+    Suppose that $\mathcal{F} \subseteq \mathcal{F}'$ is adjacent at $H$. Then
 \[
-(\Sigma^{\infty} EG_+ \wedge X)^G \to (\Sigma^{\infty} EG_+ \wedge F(\Sigma^{\infty}EG_+,X))^G
-\] 
+(\Ind_{N_GH}^G\Sigma^{\infty}(EW_GH))_+ \wedge E(\mathcal{F}',\mathcal{F}) \to E(\mathcal{F}',\mathcal{F})
+\]
 is an equivalence. 
-\end{proposition}
-Suppose $X$ is geometrically split. We now construct a map $\Theta_{X,H}$ for each $H \le G$ as the composite:
-\[
-(\Phi^HX)_{hW_GH} \simeq (\Sigma^{\infty}E(W_GH)_+ \wedge F(\Sigma^{\infty}E(W_GH)_+,\Phi^HX))^{W_GH}
-\]
-
-\begin{notation}
-    Let us fix some notation. We will write $\Map_{\cat C}(X,Y)$ for the \emph{space} of morphisms between two objects $X$ and $Y$ in $\cat C$, and $\Hom_{\cat C}(X,Y)$ for the \emph{spectrum} of such maps if $\cat C$ is stable. Note that they are related by
-    \[
-    \Omega^{\infty}\Hom_{\cat C}(X,Y) \simeq \Map_{\cat C}(X,Y). 
-    \]
-    For $X,Y \in G\Top_*$ we write $X\wedge_G Y$ for the quotient of the reduced smash product $X \wedge Y$ by the relation $(g\cdot x,y) \sim (x,g \cdot y)$. 
-
-    We also note that for a $G$-space $X$, the fixed points $X^H \simeq \Hom_{G\Top_*}(G/H,X)$ have a `leftover' action of the Weyl group $W_GH$, and likewise for $X \in \Sp_G$. 
-
-Finally, the \emph{homotopy orbits} of a $G$-space $X$ are
-\[
-X_{hG} \coloneqq EG_+ \wedge_G X
-\]
-while for a $G$-spectrum they are
-\[
-X_{hG} \coloneqq \Sigma^{\infty} EG_+ \wedge_G X. 
-\]
-Note that this is a colimit, and so $(\Sigma^{\infty} X)_{hG} \simeq \Sigma^{\infty}(X_{hG})$. 
-\end{notation}
-\begin{remark}
-    In order to describe the statement of tom Dieck splitting, note that there is a natural map
-    \[
-    \Sigma^{\infty}(X^H) \simeq \Sigma^{\infty}\Map_{G\Top_*}(G/H_+,X) \to \Hom_{\Sp_G}(\Sigma^{\infty}G/H_+,\Sigma^{\infty}X) \simeq (\Sigma^{\infty}X)^H
-    \]
-    which is adjoint to 
-    \[
-    \Map_{G\Top_*}(G/H_+,X) \to \Map_{\Sp_G}(\Sigma^{\infty}(G/H_+,\Sigma^{\infty}X) \cong \Omega^{\infty}\Hom_{\Sp_G}(\Sigma^{\infty}(G/H_+,\Sigma^{\infty}X)
-    \]
-    But
-    \[
-    (\Sigma^{\infty}X)^H \simeq F(\Sigma^{\infty}G/H_+,\Sigma^{\infty}X)^G \simeq (\Sigma^{\infty}G/H_+ \wedge \Sigma^{\infty} X)^G
-    \]
-    and so
-    \[
-    [(\Sigma^{\infty}X)^H]_{hW_GH}  \simeq  [(\Sigma^{\infty}G/H_+ \wedge \Sigma^{\infty}X)^G]_{hW_GH}
-    \simeq [(\Sigma^{\infty}(G/H_+)_{hW_GH} \wedge \Sigma^{\infty}X]^G
-    \]
-    Let $D_H = \Sigma^{\infty}(G/H)_+$, then there is a natural map $D_H \to \ast$ which induces a map
-    \[
-      [(\Sigma^{\infty}X)^H]_{hW_GH} \to (\Sigma^{\infty}X)^G
-    \]
-\end{remark}
-\begin{theorem}[tom-Dieck splitting]
-    The natural transformation
-    \[
-    \zeta_X \colon \bigvee_{(H)}\Sigma^{\infty}[(X^H)_{hW_GH}] \to   \bigvee_{(H)}[(\Sigma^{\infty}X)^H]_{hW_GH} \to (\Sigma^{\infty}X)^G
-    \]
-    is an equivalence of spectra. 
-\end{theorem}
-\begin{remark}
-    In the extreme cases of $H = e$ and $H = G$ we have summands corresponding to $X_{hG}$ and $X^G$. In particular, for $G = C_p$, the splitting takes the form
-    \[
-    (\Sigma^{\infty}X)^{C_p} \simeq \Sigma^{\infty}(X^{C_p}) \vee \Sigma^{\infty}(X_{hG})
-    \]
-    Now suppose that $X = {C_p}_+$. The first term is contractible, and the second is the sphere spectrum, and we see how this fixes the example from before. 
-\end{remark}
-\begin{remark}
-    I've been told tom Dieck splitting is actually a special case of a formula for the left adjoint to the forgetful functor from genuine $G$-spectra to naive $G$-spectra. But I'm not aware of a written down statement along these lines; the closest is in work of McCandless.
-\end{remark}
-It will be useful to make the following definition in order to prove tom-Dieck splitting. 
-\begin{definition}
-       An $X \in G\Top_*$ is concentrated at a conjugacy class $H$ if for all $K$ not in the conjugacy class of
-$H$ in $G$, the fixed points $X^K$ are contractible. 
-\end{definition}
-\begin{lemma}
-    Let $X$ be a pointed $G$-space, then tom-Dieck splitting holds if $X$ is concentrated at $G$. 
 \end{lemma}
-\begin{proof}
-    This is the claim that if $X$ is concentrated at $G$, then the natural map
-    \[
-    \Sigma^{\infty}(X^G) \to (\Sigma^{\infty}X)^G 
-    \]
-    is an equivalence. We won't prove this completely. It follows from the following claim about spaces: if $X$ is concentrated at $G$, then the map
-    \[
-    \Hom_{G\Top_*}(B,X) \to \Hom_{\Top_*}(B^G,X^G)
-    \]
-which sends $f$ to $f^G$ is an equivalence for any $G$-space $B$. Indeed, it suffices to prove this for $B = G/H_+$. If $H = G$, then this is the claim that the identity map $X^G \to X^G$ is an equivalence. If $H \ne G$, then the left hand side is $X^H$, which is contractible by assumption, while the right hand side is contractible because $(G/H)^G = \emptyset$. 
+\begin{proof}[Proof of \Cref{prop:key-td-prop}]
+    We will give an equivalence, but will not show that it is actually given by the claimed map. Let $\lambda \colon N_GH \to G$ be the inclusion, and $\pi \colon G \to e$ the projection. For brevity, we let $(\lambda_!,\lambda^*)$ denote the adjoint pair $(\Ind_{N_GH}^G,\Res_{N_GH}^G)$, and $(\pi^*,\pi_*)$ for $(\Inf_e^G,(-)^G)$. By \Cref{rem:commutative} we have that $\pi_*\lambda_!(X) \simeq (X^H)^{W_GH}$.  
+
     
+    First, we note that there is an equivalence
+    \[
+    \begin{split}
+    \lambda_!(\Sigma^{\infty}EW_GH_+ &\wedge \lambda^*(E(\mathcal{F}',\mathcal{F}) \otimes X)) \\ &\xrightarrow{{\sim}} \lambda_!(\Sigma^{\infty}EW_GH_+ \wedge \tilde E\mathcal{F}[H] \wedge \lambda^*(E(\mathcal{F}',\mathcal{F}) \otimes X))
+    \end{split}
+    \]
+    by \Cref{cor:3.27(2)} and monoidality of restriction. By the projection formula and \Cref{lem:3.27(a)}
+  \[
+  \begin{split}
+   \lambda_!(\Sigma^{\infty}EW_GH_+ \wedge \lambda^*(E(\mathcal{F}',\mathcal{F}) \otimes X)) &\simeq  \lambda_!(\Sigma^{\infty}EW_GH_+) \wedge E(\mathcal{F}',\mathcal{F}) \wedge X  \\
+   & \xrightarrow{\sim} E(\mathcal{F}',\mathcal{F}) \wedge X
+   \end{split}
+  \]  
+  We now apply $\pi_*$ and using monoidality of geometric fixed points gives the result. 
 \end{proof}
-\end{comment}
+
+
 
 	% End the document without loading the bibliography
 
