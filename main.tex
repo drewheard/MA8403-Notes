@@ -14,7 +14,9 @@
 \newcommand{\nc}{\newcommand}
 \nc{\ul}{\underline}
 \nc{\dmo}{\DeclareMathOperator}
+\dmo{\Rep}{Rep}
 \dmo{\Sub}{Sub}
+\dmo{\Vect}{Vect}
 \dmo{\co}{co}
 \dmo{\hocolim}{hocolim}
 \dmo{\colim}{colim}
@@ -2947,7 +2949,7 @@ Let $f \colon X \to Y$ be a morphism in $\Sp_G$, then the following are equivale
     \[
     f^H \colon X^H \to Y^H
     \]
-    is an equivalence for all $H \lneq G$. This it remains to show that $f^G$ is an equivalence. Letting $Z$ be the cofiber of $f$, this is equivalence to showing that $Z^G$ is contractible. Now we use isotropy separation, in the form of the cofiber sequence
+    is an equivalence for all $H \lneq G$. This it remains to show that $f^G$ is an equivalence. Letting $Z$ be the cofiber of $f$ (so that $Z^H \simeq \ast$ for all $H \lneq G$), this is equivalent to showing that $Z^G$ is contractible. Now we use isotropy separation, in the form of the cofiber sequence
     \[
     (\Sigma^{\infty}E\mathcal{P}_+ \wedge Z)^G \to Z^G \to (\Sigma^{\infty}\tilde E\mathcal{P} \wedge Z)^G
     \]
@@ -3088,7 +3090,7 @@ To that end, suppose that $X \in \Sp_G$ be $G$-split and consider the following 
     \]
     where the last map is induced by the map $(EW_GH)_+ \to S^0$. Call this map $\Theta_{X,H}$. Together, we define a map
     \[
-    \Theta_X \colon \bigvee_{(H)} \Sigma^{\infty} (X^{\phi H})_{hW_GH} \to  X^G
+    \Theta_X \colon \bigvee_{(H)}  (X^{\phi H})_{hW_GH} \to  X^G
     \]
     as the sum over the maps $\Theta_{X,H}$. 
 \end{remark}
@@ -3096,7 +3098,7 @@ The theorem we want to prove is the following.
 \begin{theorem}\label{thm:tom-dieck-theorem}
     Let $X \in \Sp_G$ be a $G$-split $G$-spectrum, then the map 
     \[
- \Theta_X \colon \bigvee_{(H)} \Sigma^{\infty} (X^{\phi H})_{hW_GH} \to  X^G
+ \Theta_X \colon \bigvee_{(H)} (X^{\phi H})_{hW_GH} \to  X^G
     \]
     is an equivalence of spectra. 
 \end{theorem}
@@ -3244,7 +3246,7 @@ The following is the key input for the proof of \Cref{thm:tom-dieck-theorem}. Fo
 \begin{proposition}\label{prop:key-td-prop}
     Suppose that $\mathcal{F}'\subseteq \mathcal{F}$ are adjacent, i.e., $\mathcal{F} \setminus \mathcal{F}' = \{ (H) \}$. Then for $X \in \Sp_G$ there is a natural equivalence
     \[
-\Sigma^{\infty}((X \wedge E(\mathcal{F',F}))^{\phi H})_{W_GH} \simeq (E(\mathcal{F}',\mathcal{F}) \wedge X)^G  
+((X \wedge E(\mathcal{F',F}))^{\phi H})_{W_GH} \simeq (E(\mathcal{F}',\mathcal{F}) \wedge X)^G  
     \]
  given by  $\Theta_{X \wedge E(\mathcal{F',F}),H}$.
 \end{proposition}
@@ -3286,9 +3288,250 @@ is an equivalence.
   \]  
   We now apply $\pi_*$ and using monoidality of geometric fixed points gives the result. 
 \end{proof}
+\chapter{Equivariant $K$-theory}
+So far we have not seen many examples of generalized equivariant cohomology theories. In this section we will introduce two variants of equivariant $K$-theory: one which will work for all finite groups, and one which is specific to the group $G = C_2$. 
+\section{Equivariant $K$-theory}
+Before going to equivariant $K$-theory, we can start with some of the basics of (complex) topological $K$-theory. 
+\begin{definition}
+    Let $X$ be a compact Hausdorff space, and $\Vect_{\mathbb{C}}(X)$ the set of isomorphism classes of finite rank complex vector bundles over $X$. The $K$-theory ring $K^0(X)$ is defined to be  the Grothendieck group of the commutative monoid $\Vect_{\mathbb{C}}(X)$ (with sum given by Whitney sum, and product given by the tensor product of bundles). 
+\end{definition}
+\begin{example}
+    If $X$ is a point, then an element of $\Vect_{\mathbb{C}}(\ast)$ is classified by a natural number (because vector bundles over a point are trivial, and hence classified by their rank), and so $K^0(\ast) = \mathbb{Z}$. 
+\end{example}
+\begin{remark}
+    For a based space $X$, we can define the reduced $K$-theory as $\widetilde K^0(X)$ as the kernel of the map $K^0(X) \to K^0(\ast)$ given by restricting bundles over $X$ to the base point. For a locally compact Hausdorff space $X$, we define
+    \[
+    X_+ = \begin{cases}
+        \text{The one point compactification of } X & \text{if } X \text{ is not compact} \\
+        X \sqcup \{ \ast \} & \text{if } X \text{ is compact.}
+    \end{cases}
+    \]
+    Then we define $K^0(X) \coloneqq \tilde K^0(X_+)$. 
+\end{remark}
+\begin{definition}
+    Let $\Sigma$ denote the reduced suspension of a based space, then 
+    \[
+    \tilde K^{-n}(X) \coloneqq \tilde K^0(\Sigma^n X)
+    \]
+    for all $n \ge 0$. 
+\end{definition}
+\begin{example}
+    By definition, $K^{-1}(\ast) = \tilde K^0(S^1)$. We can compute that this is trivial by using the clutching construction of vector bundles on spheres, as we now explain. 
+\end{example}
+\begin{remark}
+    Any $k$-dimensional vector  bundle over a sphere $S^n$ can be by constructed by piecing together the trivial bundles over the two hemispheres along the equator by the way of a map $S^{n-1} \to U(k)$, whose homotopy class determines the isomorphism class of the vector bundle. In symbols,
+    \[
+    [S^{n-1},U(k)] \cong \Vect_{\mathbb{C}}^k(S^n)
+    \]
+    In particular, taking $n = 1$, we see that the claim about $\tilde K^0(S^1)$ above is equivalent to the claim that $U(k)$ is path-connected, which is a standard result. 
+\end{remark}
+\begin{definition}
+    The canonical bundle $p \colon E \to \mathbb{C}P^n$ has as its total space
+    \[
+    E = \SET{(\ell,v) \in \mathbb{C}P^n \times \mathbb{C}^{n+1}}{v \in \ell}
+    \]
+    and the map $p$ is the projection. 
+\end{definition}
+\begin{example}
+    Let $H$ denote the canonical line bundle over $\mathbb{C}P^1 = S^2$. This has clutching function $S^1 \to GL_2(\mathbb{C})$ given by
+    \[
+ f \colon   z \mapsto \begin{bmatrix}
+z^2 & 0 \\
+0 & 1 
+\end{bmatrix}
+    \]
+    We claim that $(H \otimes H) \oplus 1 \simeq H \oplus H$. Indeed, these two bundles have clutching functions
+    \[
+f\colon      z \mapsto \begin{bmatrix}
+z^2 & 0 \\
+0 & 1
+\end{bmatrix}  
+    \]
+    and
+        \[
+g \colon      z \mapsto \begin{bmatrix}
+z & 0 \\
+0 & z
+\end{bmatrix}  
+\]
+Now we use the fact that $GL_2(\mathbb{C})$ is path-connected, so that there is a a continuous map $\alpha \colon [0,1] \to GL_2(\mathbb{C})$ such that $\alpha(0) = \text{id}$ and $\alpha(1) = \begin{bmatrix}
+0 & 1 \\
+1 & 0
+\end{bmatrix}  $
+The required homotopy is then given by
+\[
+\begin{split}
+H &\colon [0,1] \times S^1 \to GL_2(\mathbb{C})\\
+(t,z) &\mapsto \begin{bmatrix}
+z & 0 \\
+0 & 1
+\end{bmatrix}  \alpha(t)\begin{bmatrix}
+1 & 0 \\
+0 & z
+\end{bmatrix}  \alpha(t)
+\end{split}
+\]
+This means that in $K^0(S^2)$ we have $H^2+1 = 2H$ or $(H-1)^2 = 0$. In fact, we have that
+\[
+K^0(S^2) = Z[H]/((H-1)^2)
+\]
+The reduced $K$-theory is then isomorphic to the subring $\mathbb{Z} \cdot (1-H)$ and $K^{-2}(\ast) \coloneqq \tilde K^0(S^2) $ is isomorphic to $\mathbb{Z}$ with generator $(1-H)$. The negative of this generator is called the Bott class $\beta$. In fact, the reduced $K$-theory of $S^n$ turns out to only depend on the parity of $n$: it is $\mathbb{Z}$ for $n$ even, and $0$ for $n$ odd. 
+\end{example}
+\begin{theorem}[Bott periodicty]
+    There is an isomorphism \[K^{-n}(X) \to K^{-n-2}(X)\] through the external product with $\beta$. 
+\end{theorem}
+This allows us to extend $K$-theory to a $\mathbb{Z}$-graded cohomology theory simply by setting $K^{2k}(X) = K^0(X)$ and $K^{2k+1}(X) = K^1(X)$. 
 
-
-
+We now with to do the same constructions in the equivariant world. 
 	% End the document without loading the bibliography
-
+ Let $G$ be a finite group which acts on a locally compact Hausdorff space $X$.
+ \begin{definition}
+     A $G$-vector bundle over a G-space $X$ is a vector bundle $p \colon E\rightarrow X$, together with a
+$G$-space structure on $E$, such that
+\begin{enumerate}[label=(\roman*)]
+    \item $p$ is a $G$-map,
+    \item if $g\in G$ then $g\colon p^{-1}(x)\rightarrow p^{-1}(gx)$ is a linear map.
+\end{enumerate}
+ \end{definition}
+\begin{definition}
+     Let $\Vect^G_{\mathbb{C}}(X)$ the set of isomorphism classes of finite rank complex $G$-vector bundles over $X$. The equivariant $K$-theory ring $K_G^0(X)$ is defined to be  the Grothendieck group of the commutative monoid $\Vect^G_{\mathbb{C}}(X)$ (with sum given by Whitney sum, and product given by the tensor product of bundles). 
+\end{definition}
+\begin{example}
+    If $X$ is a point, then a $G$-vector bundle is the same thing as a representation of $G$, so that $K_G^0(\ast) \cong R(G)$. 
+\end{example}
+\begin{remark}
+    As usual, we have a restriction functor. Indeed, if $H\le G$ is a subgroup, then restriction of $G$-spaces induces a map
+    \[
+    \Vect^G_{\mathbb{C}}(X) \to \Vect^H_{\mathbb{C}}(X)
+    \]
+    which induces a map $K_G^0(X) \to K_H^0(X)$. In particular, if $H = e$ is the trivial group, we get a forgetful map $K_G^0(X) \to K^0(X)$. In the case $X = \ast$ this is a map $R(G) \to \mathbb{Z}$, sending a representation to its dimension. The kernel of this is called the augmentation ideal, and denoted $I(G)$. 
+\end{remark}
+\begin{remark}
+    If $X$ is a trivial $G$-space, then the action of $G$ on the total space of a $G$-vector bundle restricts to the action on each fiber. This gives us two maps
+    \[
+    i \colon \Rep(G) \to \Vect^G_{\mathbb{C}}(X)
+    \]
+    taking a representation $M$ to the trivial bundle $\mathbf{M} \colon X \times M$ and
+    \[
+    j \colon \Vect_{\mathbb{C}}(X) \to \Vect_{\mathbb{C}}^G(X)
+    \]
+    giving a vector bundle the trivial $G$-action. 
+\end{remark}
+\begin{theorem}\label{thm:trivial-g-space}
+    Let $X$ be a trivial $G$-space, then the map $\tilde i \otimes \tilde j \colon R(G) \otimes K^0(G) \to K^0_G(X)$ is an isomorphism of rings. 
+\end{theorem}
+\begin{theorem}
+    If $X$ is a free $G$-space, then
+    \[
+    K_G^0(X) = K^0(X/G)
+    \]
+\end{theorem}
+\begin{proof}
+    This follows from the observation that
+    \[
+    \Vect_{\mathbb{C}}^G(X) \cong \Vect_{\mathbb{C}}(X/G)
+    \]
+    given by taking the quotient of an equivariant bundle by the free $G$-action which admits an inverse the pullback map induced by the point-orbit projection
+\end{proof}
+\begin{definition}
+    If $X$ is a pointed $G$-space, then we define
+    \[
+    \tilde K^0(X) = \ker(K_G^0(X) \to K_G^0(\ast))
+    \]
+    We can extend this to negative degrees via
+    \[
+    \tilde K^{-n}(X) = \tilde K^0(\Sigma^nX)
+    \]
+\end{definition}
+\begin{example}
+    By definition, $\tilde K_G^{-n}(\ast) = \tilde K_G^0(S^n)$. By the reduced version of \Cref{thm:trivial-g-space} this is
+    \[
+    \tilde K_G^0(S^n) \cong R(G) \otimes K^0(S^n) \cong \begin{cases}
+        R(G) & n \text{ even.} \\
+        0 & n \text{ odd.}
+    \end{cases}
+    \]
+\end{example}
+\begin{definition}
+    The equivariant Bott class $\beta_G \in K_G^{-2}(\ast)$ corresponds to $1 \otimes (1-H^{-1}) \in R(G) \otimes \tilde K^0(S^2) \cong \tilde K_G^0(S^2)$. 
+\end{definition}
+This gives us Bott periodicity again, and allows us to extend $K_G$ to an equivariant cohomology theory. 
+\begin{theorem}[Equivariant Bott periodicity]
+  There is an isomorphism \[K^{-n}_G(X) \to K_G^{-n-2}(X)\] through the external product with $\beta_G$. 
+\end{theorem}
+A purely equivariant result is the Atiyah--Segal completion theorem. To state this, observe that applying $-\times_G EG$ to both $E$ and $X$ gives a vector bundle $E \times_G EG \to X_G \coloneqq X \times_G EG$. This gives us a map $\Vect_{\mathbb{C}}^G(X) \to \Vect_{\mathbb{C}})(X_G)$, and hence a map $K_G^*(X) \to K^*(X_G)$. 
+\begin{theorem}[Atiyah--Segal]
+    If $K_G^*(X)$ is a finitely generated $R(G)$-module, the map
+    \[
+    K_G^*(X) \to K^*(X_G)
+    \]
+    induces an isomorphism
+    \[
+   (K_G^*(X))^{\wedge}_{I(G)} \xrightarrow{\sim } K^*(X_G)
+    \]
+    In particular, when $X$ is a point, we deduce that 
+    \[
+    K^0(BG) \cong R(G)^{\wedge}_{I(G)}.
+    \]
+\end{theorem}
+\section{Atiyah's real $K$-theory}
+The second form of equivariant $K$-theory we will consider is Atiyah's real $K$-theory, usually denoted $K\mathbb{R}$. This relies on the notion of a real vector bundle. 
+\begin{definition}
+    A real space is a $C_2$-space, and we write $\overline{x}$ for the image of $x$ under the $C_2$-action. A real vector bundle over a real space $X$ is a complex vector bundle $p \colon E \to X$ where $E$ is a real space and such that
+    \begin{enumerate}[label=(\roman*)]
+        \item $p$ is a map of real spaces
+        \item The map $p^{-1}(x) \to p^{-1}(\overline{x})$ is complex anti-linear, i.e., the diagram
+        % https://q.uiver.app/#q=WzAsNCxbMCwwLCJcXG1hdGhiYntDfSBcXHRpbWVzIHBeey0xfSh4KSJdLFswLDEsIlxcbWF0aGJie0N9IFxcdGltZXMgcF57LTF9KFxcb3ZlcmxpbmUgeCkiXSxbMSwxLCJwXnstMX0oXFxvdmVybGluZSB4KSJdLFsxLDAsInBeey0xfSh4KSJdLFswLDFdLFsxLDJdLFswLDNdLFszLDJdXQ==
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{\mathbb{C} \times p^{-1}(x)} \& {p^{-1}(x)} \\
+	{\mathbb{C} \times p^{-1}(\overline x)} \& {p^{-1}(\overline x)}
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=2-1, to=2-2]
+	\arrow[from=1-1, to=1-2]
+	\arrow[from=1-2, to=2-2]
+\end{tikzcd}\]
+commutes, where the vertical arrow is the $C_2$-action, where $\mathbb{C}$ has its usual $C_2$-action by complex conjugation. 
+    \end{enumerate}
+    We let $K\mathbb{R}(X)$ denote the Grothendieck group of real vector bundles over a real space $X$. 
+\end{definition}
+\begin{remark}
+    Notice the difference between $K\mathbb{R}(X)$ and $K^0_{C_2}(X)$; the former is complex anti-linear on the fiber, while the latter is linear on the fiber. There is a common generalization of these, called $K\mathbb{R}_G$. 
+\end{remark}
+\begin{example}
+    A real vector bundle over a point is the data of a complex vector space $V$ with a conjugate linear involution $\tau$. The fixed points $V^{\tau}$ for a real vector space in the usual sense (no $C_2$-action, but an an action of $\mathbb{R}$). Moreover, $V^{\tau} \otimes_{\mathbb{R}}\mathbb{C} \simeq V$, and hence 
+    \[
+    K\mathbb{R}(\ast) \cong K(\Vect_{\mathbb{R}}) \cong \mathbb{Z}. 
+    \]
+    In fact, when $X$ is a trivial real space, we have $K\mathbb{R}(X) \cong KO^0(X)$, where $KO$ is real $K$-theory. 
+\end{example}
+It turns out there is an interesting generalization of Bott periodicity to $K\mathbb{R}$. 
+\begin{theorem}
+    There is a natural isomorphism
+    \[
+    K\mathbb{R}(X) \cong K\mathbb{R}(\mathbb{C}P^1 \wedge X_+)
+    \]
+    where $\mathbb{C}P^1$ is given its usual $C_2$-action.
+\end{theorem}
+That is two say, the $\mathbb{C}P^1$ appearing in the theorem is nothing other that $S^{\rho}$. 
+We can then extend $K\mathbb{R}$ to a $\mathbb{Z}$-graded theory by
+\[
+K\mathbb{R}^n(X) = \begin{cases}
+    \tilde K\mathbb{R}(S^{-n} \wedge X_+), & n \le 0 \\
+    \tilde K\mathbb{R}(S^{n\rho} \wedge X_+), &n \ge 0. 
+\end{cases}
+\]
+So what are these groups for $X = \ast$? In fact, it is better to compute the $RO(C_2)$-graded groups $\pi_{n,k} = \pi_{n,k\sigma}$. The answer is known, but it is complicated, at least as a ring! Here are some facts:
+\begin{enumerate}[label=(\roman*)]
+\item We have
+\[
+\pi_{i,0}^{C_2}(K\mathbb{R}) \cong \pi_iKO
+\]
+\item The spectrum $K\mathbb{R}$ is $\rho = 1\oplus \sigma$ periodic, that is 
+\[
+\pi_{a,b}^{C_2}K\mathbb{R} \cong \pi_{a+1,b+1}^{C_2}K\mathbb{R}. 
+\]
+\end{enumerate}
+\begin{remark}
+    $K\mathbb{R}$ has the property that its underlying non-equivariant spectrum is $KU$. We can see the 2-periodicity from the fact that the underlying non-equivariant space of $S^{\rho}$ is $S^2$. 
+\end{remark}
 \end{document}
