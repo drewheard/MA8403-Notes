@@ -3333,14 +3333,7 @@ Before going to equivariant $K$-theory, we can start with some of the basics of 
     and the map $p$ is the projection. 
 \end{definition}
 \begin{example}
-    Let $H$ denote the canonical line bundle over $\mathbb{C}P^1 = S^2$. This has clutching function $S^1 \to GL_2(\mathbb{C})$ given by
-    \[
- f \colon   z \mapsto \begin{bmatrix}
-z^2 & 0 \\
-0 & 1 
-\end{bmatrix}
-    \]
-    We claim that $(H \otimes H) \oplus 1 \simeq H \oplus H$. Indeed, these two bundles have clutching functions
+    Let $H$ denote the canonical line bundle over $\mathbb{C}P^1 = S^2$. This has clutching function $S^1 \to GL_2(\mathbb{C})$ given by $z \mapsto [z]$.  We claim that $(H \otimes H) \oplus 1 \simeq H \oplus H$. Indeed, these two bundles have clutching functions
     \[
 f\colon      z \mapsto \begin{bmatrix}
 z^2 & 0 \\
@@ -3382,11 +3375,11 @@ The reduced $K$-theory is then isomorphic to the subring $\mathbb{Z} \cdot (1-H)
 \end{theorem}
 This allows us to extend $K$-theory to a $\mathbb{Z}$-graded cohomology theory simply by setting $K^{2k}(X) = K^0(X)$ and $K^{2k+1}(X) = K^1(X)$. 
 
-We now with to do the same constructions in the equivariant world. 
+We now want to do the same constructions in the equivariant world. 
 	% End the document without loading the bibliography
  Let $G$ be a finite group which acts on a locally compact Hausdorff space $X$.
  \begin{definition}
-     A $G$-vector bundle over a G-space $X$ is a vector bundle $p \colon E\rightarrow X$, together with a
+     A $G$-vector bundle over a $G$-space $X$ is a vector bundle $p \colon E\rightarrow X$, together with a
 $G$-space structure on $E$, such that
 \begin{enumerate}[label=(\roman*)]
     \item $p$ is a $G$-map,
@@ -3461,15 +3454,15 @@ This gives us Bott periodicity again, and allows us to extend $K_G$ to an equiva
 \end{theorem}
 In fact, there is an even stronger version of equivariant Bott periodicity that holds, that allows an extension to an $RO(G)$-graded cohomology theory. 
 \begin{theorem}
-    Let $V$ be a finite-dimensional complex representation of the finite group $G$. The Thom isomorphism in equivariant complex $K$-theory is a canonical isomorphism of $RU (G)$-modules
+    Let $V$ be a finite-dimensional complex representation of the finite group $G$. The Thom isomorphism in equivariant complex $K$-theory is a canonical isomorphism of $R(G)$-modules
 \[
-\tilde KU^0_G(X) \cong \tilde KU^0_G(X \wedge S^V)
+\tilde K^0_G(X) \cong \tilde K^0_G(X \wedge S^V)
 \]
 where $S^V$ is the representation sphere associated to $V$ . This isomorphism is given by
 multiplication by the equivariant Bott class $\beta_V$.  
 \end{theorem}
 
-A purely equivariant result is the Atiyah--Segal completion theorem. To state this, observe that applying $-\times_G EG$ to both $E$ and $X$ gives a vector bundle $E \times_G EG \to X_G \coloneqq X \times_G EG$. This gives us a map $\Vect_{\mathbb{C}}^G(X) \to \Vect_{\mathbb{C}})(X_G)$, and hence a map $K_G^*(X) \to K^*(X_G)$. 
+A purely equivariant result is the Atiyah--Segal completion theorem. To state this, observe that applying $-\times_G EG$ to both $E$ and $X$ gives a (non-equivariant) vector bundle $E \times_G EG \to X_G \coloneqq X \times_G EG$. This gives us a map $\Vect_{\mathbb{C}}^G(X) \to \Vect_{\mathbb{C}}(X_G)$, and hence a map $K_G^*(X) \to K^*(X_G)$. 
 \begin{theorem}[Atiyah--Segal]
     If $K_G^*(X)$ is a finitely generated $R(G)$-module, the map
     \[
@@ -3508,7 +3501,7 @@ commutes, where the vertical arrow is the $C_2$-action, where $\mathbb{C}$ has i
     Notice the difference between $K\mathbb{R}(X)$ and $K^0_{C_2}(X)$; the former is complex anti-linear on the fiber, while the latter is linear on the fiber. There is a common generalization of these, called $K\mathbb{R}_G$. 
 \end{remark}
 \begin{example}
-    A real vector bundle over a point is the data of a complex vector space $V$ with a conjugate linear involution $\tau$. The fixed points $V^{\tau}$ for a real vector space in the usual sense (no $C_2$-action, but an an action of $\mathbb{R}$). Moreover, $V^{\tau} \otimes_{\mathbb{R}}\mathbb{C} \simeq V$, and hence 
+    A real vector bundle over a point is the data of a complex vector space $V$ with a conjugate linear involution $\tau$. The fixed points $V^{\tau}$ form a real vector space in the usual sense (no $C_2$-action, but an action of $\mathbb{R}$). Moreover, $V^{\tau} \otimes_{\mathbb{R}}\mathbb{C} \simeq V$, and hence 
     \[
     K\mathbb{R}(\ast) \cong K(\Vect_{\mathbb{R}}) \cong \mathbb{Z}. 
     \]
@@ -3522,7 +3515,7 @@ It turns out there is an interesting generalization of Bott periodicity to $K\ma
     \]
     where $\mathbb{C}P^1$ is given its usual $C_2$-action.
 \end{theorem}
-That is two say, the $\mathbb{C}P^1$ appearing in the theorem is nothing other that $S^{\rho}$. 
+That is to say, the $\mathbb{C}P^1$ appearing in the theorem is nothing other that $S^{\rho}$. 
 We can then extend $K\mathbb{R}$ to a $\mathbb{Z}$-graded theory by
 \[
 K\mathbb{R}^n(X) = \begin{cases}
